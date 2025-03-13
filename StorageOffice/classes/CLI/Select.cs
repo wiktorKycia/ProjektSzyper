@@ -44,28 +44,25 @@ public class Select
         foreach (Option option in Options)
         {
             option.Display(specialSign);
-            Console.WriteLine();
         }
     }
     public virtual void SelectOption()
     {
         Options[CurrentIndex].Toggle();
     }
-    public void MoveUp()
+    public virtual void MoveUp()
     {
         if (CurrentIndex > 0)
         {
             CurrentIndex--;
         }
-        SelectOption();
     }
-    public void MoveDown()
+    public virtual void MoveDown()
     {
         if (CurrentIndex < Options.Count - 1)
         {
             CurrentIndex++;
         }
-        SelectOption();
     }
 }
 
@@ -73,10 +70,22 @@ public class RadioSelect : Select
 {
     private readonly string specialSign = "\u2022";
 
-    public RadioSelect() : base() { }
-    public RadioSelect(List<Option> options) : base(options) { }
-    public RadioSelect(IEnumerable<string> options) : base(options) { }
-    public RadioSelect(params string[] options) : base(options) { }
+    public RadioSelect() : base()
+    {
+        SelectOption();
+    }
+    public RadioSelect(List<Option> options) : base(options)
+    {
+        SelectOption();
+    }
+    public RadioSelect(IEnumerable<string> options) : base(options)
+    {
+        SelectOption();
+    }
+    public RadioSelect(params string[] options) : base(options)
+    {
+        SelectOption();
+    }
 
     public override void SelectOption()
     {
@@ -106,15 +115,41 @@ public class RadioSelect : Select
         base.DisplayOptions(specialSign);
         Console.WriteLine();
     }
+    public override void MoveUp()
+    {
+        base.MoveUp();
+        SelectOption();
+    }
+    public override void MoveDown()
+    {
+        base.MoveDown();
+        SelectOption();
+    }
 }
 
 public class CheckBoxSelect : Select
 {
     private readonly string specialSign = "\u2713";
-    public CheckBoxSelect() : base() { }
-    public CheckBoxSelect(List<Option> options) : base(options) { }
-    public CheckBoxSelect(IEnumerable<string> options) : base(options) { }
-    public CheckBoxSelect(params string[] options) : base(options) { }
+    public CheckBoxSelect() : base()
+    {
+        HighlightOption();
+    }
+    public CheckBoxSelect(List<Option> options) : base(options)
+    {
+        HighlightOption();
+    }
+    public CheckBoxSelect(IEnumerable<string> options) : base(options)
+    {
+        HighlightOption();
+    }
+    public CheckBoxSelect(params string[] options) : base(options)
+    {
+        HighlightOption();
+    }
+    public void HighlightOption()
+    {
+        Options[CurrentIndex].ToggleHighlight();
+    }
     public override void SelectOption()
     {
         Options[CurrentIndex].Toggle();
@@ -140,12 +175,25 @@ public class CheckBoxSelect : Select
         base.DisplayOptions(specialSign);
         Console.WriteLine();
     }
+    public override void MoveUp()
+    {
+        HighlightOption();
+        base.MoveUp();
+        HighlightOption();
+    }
+    public override void MoveDown()
+    {
+        HighlightOption();
+        base.MoveDown();
+        HighlightOption();
+    }
 }
 
 public class Option
 {
     public string Text { get; set; }
     public bool IsSelected { get; set; } = false;
+    public bool IsHighlighted { get; set; } = false;
 
     public Option(string text)
     {
@@ -155,16 +203,41 @@ public class Option
     {
         IsSelected = !IsSelected;
     }
+    public void ToggleHighlight()
+    {
+        IsHighlighted = !IsHighlighted;
+    }
 
     public void Display(string specialSign)
     {
-        if(IsSelected)
+        if(IsHighlighted)
         {
-            Console.WriteLine($"[{specialSign}] {Text}");
+            ConsoleOutput.PrintColorMessage("[", ConsoleColor.Yellow);
         }
         else
         {
-            Console.WriteLine($"[ ] {Text}");
+            Console.Write("[");
         }
+
+        if(IsSelected)
+        {
+            Console.Write($"{specialSign}");
+        }
+        else
+        {
+            Console.Write(" ");
+        }
+        
+        if(IsHighlighted)
+        {
+            ConsoleOutput.PrintColorMessage("]", ConsoleColor.Yellow);
+        }
+        else
+        {
+            Console.Write("]");
+        }
+        
+        Console.WriteLine($" {Text}");
+        
     }
 }

@@ -17,7 +17,7 @@ public static class ConsoleOutput
     public static void PrintColorMessage(string message, ConsoleColor color)
     {
         Console.ForegroundColor = color;
-        Console.WriteLine(message);
+        Console.Write(message);
         Console.ResetColor();
     }
 }
