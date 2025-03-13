@@ -4,7 +4,7 @@ namespace StorageOffice.classes.CLI;
 
 public class Select
 {
-
+    public List<Option> Options { get; set; } = new List<Option>();
 }
 
 public class Option
