@@ -4,7 +4,32 @@ namespace StorageOffice.classes.CLI;
 
 public class Select
 {
-    public List<Option> Options { get; set; } = new List<Option>();
+    public List<Option> Options { get; set; }
+    public Select()
+    {
+        Options = new List<Option>();
+    }
+    public Select(List<Option> options)
+    {
+        Options = options;
+    }
+    public Select(IEnumerable<string> options)
+    {
+        Options = new List<Option>();
+        foreach (string option in options)
+        {
+            Options.Add(new Option(option));
+        }
+    }
+    public Select(params string[] options)
+    {
+        Options = new List<Option>();
+        foreach (string option in options)
+        {
+            Options.Add(new Option(option));
+        }
+    }
+    
 }
 
 public class Option
@@ -16,6 +41,11 @@ public class Option
     {
         Text = text;
     }
+    public void Toggle()
+    {
+        IsSelected = !IsSelected;
+    }
+
     public void Display(string specialSign)
     {
         if(IsSelected)
