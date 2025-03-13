@@ -51,6 +51,22 @@ public class Select
     {
         Options[CurrentIndex].Toggle();
     }
+    public void MoveUp()
+    {
+        if (CurrentIndex > 0)
+        {
+            CurrentIndex--;
+        }
+        SelectOption();
+    }
+    public void MoveDown()
+    {
+        if (CurrentIndex < Options.Count - 1)
+        {
+            CurrentIndex++;
+        }
+        SelectOption();
+    }
 }
 
 public class RadioSelect : Select
