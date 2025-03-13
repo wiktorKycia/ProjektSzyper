@@ -5,6 +5,7 @@ namespace StorageOffice.classes.CLI;
 public class Select
 {
     public List<Option> Options { get; set; }
+    public int CurrentIndex { get; set; } = 0;
     public Select()
     {
         Options = new List<Option>();
@@ -38,10 +39,19 @@ public class Select
     {
         Options.Add(option);
     }
+    public void DisplayOptions(string specialSign = "")
+    {
+        foreach (Option option in Options)
+        {
+            option.Display(specialSign);
+            Console.WriteLine();
+        }
+    }
 }
 
 public class RadioSelect : Select
 {
+    private readonly string specialSign = "\u2022";
     public void SelectOption(int index)
     {
         if (index < 0 || index >= Options.Count)
@@ -59,6 +69,37 @@ public class RadioSelect : Select
         }
         option.Toggle();
         Options.Where(o => o != option).ToList().ForEach(o => o.IsSelected = false);
+    }
+    public void DisplayOptions()
+    {
+        base.DisplayOptions(specialSign);
+        Console.WriteLine();
+    }
+}
+
+public class CheckBoxSelect : Select
+{
+    private readonly string specialSign = "\u2713";
+    public void SelectOption(int index)
+    {
+        if (index < 0 || index >= Options.Count)
+        {
+            throw new ArgumentOutOfRangeException(nameof(index), "Index is out of range.");
+        }
+        Options[index].Toggle();
+    }
+    public void SelectOption(Option option)
+    {
+        if (!Options.Contains(option))
+        {
+            throw new ArgumentException("Option not found in the list.", nameof(option));
+        }
+        option.Toggle();
+    }
+    public void DisplayOptions()
+    {
+        base.DisplayOptions(specialSign);
+        Console.WriteLine();
     }
 }
 
@@ -80,11 +121,11 @@ public class Option
     {
         if(IsSelected)
         {
-            Console.Write($"[{specialSign}] {Text}");
+            Console.WriteLine($"[{specialSign}] {Text}");
         }
         else
         {
-            Console.Write($"[ ] {Text}");
+            Console.WriteLine($"[ ] {Text}");
         }
     }
 }
