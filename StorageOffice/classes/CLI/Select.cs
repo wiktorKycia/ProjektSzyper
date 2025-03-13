@@ -16,4 +16,15 @@ public class Option
     {
         Text = text;
     }
+    public void Display(string specialSign)
+    {
+        if(IsSelected)
+        {
+            Console.Write($"[{specialSign}] {Text}");
+        }
+        else
+        {
+            Console.Write($"[ ] {Text}");
+        }
+    }
 }
