@@ -47,11 +47,21 @@ public class Select
             Console.WriteLine();
         }
     }
+    public virtual void SelectOption()
+    {
+        Options[CurrentIndex].Toggle();
+    }
 }
 
 public class RadioSelect : Select
 {
     private readonly string specialSign = "\u2022";
+
+    public override void SelectOption()
+    {
+        Options[CurrentIndex].Toggle();
+        Options.Where(o => o != Options[CurrentIndex]).ToList().ForEach(o => o.IsSelected = false);
+    }
     public void SelectOption(int index)
     {
         if (index < 0 || index >= Options.Count)
@@ -80,6 +90,10 @@ public class RadioSelect : Select
 public class CheckBoxSelect : Select
 {
     private readonly string specialSign = "\u2713";
+    public override void SelectOption()
+    {
+        Options[CurrentIndex].Toggle();
+    }
     public void SelectOption(int index)
     {
         if (index < 0 || index >= Options.Count)
