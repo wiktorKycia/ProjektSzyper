@@ -39,7 +39,7 @@ public class Select
     {
         Options.Add(option);
     }
-    public void DisplayOptions(string specialSign = "")
+    public void DisplayOptions(string specialSign)
     {
         foreach (Option option in Options)
         {
@@ -72,6 +72,11 @@ public class Select
 public class RadioSelect : Select
 {
     private readonly string specialSign = "\u2022";
+
+    public RadioSelect() : base() { }
+    public RadioSelect(List<Option> options) : base(options) { }
+    public RadioSelect(IEnumerable<string> options) : base(options) { }
+    public RadioSelect(params string[] options) : base(options) { }
 
     public override void SelectOption()
     {
@@ -106,6 +111,10 @@ public class RadioSelect : Select
 public class CheckBoxSelect : Select
 {
     private readonly string specialSign = "\u2713";
+    public CheckBoxSelect() : base() { }
+    public CheckBoxSelect(List<Option> options) : base(options) { }
+    public CheckBoxSelect(IEnumerable<string> options) : base(options) { }
+    public CheckBoxSelect(params string[] options) : base(options) { }
     public override void SelectOption()
     {
         Options[CurrentIndex].Toggle();

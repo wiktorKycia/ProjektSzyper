@@ -1,4 +1,4 @@
-namespace CLI;
+namespace StorageOffice.classes.CLI;
 
 public static class ConsoleInput
 {
