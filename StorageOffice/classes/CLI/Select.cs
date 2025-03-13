@@ -40,6 +40,28 @@ public class Select
     }
 }
 
+public class RadioSelect : Select
+{
+    public void SelectOption(int index)
+    {
+        if (index < 0 || index >= Options.Count)
+        {
+            throw new ArgumentOutOfRangeException(nameof(index), "Index is out of range.");
+        }
+        Options[index].Toggle();
+        Options.Where(o => o != Options[index]).ToList().ForEach(o => o.IsSelected = false);
+    }
+    public void SelectOption(Option option)
+    {
+        if (!Options.Contains(option))
+        {
+            throw new ArgumentException("Option not found in the list.", nameof(option));
+        }
+        option.Toggle();
+        Options.Where(o => o != option).ToList().ForEach(o => o.IsSelected = false);
+    }
+}
+
 public class Option
 {
     public string Text { get; set; }
