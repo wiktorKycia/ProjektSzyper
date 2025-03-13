@@ -29,7 +29,15 @@ public class Select
             Options.Add(new Option(option));
         }
     }
-    
+
+    public void AddOption(string option)
+    {
+        Options.Add(new Option(option));
+    }
+    public void AddOption(Option option)
+    {
+        Options.Add(option);
+    }
 }
 
 public class Option
