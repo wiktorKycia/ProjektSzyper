@@ -15,7 +15,7 @@ namespace StorageOffice
             while(true)
             {
                 Console.Clear();
-                ConsoleOutput.PrintColorMessage("Select an option:\n\n", ConsoleColor.Cyan);
+                ConsoleOutput.PrintCenteredMessage("Select an option", ConsoleColor.Cyan, sign: '=');
                 select.DisplayOptions();
                 Console.WriteLine("Press Up/Down to navigate, Enter to select, Esc to exit.");
 
