@@ -193,7 +193,7 @@ public class Option
 {
     public string Text { get; set; }
     public bool IsSelected { get; set; } = false;
-    public bool IsHighlighted { get; set; } = false;
+    
 
     public Option(string text)
     {
@@ -203,12 +203,21 @@ public class Option
     {
         IsSelected = !IsSelected;
     }
+    public virtual void Display(string specialSign)
+    {
+        Console.WriteLine($"[{specialSign}] {Text}");
+    }
+}
+
+public class CheckBoxOption(string text) : Option(text) // dziedziczenie konstruktora
+{
+    public bool IsHighlighted { get; set; } = false;
+
     public void ToggleHighlight()
     {
         IsHighlighted = !IsHighlighted;
     }
-
-    public void Display(string specialSign)
+    public override void Display(string specialSign = "\u2713")
     {
         if(IsHighlighted)
         {
