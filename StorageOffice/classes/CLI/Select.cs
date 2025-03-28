@@ -2,6 +2,104 @@ using System;
 
 namespace StorageOffice.classes.CLI;
 
+public interface ISelectable
+{
+    public void Toggle();
+    public string ToString();
+}
+
+public interface IHighlightable
+{
+    public void ToggleHighlight();
+    public string ToString();
+}
+
+
+public abstract class Select
+{
+    public int CurrentIndex { get; set; } = 0;
+    
+    public virtual void MoveUp()
+    {
+        if (CurrentIndex > 0)
+        {
+            CurrentIndex--;
+        }
+    }
+    public virtual void MoveDown()
+    {
+        if (CurrentIndex < Options.Count - 1)
+        {
+            CurrentIndex++;
+        }
+    }
+}
+
+public class RadioSelect : Select
+{
+    public List<RadioOption> Options { get; set; }
+
+    public RadioSelect(List<RadioOption> options)
+    {
+        Options = options;
+    }
+    public virtual void SelectOption()
+    {
+        Options[CurrentIndex].Toggle();
+    }
+}
+
+
+
+public class RadioOption: ISelectable
+{
+    public string Text { get; set; }
+    public bool IsSelected { get; set; } = false;
+    public char SpecialSign { get; set; }
+    
+
+    public RadioOption(string text, char specialSign = '\u2022')
+    {
+        Text = text;
+        SpecialSign = specialSign;
+    }
+    public void Toggle()
+    {
+        IsSelected = !IsSelected;
+    }
+    public override string ToString()
+    {
+        return $"[{SpecialSign}] {Text}";
+    }
+}
+
+public class CheckBoxOption: ISelectable, IHighlightable
+{
+    public string Text { get; set; }
+    public bool IsSelected { get; set; } = false;
+    public char SpecialSign { get; set; }
+    public bool IsHighlighted { get; set; } = false;
+
+    public CheckBoxOption(string text, char specialSign = '\u2713')
+    {
+        Text = text;
+        SpecialSign = specialSign;
+    }
+    public void Toggle()
+    {
+        IsSelected = !IsSelected;
+    }
+    public void ToggleHighlight()
+    {
+        IsHighlighted = !IsHighlighted;
+    }
+    public override string ToString()
+    {
+        return $"[{SpecialSign}] {Text}";
+    }
+}
+
+/*
 public class Select
 {
     public List<Option> Options { get; set; }
@@ -249,4 +347,4 @@ public class CheckBoxOption(string text) : Option(text) // dziedziczenie konstru
         Console.WriteLine($" {Text}");
         
     }
-}
+}*/
