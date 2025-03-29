@@ -91,7 +91,7 @@ public static class ConsoleOutput
         if (text.Length <= maxElemLength) return [text];
         else
         {
-            List<string> elems = new();
+            List<string> elems = []; // zastępuje: new List<string>();
             bool end = false;
             int i = 0;
             while(!end)
@@ -100,7 +100,7 @@ public static class ConsoleOutput
                 i += maxElemLength;
                 if(i >= text.Length) end = true;
             }
-            return elems.ToArray();
+            return [..elems]; // zastępuje: elems.ToArray();
         }
     }
 
