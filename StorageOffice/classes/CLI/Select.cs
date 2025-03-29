@@ -39,7 +39,39 @@ public class RadioSelect(List<RadioOption> options) : Select
 }
 
 
+public class CheckBoxSelect(List<CheckBoxOption> options) : Select
+{
+    public List<CheckBoxOption> Options { get; set; } = options;
 
+    protected override int CurrentIndex { get; set; } = 0;
+
+    public override void SelectOption()
+    {
+        Options[CurrentIndex].Toggle();
+    }
+    private void HighlightOption()
+    {
+        Options[CurrentIndex].ToggleHighlight();
+    }
+    public override void MoveUp()
+    {
+        if (CurrentIndex > 0)
+        {
+            HighlightOption();
+            CurrentIndex--;
+            HighlightOption();
+        }
+    }
+    public override void MoveDown()
+    {
+        if (CurrentIndex < Options.Count - 1)
+        {
+            HighlightOption();
+            CurrentIndex++;
+            HighlightOption();
+        }
+    }
+}
 
 
 /*
