@@ -34,19 +34,19 @@ public static class ConsoleOutput
     {
         return Repeat(Char, UIWidth);
     }
-    internal static string Header(string Str, char Char = '-')
+    internal static string Header(string text, char Char = '-')
     {
-        Str = Str.Margin();
-        int length = (UIWidth-Str.Length)/2;
+        text = text.Margin();
+        int length = (UIWidth-text.Length)/2;
         return (
             Repeat(Char, length) + 
-            Str +
-            Repeat(Char, UIWidth - length - Str.Length)
+            text +
+            Repeat(Char, UIWidth - length - text.Length)
         );
     }
-    internal static string CenteredText(string Str, bool wrap = false)
+    internal static string CenteredText(string text, bool wrap = false)
     {
-        string[] lines = Str.Split('\n');
+        string[] lines = text.Split('\n');
 
         if(wrap)
         {
@@ -66,29 +66,29 @@ public static class ConsoleOutput
         }
         return result;
     }
-    internal static string RightAlignText(string Str)
+    internal static string RightAlignText(string text)
     {
         return (
-            Spaces(UIWidth - Str.Length) +
-            Str
+            Spaces(UIWidth - text.Length) +
+            text
         );
     }
-    internal static string Margin(this string Str, char Char = ' ', int lenght = 1)
+    internal static string Margin(this string text, char Char = ' ', int lenght = 1)
     {
         return (
             Repeat(Char, lenght) + 
-            Str + 
+            text + 
             Repeat(Char, lenght)
         );
     }
-    internal static string Truncate(string Str, int finalLength)
+    internal static string Truncate(string text, int finalLength)
     {
-        if(Str.Length > finalLength){ return Str[..(finalLength - 3)] + "...";}
-        return Str;
+        if(text.Length > finalLength){ return text[..(finalLength - 3)] + "...";}
+        return text;
     }
-    private static string[] DivideIntoArray(this string Str, int maxElemLength)
+    private static string[] DivideIntoArray(this string text, int maxElemLength)
     {
-        if (Str.Length <= maxElemLength) return [Str];
+        if (text.Length <= maxElemLength) return [text];
         else
         {
             List<string> elems = new();
@@ -96,9 +96,9 @@ public static class ConsoleOutput
             int i = 0;
             while(!end)
             {
-                elems.Add(Str.Substring(i, maxElemLength));
+                elems.Add(text.Substring(i, maxElemLength));
                 i += maxElemLength;
-                if(i >= Str.Length) end = true;
+                if(i >= text.Length) end = true;
             }
             return elems.ToArray();
         }
