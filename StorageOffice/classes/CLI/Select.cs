@@ -2,13 +2,13 @@ using System;
 
 namespace StorageOffice.classes.CLI;
 
-public interface ISelectable
+internal interface ISelectable
 {
     public void Toggle();
     public string ToString();
 }
 
-public interface IHighlightable
+internal interface IHighlightable
 {
     public void ToggleHighlight();
     public string ToString();
@@ -17,35 +17,37 @@ public interface IHighlightable
 
 public abstract class Select
 {
-    public int CurrentIndex { get; set; } = 0;
-    
-    public virtual void MoveUp()
+    protected abstract int CurrentIndex { get; set; } 
+
+    public abstract void SelectOption();
+    public abstract void MoveUp();
+    public abstract void MoveDown();
+}
+
+public class RadioSelect(List<RadioOption> options) : Select
+// jeśli mamy konstruktor, który nie robi nic poza przypisywaniem wartości do właściwości, to możemy go zapisać tak jak powyżej
+{
+    public List<RadioOption> Options { get; set; } = options;
+
+    protected override int CurrentIndex { get; set; } = 0;
+
+    public override void SelectOption()
+    {
+        Options[CurrentIndex].Toggle();
+    }
+    public override void MoveUp()
     {
         if (CurrentIndex > 0)
         {
             CurrentIndex--;
         }
     }
-    public virtual void MoveDown()
+    public override void MoveDown()
     {
         if (CurrentIndex < Options.Count - 1)
         {
             CurrentIndex++;
         }
-    }
-}
-
-public class RadioSelect : Select
-{
-    public List<RadioOption> Options { get; set; }
-
-    public RadioSelect(List<RadioOption> options)
-    {
-        Options = options;
-    }
-    public virtual void SelectOption()
-    {
-        Options[CurrentIndex].Toggle();
     }
 }
 
