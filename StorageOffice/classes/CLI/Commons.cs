@@ -73,12 +73,12 @@ public static class ConsoleOutput
             text
         );
     }
-    internal static string Margin(this string text, char Char = ' ', int lenght = 1)
+    internal static string Margin(this string text, char Char = ' ', int length = 1)
     {
         return (
-            Repeat(Char, lenght) + 
+            Repeat(Char, length) + 
             text + 
-            Repeat(Char, lenght)
+            Repeat(Char, length)
         );
     }
     internal static string Truncate(string text, int finalLength)
