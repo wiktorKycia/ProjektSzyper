@@ -6,14 +6,14 @@ using System.Reflection;
 
 namespace StorageOffice.classes.database;
 
-public class AppContext : DbContext
+public class StorageContext : DbContext
 {
     public DbSet<Product> Products {get;set;}
     public DbSet<Transaction> Transactions {get;set;}
 
     public string DbPath {get;}
 
-    public AppContext(string? DbPath = null)
+    public StorageContext(string? DbPath = null)
     {
         var folder = Environment.SpecialFolder.LocalApplicationData;
 
