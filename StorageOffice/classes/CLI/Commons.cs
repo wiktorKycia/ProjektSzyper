@@ -37,9 +37,9 @@ public static class ConsoleOutput
     internal static string Header(string text, char Char = '-')
     {
         text = text.Margin();
-        int length = (UIWidth-text.Length)/2;
+        int length = (UIWidth - text.Length) / 2;
         return (
-            Repeat(Char, length) + 
+            Repeat(Char, length) +
             text +
             Repeat(Char, UIWidth - length - text.Length)
         );
@@ -48,11 +48,11 @@ public static class ConsoleOutput
     {
         string[] lines = text.Split('\n');
 
-        if(wrap)
+        if (wrap)
         {
             List<string> wrappedLines = new();
 
-            foreach(string line in lines)
+            foreach (string line in lines)
             {
                 wrappedLines.AddRange(line.DivideIntoArray(UIWidth));
             }
@@ -60,7 +60,7 @@ public static class ConsoleOutput
         }
         string result = "";
 
-        foreach(string line in lines)
+        foreach (string line in lines)
         {
             result += Header(line, ' ') + '\n';
         }
@@ -76,14 +76,14 @@ public static class ConsoleOutput
     internal static string Margin(this string text, char Char = ' ', int length = 1)
     {
         return (
-            Repeat(Char, length) + 
-            text + 
+            Repeat(Char, length) +
+            text +
             Repeat(Char, length)
         );
     }
     internal static string Truncate(string text, int finalLength)
     {
-        if(text.Length > finalLength){ return text[..(finalLength - 3)] + "...";}
+        if (text.Length > finalLength) { return text[..(finalLength - 3)] + "..."; }
         return text;
     }
     private static string[] DivideIntoArray(this string text, int maxElemLength)
@@ -94,13 +94,13 @@ public static class ConsoleOutput
             List<string> elems = []; // zastępuje: new List<string>();
             bool end = false;
             int i = 0;
-            while(!end)
+            while (!end)
             {
                 elems.Add(text.Substring(i, maxElemLength));
                 i += maxElemLength;
-                if(i >= text.Length) end = true;
+                if (i >= text.Length) end = true;
             }
-            return [..elems]; // zastępuje: elems.ToArray();
+            return [.. elems]; // zastępuje: elems.ToArray();
         }
     }
 }
