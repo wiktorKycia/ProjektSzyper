@@ -2,6 +2,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
+using System.Reflection;
+
+namespace StorageOffice.classes.database;
 
 public class AppContext : DbContext
 {
@@ -10,11 +13,15 @@ public class AppContext : DbContext
 
     public string DbPath {get;}
 
-    public AppContext()
+    public AppContext(string? DbPath = null)
     {
         var folder = Environment.SpecialFolder.LocalApplicationData;
-        var path = Environment.GetFolderPath(folder);
-        DbPath = System.IO.Path.Join(path, "blogging.db");
+
+        // Create app folder in AppData/Local (MS Windows) if it doesn't exist yet
+        var appPath = Path.Join(Environment.GetFolderPath(folder), "StorageOffice");
+        Directory.CreateDirectory(appPath);
+
+        this.DbPath = appPath ?? Path.Join(appPath, "StorageOffice.db");
     }
     protected override void OnConfiguring(DbContextOptionsBuilder options)
     {
