@@ -3,16 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using StorageOffice.classes.UsersManagement.Services;
 
 namespace StorageOffice.classes.UsersManagement.Modules
 {
-    enum Role
-    {
-        Administrator,
-        Warehouseman,
-        Logistician,
-        WarehouseManager
-    }
     internal class User
     {
         public string Username { get; set; }
