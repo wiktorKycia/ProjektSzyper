@@ -7,6 +7,7 @@ namespace StorageOffice
         static void Main(string[] args)
         {
             var db = new StorageDatabase();
+            db.ClearDatabase();
             db.SeedData(); // Add this line to populate the database
         }
     }
