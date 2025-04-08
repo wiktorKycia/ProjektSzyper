@@ -9,12 +9,33 @@ namespace StorageOffice.classes.UsersManagement.Modules
 {
     internal class User
     {
-        public string Username { get; set; }
+        private string _username;
         public List<Role> Roles { get; set; }
+
+        public User()
+        {
+            Roles = new List<Role>();
+        }
         public User(string username)
         {
             Roles = new List<Role>();
             Username = username;
+        }
+
+        public string Username
+        {
+            get { return _username; }
+            set
+            {
+                if (string.IsNullOrEmpty(value))
+                {
+                    throw new ArgumentNullException(null, "The user name must not be empty! ");
+                }
+                else
+                {
+                    _username = value;
+                }
+            }
         }
 
         public void AddRole(Role role)
