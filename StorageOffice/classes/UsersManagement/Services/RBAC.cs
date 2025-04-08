@@ -18,7 +18,10 @@ namespace StorageOffice.classes.UsersManagement.Services
 
     enum Permission
     {
-
+        Read,
+        Write,
+        Delete,
+        ManageUsers
     }
 
     internal class RBAC

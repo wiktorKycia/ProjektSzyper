@@ -1,4 +1,5 @@
 using StorageOffice.classes.CLI;
+using StorageOffice.classes.UsersManagement.Services;
 namespace StorageOffice
 {
     internal class Program
