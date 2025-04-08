@@ -1,4 +1,4 @@
-using StorageOffice.classes.CLI;
+﻿using StorageOffice.classes.CLI;
 using StorageOffice.classes.database;
 namespace StorageOffice
 {
@@ -6,7 +6,7 @@ namespace StorageOffice
     {
         static void Main(string[] args)
         {
-            using (var db = new StorageContext()) { }
+            var db = new StorageDatabase();
         }
     }
 }

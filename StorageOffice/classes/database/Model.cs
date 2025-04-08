@@ -17,7 +17,7 @@ public class StorageContext : DbContext
 
     public string DbPath { get; }
 
-    public StorageContext(string? DbPath = null)
+    public StorageContext(string? customDbPath = null)
     {
         var folder = Environment.SpecialFolder.LocalApplicationData;
 
@@ -25,11 +25,11 @@ public class StorageContext : DbContext
         var appPath = Path.Join(Environment.GetFolderPath(folder), "StorageOffice");
         Directory.CreateDirectory(appPath);
 
-        this.DbPath = appPath ?? Path.Join(appPath, "StorageOffice.db");
+        this.DbPath = customDbPath ?? Path.Join(appPath, "StorageOffice.db");
     }
     protected override void OnConfiguring(DbContextOptionsBuilder options)
     {
-        options.UseSqlite("FileName=StorageOffice.db", opt =>
+        options.UseSqlite($"Data Source={DbPath}", opt =>
         {
             opt.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName);
         });
