@@ -8,8 +8,12 @@ namespace StorageOffice.classes.database;
 
 public class StorageContext : DbContext
 {
+    public DbSet<Shop> Shops { get; set; }
     public DbSet<Product> Products { get; set; }
-    public DbSet<Transaction> Transactions { get; set; }
+    public DbSet<Stock> Stocks { get; set; }
+    public DbSet<Shipper> Shippers { get; set; }
+    public DbSet<Shipment> Shipments { get; set; }
+    public DbSet<ShipmentItem> ShipmentItems { get; set; }
 
     public string DbPath { get; }
 
@@ -29,6 +33,39 @@ public class StorageContext : DbContext
         {
             opt.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName);
         });
+    }
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        // One-to-one relationship between Product and Stock.
+        modelBuilder.Entity<Product>()
+                    .HasOne(p => p.Stock)
+                    .WithOne(s => s.Product)
+                    .HasForeignKey<Stock>(s => s.ProductId);
+
+        // One-to-many: Shop -> Shipments.
+        modelBuilder.Entity<Shop>()
+                    .HasMany(s => s.Shipments)
+                    .WithOne(sh => sh.Shop)
+                    .HasForeignKey(sh => sh.ShopId);
+
+        // One-to-many: Shipper -> Shipments.
+        modelBuilder.Entity<Shipper>()
+                    .HasMany(s => s.Shipments)
+                    .WithOne(sh => sh.Shipper)
+                    .HasForeignKey(sh => sh.ShipperId)
+                    .OnDelete(DeleteBehavior.SetNull); // If a shipper is removed, set FK to null.
+
+        // One-to-many: Shipment -> ShipmentItems.
+        modelBuilder.Entity<Shipment>()
+                    .HasMany(s => s.ShipmentItems)
+                    .WithOne(si => si.Shipment)
+                    .HasForeignKey(si => si.ShipmentId);
+
+        // One-to-many: Product -> ShipmentItems.
+        modelBuilder.Entity<Product>()
+                    .HasMany(p => p.ShipmentItems)
+                    .WithOne(si => si.Product)
+                    .HasForeignKey(si => si.ProductId);
     }
 }
 
