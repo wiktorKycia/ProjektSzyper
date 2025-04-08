@@ -2,6 +2,19 @@
   "version": 3,
   "targets": {
     "net9.0": {
+      "Bogus/35.6.2": {
+        "type": "package",
+        "compile": {
+          "lib/net6.0/Bogus.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net6.0/Bogus.dll": {
+            "related": ".xml"
+          }
+        }
+      },
       "Microsoft.Data.Sqlite.Core/9.0.3": {
         "type": "package",
         "dependencies": {
@@ -468,6 +481,27 @@
     }
   },
   "libraries": {
+    "Bogus/35.6.2": {
+      "sha512": "u3XtrfDqwNDqmJiUA6AnUBGU2169av3BtBOrcgp1JZb2RVCg6P6JOTcJvXCLDd6YiRZFKxuoujiWM951Ze8D5w==",
+      "type": "package",
+      "path": "bogus/35.6.2",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "LICENSE",
+        "bogus.128.png",
+        "bogus.35.6.2.nupkg.sha512",
+        "bogus.nuspec",
+        "lib/net40/Bogus.dll",
+        "lib/net40/Bogus.xml",
+        "lib/net6.0/Bogus.dll",
+        "lib/net6.0/Bogus.xml",
+        "lib/netstandard1.3/Bogus.dll",
+        "lib/netstandard1.3/Bogus.xml",
+        "lib/netstandard2.0/Bogus.dll",
+        "lib/netstandard2.0/Bogus.xml"
+      ]
+    },
     "Microsoft.Data.Sqlite.Core/9.0.3": {
       "sha512": "rhNmI4KqeL6bOtZ7KwLVZLjrj0Bnf0PFq5Nlv2uOj9n1UuPYTbJaa816EJH5Hp5FM04H2iUcFtmmvqrl3xRCmA==",
       "type": "package",
@@ -1109,6 +1143,7 @@
   },
   "projectFileDependencyGroups": {
     "net9.0": [
+      "Bogus >= 35.6.2",
       "Microsoft.EntityFrameworkCore >= 9.0.3",
       "Microsoft.EntityFrameworkCore.Sqlite >= 9.0.3"
     ]
@@ -1163,6 +1198,10 @@
       "net9.0": {
         "targetAlias": "net9.0",
         "dependencies": {
+          "Bogus": {
+            "target": "Package",
+            "version": "[35.6.2, )"
+          },
           "Microsoft.EntityFrameworkCore": {
             "target": "Package",
             "version": "[9.0.3, )"
