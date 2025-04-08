@@ -25,7 +25,7 @@ public class DataSeeder
 
         // Generate fake Products
         var productFaker = new Faker<Product>()
-            .RuleFor(p => p.Name, f => f.Commerce.ProductName())
+            .RuleFor(p => p.Name, f => f.Commerce.Product())
             .RuleFor(p => p.SKU, f => f.Commerce.Ean13())
             .RuleFor(p => p.Category, f => f.Commerce.Department())
             .RuleFor(p => p.Unit, f => "pcs")

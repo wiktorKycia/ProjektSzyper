@@ -21,5 +21,15 @@ namespace StorageOffice.classes.database
 
         public void SeedData() => DataSeeder.Seed(_context);
 
+        public void ClearDatabase()
+        {
+            _context.RemoveRange(_context.Shops);
+            _context.RemoveRange(_context.Products);
+            _context.RemoveRange(_context.Stocks);
+            _context.RemoveRange(_context.Shippers);
+            _context.RemoveRange(_context.Shipments);
+            _context.RemoveRange(_context.ShipmentItems);
+            _context.SaveChanges();
+        }
     }
 }
