@@ -10,6 +10,11 @@ namespace StorageOffice
         {
             while (true)
             {
+                bool isAnyUserCreated = PasswordManager.CheckFile();
+                if (!isAnyUserCreated)
+                {
+                    Console.WriteLine("No users created in the system. Start creating a new user - administrator. Please enter details for him/her.");
+                }
                 Console.Clear();
                 Console.WriteLine("Welcome to the logistics warehouse management system!");
 

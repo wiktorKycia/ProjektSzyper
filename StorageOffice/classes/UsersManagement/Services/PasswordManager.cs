@@ -16,6 +16,7 @@ namespace StorageOffice.classes.UsersManagement.Services
         {
             if (!File.Exists(_passwordFilePath))
             {
+                Console.WriteLine("The users file does not exist. The system creates a new one.");
                 File.Create(_passwordFilePath).Dispose();
             }
 
@@ -54,6 +55,23 @@ namespace StorageOffice.classes.UsersManagement.Services
             fileLines.RemoveAt(userIndex);
             File.WriteAllLines(_passwordFilePath, fileLines.ToArray());
             Console.WriteLine($"User {username} has been deleted");
+        }
+
+        public static bool CheckFile()
+        {
+            List<string> lines = File.ReadAllLines(_passwordFilePath).ToList();
+            if (lines.Count > 0)
+            {
+                foreach (string line in lines)
+                {
+                    if(line.Split(',').Length < 3)
+                    {
+                        throw new FormatException("Error: An anomaly was detected in the system data!");
+                    }
+                }
+                return true;
+            }
+            return false;
         }
 
         public static bool VerifyPassword(string username, string password)
