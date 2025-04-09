@@ -1,16 +1,20 @@
 using System;
 using System.Collections.Generic;
+using System.Text;
 namespace StorageOffice.classes.CLI;
 
 public static partial class ConsoleOutput
 {
     /// <summary>
-    /// Writes data as a formatted table to the console
+    /// Creates a formatted table as a string
     /// </summary>
-    /// <param name="data">Collection of data rows</param>
+    /// <param name="data">Collection of string arrays representing rows of data</param>
     /// <param name="headers">Column headers</param>
-    public static void WriteTable<T>(IEnumerable<T[]> data, string[] headers)
+    /// <returns>String representation of the table</returns>
+    public static string WriteTable(IEnumerable<string[]> data, string[] headers)
     {
+        StringBuilder tableString = new StringBuilder();
+        
         // Calculate column widths
         int[] columnWidths = CalculateColumnWidths(data, headers);
         
@@ -23,22 +27,23 @@ public static partial class ConsoleOutput
         }
         
         // Write header row
-        WriteTableSeparator(columnWidths, '-');
-        WriteTableRow(headers, columnWidths);
-        WriteTableSeparator(columnWidths, '-');
+        tableString.AppendLine(WriteTableSeparator(columnWidths, '-'));
+        tableString.AppendLine(WriteTableRow(headers, columnWidths));
+        tableString.AppendLine(WriteTableSeparator(columnWidths, '-'));
         
         // Write data rows
         foreach (var row in data)
         {
-            string[] stringRow = [.. row.Select(item => item?.ToString() ?? "")];
-            WriteTableRow(stringRow, columnWidths);
+            tableString.AppendLine(WriteTableRow(row, columnWidths));
         }
         
         // Write bottom separator
-        WriteTableSeparator(columnWidths, '-');
+        tableString.AppendLine(WriteTableSeparator(columnWidths, '-'));
+        
+        return tableString.ToString();
     }
 
-    private static int[] CalculateColumnWidths<T>(IEnumerable<T[]> data, string[] headers)
+    private static int[] CalculateColumnWidths(IEnumerable<string[]> data, string[] headers)
     {
         var widths = headers.Select(h => h.Length).ToArray();
         
@@ -46,7 +51,7 @@ public static partial class ConsoleOutput
         {
             for (int i = 0; i < row.Length && i < widths.Length; i++)
             {
-                string cellValue = row[i]?.ToString() ?? "";
+                string cellValue = row[i] ?? "";
                 widths[i] = Math.Max(widths[i], cellValue.Length);
             }
         }
@@ -89,9 +94,10 @@ public static partial class ConsoleOutput
         }
     }
 
-    private static void WriteTableRow(string[] cells, int[] columnWidths)
+    private static string WriteTableRow(string[] cells, int[] columnWidths)
     {
-        Console.Write("|");
+        StringBuilder rowString = new StringBuilder();
+        rowString.Append("|");
         
         for (int i = 0; i < cells.Length && i < columnWidths.Length; i++)
         {
@@ -105,22 +111,23 @@ public static partial class ConsoleOutput
             
             // Pad the cell content
             string paddedCell = cell.PadRight(columnWidths[i] - 1);
-            Console.Write(" " + paddedCell + "|");
+            rowString.Append(" " + paddedCell + "|");
         }
         
-        Console.WriteLine();
+        return rowString.ToString();
     }
 
-    private static void WriteTableSeparator(int[] columnWidths, char separatorChar)
+    private static string WriteTableSeparator(int[] columnWidths, char separatorChar)
     {
-        Console.Write("+");
+        StringBuilder separatorString = new StringBuilder();
+        separatorString.Append("+");
         
         for (int i = 0; i < columnWidths.Length; i++)
         {
-            Console.Write(Repeat(separatorChar, columnWidths[i]));
-            Console.Write("+");
+            separatorString.Append(Repeat(separatorChar, columnWidths[i]));
+            separatorString.Append("+");
         }
         
-        Console.WriteLine();
+        return separatorString.ToString();
     }
 }
