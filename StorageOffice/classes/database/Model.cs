@@ -75,6 +75,13 @@ public enum ShipmentType
     Inbound,
     Outbound
 }
+public enum UserRole
+{
+    Admin,
+    Manager,
+    Warehouseman,
+    Guest
+}
 
 // Shop table: holds shop details.
 public class Shop
@@ -84,7 +91,7 @@ public class Shop
     public string Location { get; set; }
 
     // Navigation property: One shop can have many shipments.
-    public ICollection<Shipment> Shipments { get; set; }
+    public List<Shipment> Shipments { get; set; }
 }
 
 // Product table: holds product details.
@@ -101,7 +108,7 @@ public class Product
     public Stock Stock { get; set; }
 
     // Navigation: One product can appear in many shipment items.
-    public ICollection<ShipmentItem> ShipmentItems { get; set; }
+    public List<ShipmentItem> ShipmentItems { get; set; }
 }
 
 // Stock table: maintains current inventory per product.
@@ -124,7 +131,7 @@ public class Shipper
     public string ContactInfo { get; set; }
 
     // Navigation: One shipper can be associated with many shipments.
-    public ICollection<Shipment> Shipments { get; set; }
+    public List<Shipment> Shipments { get; set; }
 }
 
 // Shipment table: represents shipments involving the warehouse.
@@ -136,6 +143,9 @@ public class Shipment
     // Optional foreign key to a shipper.
     public int? ShipperId { get; set; }
 
+    // Optional foreign key to a user.
+    public int? UserId { get; set; }
+
     // Indicates whether the shipment is inbound or outbound.
     public ShipmentType ShipmentType { get; set; }
     public DateTime ShippedDate { get; set; }
@@ -146,8 +156,11 @@ public class Shipment
     // Navigation: Shipment may be associated with an external shipper.
     public Shipper Shipper { get; set; }
 
+    // Navigation: Shipment may be associated with a user.
+    public User User { get; set; }
+
     // Navigation: One shipment contains multiple shipment items.
-    public ICollection<ShipmentItem> ShipmentItems { get; set; }
+    public List<ShipmentItem> ShipmentItems { get; set; }
 }
 
 // ShipmentItem table: holds details of products in each shipment.
@@ -163,6 +176,17 @@ public class ShipmentItem
 
     // Navigation: Each shipment item refers to one product.
     public Product Product { get; set; }
+}
+
+public class User
+{
+    public int UserId { get; set; }
+    public string Username { get; set; }
+    public string Password { get; set; }
+    public UserRole Role { get; set; } 
+
+    // Navigation property: One user can have many shipments.
+    public List<Shipment> Shipments { get; set; } 
 }
 
 
