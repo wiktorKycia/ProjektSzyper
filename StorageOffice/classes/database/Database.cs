@@ -29,6 +29,7 @@ namespace StorageOffice.classes.database
             _context.RemoveRange(_context.Shippers);
             _context.RemoveRange(_context.Shipments);
             _context.RemoveRange(_context.ShipmentItems);
+            _context.RemoveRange(_context.Users);
             _context.SaveChanges();
         }
     }

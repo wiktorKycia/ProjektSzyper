@@ -17,7 +17,7 @@ public class DataSeeder
 
         // Generate fake Users
         var userFaker = new Faker<User>()
-            .RuleFor(u => u.Username, f => f.Internet.UserName())
+            .RuleFor(u => u.Username, f => f.Person.FirstName)
             .RuleFor(u => u.Password, f => f.Internet.Password())
             .RuleFor(u => u.Role, f => f.PickRandom<UserRole>());
 
