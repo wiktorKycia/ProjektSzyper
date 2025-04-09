@@ -48,10 +48,5 @@ namespace StorageOffice.classes.UsersManagement.Modules
                 Roles.Remove(role);
             }
         }
-
-        public override string ToString()
-        {
-            return $"{_username}: {string.Join(";", Roles)}";
-        }
     }
 }
