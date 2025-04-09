@@ -105,3 +105,5 @@ public static class ConsoleOutput
     }
 
 }
+
+public delegate void KeyboardAction();
