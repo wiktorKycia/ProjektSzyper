@@ -14,6 +14,7 @@ public class StorageContext : DbContext
     public DbSet<Shipper> Shippers { get; set; }
     public DbSet<Shipment> Shipments { get; set; }
     public DbSet<ShipmentItem> ShipmentItems { get; set; }
+    public DbSet<User> Users { get; set; } 
 
     public string DbPath { get; }
 
@@ -99,7 +100,6 @@ public class Product
 {
     public int ProductId { get; set; }
     public string Name { get; set; }
-    public string SKU { get; set; }
     public string Category { get; set; }
     public string Unit { get; set; }
     public string Description { get; set; }

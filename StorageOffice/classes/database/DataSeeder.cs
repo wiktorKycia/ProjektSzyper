@@ -10,10 +10,20 @@ public class DataSeeder
     public static void Seed(StorageContext context)
     {
         // Check if data already exists
-        if (context.Shops.Any() || context.Products.Any())
+        if (context.Shops.Any() || context.Products.Any() || context.Users.Any())
             return;
 
         var random = new Random();
+
+        // Generate fake Users
+        var userFaker = new Faker<User>()
+            .RuleFor(u => u.Username, f => f.Internet.UserName())
+            .RuleFor(u => u.Password, f => f.Internet.Password())
+            .RuleFor(u => u.Role, f => f.PickRandom<UserRole>());
+
+        var users = userFaker.Generate(5);
+        context.Users.AddRange(users);
+        context.SaveChanges();
 
         // Generate fake Shops
         var shopFaker = new Faker<Shop>()
@@ -55,7 +65,6 @@ public class DataSeeder
                 var product = new Product
                 {
                     Name = productName,
-                    SKU = faker.Commerce.Ean13(),
                     Category = category.Key,
                     Unit = units[category.Key],
                     Description = $"High-quality {productName.ToLower()} for {GetDescriptionSuffix(category.Key)}"
@@ -106,7 +115,8 @@ public class DataSeeder
             .RuleFor(s => s.Shop, f => f.PickRandom(shops))
             .RuleFor(s => s.Shipper, f => f.Random.Bool(0.8f) ? f.PickRandom(shippers) : null)
             .RuleFor(s => s.ShipmentType, f => f.Random.Enum<ShipmentType>())
-            .RuleFor(s => s.ShippedDate, f => f.Date.Past(1));
+            .RuleFor(s => s.ShippedDate, f => f.Date.Past(1))
+            .RuleFor(s => s.User, f => f.PickRandom(users));
 
         var shipments = shipmentFaker.Generate(30);
         context.Shipments.AddRange(shipments);
