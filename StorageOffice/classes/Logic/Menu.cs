@@ -15,10 +15,10 @@ public class Menu
         Heading = heading;
         Select = select;
         KeyboardActions = new Dictionary<ConsoleKey, KeyboardAction>(){
-            { ConsoleKey.UpArrow, new KeyboardAction(select.MoveUp) },
-            { ConsoleKey.DownArrow, new KeyboardAction(select.MoveDown) },
-            { ConsoleKey.Enter, new KeyboardAction(select.SelectOption) },
-            { ConsoleKey.Escape, new KeyboardAction(() => Environment.Exit(0)) }
+            { ConsoleKey.UpArrow, select.MoveUp },
+            { ConsoleKey.DownArrow, select.MoveDown },
+            { ConsoleKey.Enter, select.SelectOption },
+            { ConsoleKey.Escape, () => Environment.Exit(0) }
         };
         DisplayKeyboardActions = new Dictionary<string, string>(){
             { "\u2191", "move up" },
@@ -27,6 +27,20 @@ public class Menu
             { "<Esc>", "exit" }
         };
         Display();
+
+    }
+    public void Run()
+    {
+        bool running = true;
+        while(running)
+        {
+            Display();
+            var key = ConsoleInput.GetConsoleKey();
+            if (KeyboardActions.ContainsKey(key))
+            {
+                KeyboardActions[key]();
+            }
+        }
     }
     public void Display()
     {

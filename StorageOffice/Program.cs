@@ -11,6 +11,7 @@ namespace StorageOffice
                 new RadioOption("Option 2"),
                 new RadioOption("Option 3")
             ]));
+            menu.Run();
         }
     }
 }

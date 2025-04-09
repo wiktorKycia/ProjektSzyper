@@ -39,15 +39,21 @@ public class RadioSelect : Select
     {
         if (CurrentIndex > 0)
         {
+            SelectOption();
             CurrentIndex--;
+            SelectOption();
         }
+        
     }
     public override void MoveDown()
     {
         if (CurrentIndex < RadioOptions.Count - 1)
         {
+            SelectOption();
             CurrentIndex++;
+            SelectOption();
         }
+        
     }
 }
 
