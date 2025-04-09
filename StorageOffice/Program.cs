@@ -8,14 +8,17 @@ namespace StorageOffice
     {
         static void Main(string[] args)
         {
+            bool loggedIn = true;
+            RBAC rbacSystem = new RBAC();
+
             while (true)
             {
+                Console.Clear();
                 bool isAnyUserCreated = PasswordManager.CheckFile();
                 if (!isAnyUserCreated)
                 {
-                    Console.WriteLine("No users created in the system. Start creating a new user - administrator. Please enter details for him/her.");
+                    Console.WriteLine("No user has been created on the system, so the details currently provided will be used to create the first administrator. Enter the details for him/her.\n");
                 }
-                Console.Clear();
                 Console.WriteLine("Welcome to the logistics warehouse management system!");
 
                 User user = new User();
@@ -25,7 +28,14 @@ namespace StorageOffice
                 {
                     try
                     {
-                        Console.Write("Enter your user name: ");
+                        if (isAnyUserCreated)
+                        {
+                            Console.Write("Enter your username: ");
+                        }
+                        else
+                        {
+                            Console.Write("Enter the username of the first administrator: ");
+                        }
                         username = Console.ReadLine();
                         user.Username = username;
                         isUsernameCorrect = true;
@@ -40,7 +50,15 @@ namespace StorageOffice
                 string password = "";
                 while (!isPasswordCorrect)
                 {
-                    Console.Write("Enter your password: ");
+                    if (isAnyUserCreated)
+                    {
+                        Console.Write("Enter your password: ");
+                    }
+                    else
+                    {
+                        Console.Write("Enter the password of the first administrator: ");
+                    }
+                    
                     password = Console.ReadLine();
                     if (string.IsNullOrEmpty(password))
                     {
@@ -52,10 +70,30 @@ namespace StorageOffice
                     }
                 }
 
-                if (!PasswordManager.VerifyPassword(username, password))
+                if (!isAnyUserCreated)
                 {
-                    
+                    PasswordManager.SaveNewUser(username, password, new List<Role>() { Role.Administrator });
+                    user.Roles = new List<Role>() { Role.Administrator };
                 }
+                else
+                {
+                    List<Role> roles = PasswordManager.VerifyPasswordAndGetRoles(username, password);
+                    if (roles.Count == 0)
+                    {
+                        Console.WriteLine("Username or password is incorrect");
+                        Console.ReadKey();
+                        continue;
+                    }
+                    else
+                    {
+                        user.Roles = roles;
+                    }
+                }
+
+                
+                loggedIn = true;
+                Console.WriteLine("LoggedIn");
+                Console.ReadKey();
             }
         }
     }

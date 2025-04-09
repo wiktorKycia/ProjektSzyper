@@ -23,7 +23,7 @@ namespace StorageOffice.classes.UsersManagement.Services
             PasswordVerified += (username, success) => Console.WriteLine($"Login of user {username}: {(success ? "successful" : "unsuccessful")}");
         }
 
-        public static void SaveNewUser(string username, string password, Role role)
+        public static void SaveNewUser(string username, string password, List<Role> roles)
         {
             if (File.ReadLines(_passwordFilePath).Any(line => line.Split(',')[0] == username))
             {
@@ -38,7 +38,7 @@ namespace StorageOffice.classes.UsersManagement.Services
             {
                 Console.WriteLine($"Podano niepoprawną rolę! Podaj poprawną({string.Join(", ", Enum.GetNames(typeof(Role)))}):");
             }*/
-            File.AppendAllText(_passwordFilePath, $"{username},{hashedPassword},{role}\n");
+            File.AppendAllText(_passwordFilePath, $"{username},{hashedPassword},{string.Join(';', roles)}\n");
             Console.WriteLine($"User {username} has been saved");
         }
 
@@ -74,7 +74,7 @@ namespace StorageOffice.classes.UsersManagement.Services
             return false;
         }
 
-        public static bool VerifyPassword(string username, string password)
+        public static List<Role> VerifyPasswordAndGetRoles(string username, string password)
         {
             string hashedPassword = HashPassword(password);
             foreach (var line in File.ReadLines(_passwordFilePath))
@@ -82,12 +82,20 @@ namespace StorageOffice.classes.UsersManagement.Services
                 var parts = line.Split(',');
                 if (parts[0] == username && parts[1] == hashedPassword)
                 {
+                    List<Role> userRoles = new List<Role>();
                     PasswordVerified?.Invoke(username, true);
-                    return true;
+                    foreach(string role in parts[2].Split(';').ToList())
+                    {
+                        if(Enum.TryParse(role, true, out Role userRole))
+                        {
+                            userRoles.Add(userRole);
+                        }
+                    }
+                    return userRoles;
                 }
             }
             PasswordVerified?.Invoke(username, false);
-            return false;
+            return new List<Role>();
         }
 
         private static string HashPassword(string password)

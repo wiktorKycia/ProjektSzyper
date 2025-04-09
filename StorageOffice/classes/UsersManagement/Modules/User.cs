@@ -16,11 +16,6 @@ namespace StorageOffice.classes.UsersManagement.Modules
         {
             Roles = new List<Role>();
         }
-        public User(string username)
-        {
-            Roles = new List<Role>();
-            Username = username;
-        }
 
         public string Username
         {
@@ -29,7 +24,7 @@ namespace StorageOffice.classes.UsersManagement.Modules
             {
                 if (string.IsNullOrEmpty(value))
                 {
-                    throw new ArgumentNullException(null, "The user name must not be empty! ");
+                    throw new ArgumentNullException(null, "The username must not be empty! ");
                 }
                 else
                 {
@@ -52,6 +47,11 @@ namespace StorageOffice.classes.UsersManagement.Modules
             {
                 Roles.Remove(role);
             }
+        }
+
+        public override string ToString()
+        {
+            return $"{_username}: {string.Join(";", Roles)}";
         }
     }
 }
