@@ -1,6 +1,6 @@
 using System;
 namespace StorageOffice.classes.CLI;
-internal interface ISelectable
+public interface ISelectable
 {
     public void Toggle();
     public string ToString();
@@ -30,7 +30,14 @@ public class RadioOption: ISelectable
     }
     public override string ToString()
     {
-        return $"[{SpecialSign}] {Text}";
+        if (IsSelected)
+        {
+            return $"[{SpecialSign}] {Text}";
+        }
+        else
+        {
+            return $"[ ] {Text}";
+        }
     }
 }
 

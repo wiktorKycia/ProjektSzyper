@@ -103,6 +103,14 @@ public static partial class ConsoleOutput
             return [..elems]; // zastępuje: elems.ToArray();
         }
     }
+    public static string UIFrame(string title, string content)
+    {
+        return (
+            Header(title) +
+            content +
+            HorizontalLine('=')
+        );
+    }
 }
 
 public delegate void KeyboardAction();

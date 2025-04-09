@@ -4,23 +4,36 @@ namespace StorageOffice.classes.CLI;
 
 public abstract class Select
 {
-    protected abstract int CurrentIndex { get; set; } 
+    protected abstract int CurrentIndex { get; set; }
+    public IEnumerable<ISelectable> Options => GetOptions();
 
+    protected abstract IEnumerable<ISelectable> GetOptions();
     public abstract void SelectOption();
     public abstract void MoveUp();
     public abstract void MoveDown();
 }
 
-public class RadioSelect(List<RadioOption> options) : Select
-// jeśli mamy konstruktor, który nie robi nic poza przypisywaniem wartości do właściwości, to możemy go zapisać tak jak powyżej
+public class RadioSelect : Select
 {
-    public List<RadioOption> Options { get; set; } = options;
+    public List<RadioOption> RadioOptions { get; set; }
 
-    protected override int CurrentIndex { get; set; } = 0;
+    protected override int CurrentIndex { get; set; }
+
+    public RadioSelect(List<RadioOption> options)
+    {
+        RadioOptions = options;
+        CurrentIndex = 0;
+        SelectOption();
+    }
+
+    protected override IEnumerable<ISelectable> GetOptions()
+    {
+        return RadioOptions.Cast<ISelectable>().ToList();
+    }
 
     public override void SelectOption()
     {
-        Options[CurrentIndex].Toggle();
+        RadioOptions[CurrentIndex].Toggle();
     }
     public override void MoveUp()
     {
@@ -31,7 +44,7 @@ public class RadioSelect(List<RadioOption> options) : Select
     }
     public override void MoveDown()
     {
-        if (CurrentIndex < Options.Count - 1)
+        if (CurrentIndex < RadioOptions.Count - 1)
         {
             CurrentIndex++;
         }
@@ -40,17 +53,22 @@ public class RadioSelect(List<RadioOption> options) : Select
 
 public class CheckBoxSelect(List<CheckBoxOption> options) : Select
 {
-    public List<CheckBoxOption> Options { get; set; } = options;
+    public List<CheckBoxOption> CheckBoxOptions { get; set; } = options;
 
     protected override int CurrentIndex { get; set; } = 0;
 
+    protected override IEnumerable<ISelectable> GetOptions()
+    {
+        return CheckBoxOptions.Cast<ISelectable>().ToList();
+    }
+
     public override void SelectOption()
     {
-        Options[CurrentIndex].Toggle();
+        CheckBoxOptions[CurrentIndex].Toggle();
     }
     private void HighlightOption()
     {
-        Options[CurrentIndex].ToggleHighlight();
+        CheckBoxOptions[CurrentIndex].ToggleHighlight();
     }
     public override void MoveUp()
     {
@@ -63,7 +81,7 @@ public class CheckBoxSelect(List<CheckBoxOption> options) : Select
     }
     public override void MoveDown()
     {
-        if (CurrentIndex < Options.Count - 1)
+        if (CurrentIndex < CheckBoxOptions.Count - 1)
         {
             HighlightOption();
             CurrentIndex++;
