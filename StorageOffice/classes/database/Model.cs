@@ -67,6 +67,13 @@ public class StorageContext : DbContext
                     .HasMany(p => p.ShipmentItems)
                     .WithOne(si => si.Product)
                     .HasForeignKey(si => si.ProductId);
+        
+        // One-to-many: User -> Shipments.
+        modelBuilder.Entity<User>()
+                    .HasMany(u => u.Shipments)
+                    .WithOne(s => s.User)
+                    .HasForeignKey(s => s.UserId)
+                    .OnDelete(DeleteBehavior.SetNull); // If a user is removed, set FK to null.
     }
 }
 
