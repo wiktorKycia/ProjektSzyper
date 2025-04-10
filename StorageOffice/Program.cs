@@ -80,7 +80,7 @@ namespace StorageOffice
                     List<Role> roles = PasswordManager.VerifyPasswordAndGetRoles(username, password);
                     if (roles.Count == 0)
                     {
-                        Console.WriteLine("Username or password is incorrect");
+                        Console.WriteLine("Username or password is incorrect. Press any key and try again");
                         Console.ReadKey();
                         continue;
                     }

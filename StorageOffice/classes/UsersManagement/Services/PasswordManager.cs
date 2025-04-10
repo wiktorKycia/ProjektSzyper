@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
+using StorageOffice.classes.LogServices;
 
 namespace StorageOffice.classes.UsersManagement.Services
 {
@@ -20,7 +21,7 @@ namespace StorageOffice.classes.UsersManagement.Services
                 File.Create(_passwordFilePath).Dispose();
             }
 
-            PasswordVerified += (username, success) => Console.WriteLine($"Login of user {username}: {(success ? "successful" : "unsuccessful")}");
+            PasswordVerified += (username, success) => LogManager.AddNewLog($"Login of user {username}: {(success ? "successful" : "unsuccessful")}");
         }
 
         public static void SaveNewUser(string username, string password, List<Role> roles)
