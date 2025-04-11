@@ -23,6 +23,20 @@ namespace StorageOffice.classes.LogServices
             File.AppendAllText(_logFilePath, $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] {logText}\n");
         }
 
+        public static string GetLogsFromSpecificDate(DateTime date)
+        {
+            string results = "";
+            List<string> logs = File.ReadAllLines(_logFilePath).ToList();
+            foreach (string log in logs)
+            {
+                if(log.Substring(1, 10) == date.ToString("yyyy-MM-dd"))
+                {
+                    results += $"{log}\n";
+                }
+            }
+            return results;
+        }
+
         public static string GetAllLogs()
         {
             return File.ReadAllText(_logFilePath);
