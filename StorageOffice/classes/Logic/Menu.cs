@@ -51,14 +51,7 @@ public class Menu
         {
             foreach (var option in Select.Options)
             {
-                if (option != null)
-                {
-                    content += "\n" + ConsoleOutput.CenteredText(option.ToString() ?? "[ ] No Text", true);
-                }
-                else
-                {
-                    content += "\n" + ConsoleOutput.CenteredText("[ ] Null Option", true);
-                }
+                content += "\n" + ConsoleOutput.CenteredText(option?.ToString() ?? "[ ] No Text", true);
             }
         }
         else
