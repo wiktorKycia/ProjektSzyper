@@ -8,3 +8,9 @@ komendy, które zostały użyte do tworzenia projektu
 dotnet add package Microsoft.EntityFrameworkCore
 dotnet add package Microsoft.EntityFrameworkCore.Sqlite
 ```
+
+komendy do uruchomienia, po zmianie struktury bazy:
+```bash
+dotnet ef migrations add <nazwa_migracji>
+dotnet ef database update
+```
