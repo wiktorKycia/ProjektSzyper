@@ -145,7 +145,7 @@ public class Shipper
 public class Shipment
 {
     public int ShipmentId { get; set; }
-    public int ShopId { get; set; }
+    public int? ShopId { get; set; }
 
     // Optional foreign key to a shipper.
     public int? ShipperId { get; set; }
@@ -156,6 +156,7 @@ public class Shipment
     // Indicates whether the shipment is inbound or outbound.
     public ShipmentType ShipmentType { get; set; }
     public DateTime ShippedDate { get; set; }
+    public bool IsCompleted { get; set; }
 
     // Navigation: Each shipment belongs to one shop.
     public Shop Shop { get; set; }
