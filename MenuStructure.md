@@ -4,13 +4,12 @@
 - [Menuu główne](#Menu-główne)
 
 ## Role
-0 - Gość
-1 - Magazynier
+0 - Magazynier
+1 - Logistyk
 2 - Kierownik
 3 - Administrator
 
 ## Menu logowania
-- opcja zalogowania bez hasła jako gość (po prostu jak nazwa lub hasło nie zostaną wpisane, to zaloguje jako gość)
 - logowanie użytkownika
   - 2 inputy zrobione tak, że prosi o pojedyńcze litery przez getKey, wstawia je do zmiennej, wypisuje tą zmienną w odpowiednim miejscu (w ten sposób można wyświetlić całą ramkę, bez przerywania programu na input użytkownika)
   - Enter by zatwierdzić, Esc, by odrzucić (anulować)
@@ -23,14 +22,15 @@
   - [Zadania](#Zadania) 
   - [Import](#Import)
   - [Eksport](#Eksport)
+  - [Logi](#Logi)
   - [Users](#Użytkownicy)
+  - Wyloguj
 
 
 ## Magazyn
 opcje:
-- ile jest danych towarów wg. kategorii (prawa 0: może zobaczyć gość i wszyscy nad nim)
-- dokładny przegląd produktów jakie znajdują się na magazynie (prawa 1: magazynier i wszyscy nad nim)
-- szukanie (prawa 1) - przeszukiwanie, input, szuka po nazwie lub kategorii
+- dokładny przegląd produktów jakie znajdują się na magazynie (magazynier, manager)
+- szukanie (magazynier, manager) - przeszukiwanie, input, szuka po nazwie lub kategorii
 
 ## Zadania
 (prawa 1: jeśli otwiera magazynier, to pokazuje tylko te, które są do niego przypisane, a jak manager, to może zlecać)
@@ -39,12 +39,14 @@ opcje:
   - w widoku szczegółowym można zatwierdzić taką transakcję
 
 ## Import 
-- informacja ile jest dostaw do magazynu i w jakim zakresie czasu miały one miejsce (prawa 0)
-- szczegółowe zestawienie wszystkich importów jakie mają miejsce oraz szczegółowe listy produktów w każdym z nich (prawa 1)
-- zasymuluj import (przyjazd ciężarówki) (prawa 2: tylko manager, ewentualnie admin, jakby nie było przez chwile konta managera)
+- szczegółowe zestawienie wszystkich importów jakie mają miejsce oraz szczegółowe listy produktów w każdym z nich (manager, magazynier)
+- zasymuluj import (przyjazd ciężarówki) (logistyk)
 
 ## Eksport
 generalnie to samo co w imporcie, tylko od magazynu
+
+## Logi
+- wyświetlenie logów (admin)
 
 ## Użytkownicy
 (prawa 3: tylko admin może tu wejść)
