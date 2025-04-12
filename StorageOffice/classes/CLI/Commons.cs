@@ -12,7 +12,7 @@ public static class ConsoleInput
     }
 }
 
-public static class ConsoleOutput
+public static partial class ConsoleOutput
 {
     public static void PrintColorMessage(string message, ConsoleColor color)
     {
@@ -103,4 +103,14 @@ public static class ConsoleOutput
             return [..elems]; // zastępuje: elems.ToArray();
         }
     }
+    public static string UIFrame(string title, string content)
+    {
+        return (
+            Header(title) +
+            content +
+            HorizontalLine('=')
+        );
+    }
 }
+
+public delegate void KeyboardAction();
