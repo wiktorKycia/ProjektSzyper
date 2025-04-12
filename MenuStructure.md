@@ -5,8 +5,11 @@
 
 ## Role
 0 - Magazynier
+
 1 - Logistyk
+
 2 - Kierownik
+
 3 - Administrator
 
 ## Menu logowania
@@ -33,7 +36,7 @@ opcje:
 - szukanie (magazynier, manager) - przeszukiwanie, input, szuka po nazwie lub kategorii
 
 ## Zadania
-(prawa 1: jeśli otwiera magazynier, to pokazuje tylko te, które są do niego przypisane, a jak manager, to może zlecać)
+(jeśli otwiera magazynier, to pokazuje tylko te, które są do niego przypisane, a jak manager, to może zlecać)
 - lista importów i eksportów do zatwierdzenia
   - wybranie dowolnego elementu z listy otworzy listę towarów jakie przyjechały/są do rozwiezienia)
   - w widoku szczegółowym można zatwierdzić taką transakcję
@@ -49,7 +52,7 @@ generalnie to samo co w imporcie, tylko od magazynu
 - wyświetlenie logów (admin)
 
 ## Użytkownicy
-(prawa 3: tylko admin może tu wejść)
+(tylko admin może tu wejść)
 - dodaj/usuń użytkownika
 - zmień nazwę
 - zmień hasło
