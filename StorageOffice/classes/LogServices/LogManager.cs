@@ -34,12 +34,15 @@ namespace StorageOffice.classes.LogServices
                     results += $"{log}\n";
                 }
             }
+            if (results == "") return "No relevant logs found";
             return results;
         }
 
         public static string GetAllLogs()
         {
-            return File.ReadAllText(_logFilePath);
+            string logs = File.ReadAllText(_logFilePath);
+            if (logs == "") return "No logs found";
+            return logs;
         }
     }
 }

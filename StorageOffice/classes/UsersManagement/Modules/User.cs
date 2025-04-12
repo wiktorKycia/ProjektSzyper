@@ -15,6 +15,7 @@ namespace StorageOffice.classes.UsersManagement.Modules
         public User()
         {
             Roles = new List<Role>();
+            _username = "defaultUser";
         }
 
         public string Username
