@@ -6,6 +6,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using StorageOffice.classes.LogServices;
+using StorageOffice.classes.UsersManagement.Modules;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace StorageOffice.classes.UsersManagement.Services
@@ -60,6 +61,40 @@ namespace StorageOffice.classes.UsersManagement.Services
             UserDataChanged?.Invoke("deleted a user", username);
         }
 
+        public static void ChangeUsername(string username, string newUsername)
+        {
+            if (File.ReadLines(_passwordFilePath).Any(line => line.Split(',')[0] == username))
+            {
+                string[] fileLines = File.ReadAllLines(_passwordFilePath);
+                int userIndex = Array.FindIndex(fileLines, line => line.Split(',')[0] == username);
+                string userLineInFile = fileLines[userIndex];
+                string[] parts = userLineInFile.Split(',');
+
+                parts[0] = newUsername;
+                fileLines[userIndex] = string.Join(",", parts);
+
+                File.WriteAllLines(_passwordFilePath, fileLines);
+                UserDataChanged?.Invoke($"changed user's name to {newUsername}", username);
+            }
+        }
+
+        public static void ChangeUserPassword(string username, string password)
+        {
+            if (File.ReadLines(_passwordFilePath).Any(line => line.Split(',')[0] == username))
+            {
+                string[] fileLines = File.ReadAllLines(_passwordFilePath);
+                int userIndex = Array.FindIndex(fileLines, line => line.Split(',')[0] == username);
+                string userLineInFile = fileLines[userIndex];
+                string[] parts = userLineInFile.Split(',');
+
+                parts[1] = HashPassword(password);
+                fileLines[userIndex] = string.Join(",", parts);
+
+                File.WriteAllLines(_passwordFilePath, fileLines);
+                UserDataChanged?.Invoke("changed user's password", username);
+            }
+        }
+
         public static void ChangeUserRole(string username, Role role)
         {
             if (File.ReadLines(_passwordFilePath).Any(line => line.Split(',')[0] == username))
@@ -68,11 +103,35 @@ namespace StorageOffice.classes.UsersManagement.Services
                 int userIndex = Array.FindIndex(fileLines, line => line.Split(',')[0] == username);
                 string userLineInFile = fileLines[userIndex];
                 string[] parts = userLineInFile.Split(',');
+
                 parts[2] = role.ToString();
                 fileLines[userIndex] = string.Join(",", parts);
+
                 File.WriteAllLines(_passwordFilePath, fileLines);
                 UserDataChanged?.Invoke("changed user's role", username);
             }
+        }
+
+        public static List<User> GetAllUsers()
+        {
+            List<User> users = new List<User>();
+            List<string> usersData = File.ReadAllLines(_passwordFilePath).ToList();
+
+            foreach (string line in usersData)
+            {
+                string[] parts = line.Split(',');
+
+                if (!Enum.TryParse(parts[2], true, out Role userRole))
+                {
+                    FileErrorFound?.Invoke($"incorrect user's role was found in users.txt file for user {parts[0]}");
+                    throw new FormatException($"Error: Incorrect user's role was found in users.txt file for user {parts[0]}");
+                }
+
+                User user = new User(parts[0], userRole);
+                users.Add(user);
+            }
+
+            return users;
         }
 
         public static bool CheckFile()
@@ -88,8 +147,10 @@ namespace StorageOffice.classes.UsersManagement.Services
                         throw new FormatException("Error: An anomaly was detected in the system data!");
                     }
                 }
+
                 return true;
             }
+
             return false;
         }
 
@@ -99,6 +160,7 @@ namespace StorageOffice.classes.UsersManagement.Services
             foreach (var line in File.ReadLines(_passwordFilePath))
             {
                 var parts = line.Split(',');
+
                 if (parts[0] == username && parts[1] == hashedPassword)
                 {
                     PasswordVerified?.Invoke(username, true);
@@ -107,10 +169,12 @@ namespace StorageOffice.classes.UsersManagement.Services
                         FileErrorFound?.Invoke($"incorrect user's role was found in users.txt file for user {username}");
                         throw new FormatException($"Error: Incorrect user's role was found in users.txt file for user {username}");
                     }
+
                     return userRole;
                 }
             }
             PasswordVerified?.Invoke(username, false);
+
             return null;
         }
 

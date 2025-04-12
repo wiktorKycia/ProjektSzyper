@@ -18,6 +18,13 @@ namespace StorageOffice.classes.UsersManagement.Modules
             _username = "defaultUser";
         }
 
+        public User(string username, Role role)
+        {
+            Role = role;
+            _username = "defaultUser";
+            Username = username;
+        }
+
         public string Username
         {
             get { return _username; }
