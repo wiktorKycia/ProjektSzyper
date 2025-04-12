@@ -155,17 +155,17 @@ public class Shipment
 
     // Indicates whether the shipment is inbound or outbound.
     public ShipmentType ShipmentType { get; set; }
-    public DateTime ShippedDate { get; set; }
+    public DateTime? ShippedDate { get; set; }
     public bool IsCompleted { get; set; }
 
     // Navigation: Each shipment belongs to one shop.
-    public Shop Shop { get; set; }
+    public Shop? Shop { get; set; }
 
     // Navigation: Shipment may be associated with an external shipper.
-    public Shipper Shipper { get; set; }
+    public Shipper? Shipper { get; set; }
 
     // Navigation: Shipment may be associated with a user.
-    public User User { get; set; }
+    public User? User { get; set; }
 
     // Navigation: One shipment contains multiple shipment items.
     public List<ShipmentItem> ShipmentItems { get; set; }
