@@ -42,12 +42,9 @@ namespace StorageOffice.classes.UsersManagement.Services
 
         public bool HasPermission(User user, Permission permission)
         {
-            foreach (var role in user.Roles)
+            if (_rolePermissions.ContainsKey(user.Role) && _rolePermissions[user.Role].Contains(permission))
             {
-                if (_rolePermissions.ContainsKey(role) && _rolePermissions[role].Contains(permission))
-                {
-                    return true;
-                }
+                return true;
             }
             return false;
         }

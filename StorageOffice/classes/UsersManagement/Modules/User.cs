@@ -10,11 +10,11 @@ namespace StorageOffice.classes.UsersManagement.Modules
     internal class User
     {
         private string _username;
-        public List<Role> Roles { get; set; }
+        public Role Role { get; set; }
 
         public User()
         {
-            Roles = new List<Role>();
+            Role = Role.Administrator;
             _username = "defaultUser";
         }
 
@@ -31,22 +31,6 @@ namespace StorageOffice.classes.UsersManagement.Modules
                 {
                     _username = value;
                 }
-            }
-        }
-
-        public void AddRole(Role role)
-        {
-            if (!Roles.Contains(role))
-            {
-                Roles.Add(role);
-            }
-        }
-
-        public void RemoveRole(Role role)
-        {
-            if (Roles.Contains(role))
-            {
-                Roles.Remove(role);
             }
         }
     }

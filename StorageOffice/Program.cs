@@ -73,13 +73,13 @@ namespace StorageOffice
 
                 if (!isAnyUserCreated)
                 {
-                    PasswordManager.SaveNewUser(username, password, new List<Role>() { Role.Administrator });
-                    user.Roles = new List<Role>() { Role.Administrator };
+                    PasswordManager.SaveNewUser(username, password, Role.Administrator);
+                    LogManager.AddNewLog($"Info: login of user {username} - successful");
                 }
                 else
                 {
-                    List<Role> roles = PasswordManager.VerifyPasswordAndGetRoles(username, password);
-                    if (roles.Count == 0)
+                    Role? role = PasswordManager.VerifyPasswordAndGetRole(username, password);
+                    if (role == null)
                     {
                         Console.WriteLine("Username or password is incorrect. Press any key and try again");
                         Console.ReadKey();
@@ -87,7 +87,7 @@ namespace StorageOffice
                     }
                     else
                     {
-                        user.Roles = roles;
+                        user.Role = (Role)role;
                     }
                 }
 

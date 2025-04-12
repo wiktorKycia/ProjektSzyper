@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using StorageOffice.classes.LogServices;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace StorageOffice.classes.UsersManagement.Services
 {
@@ -12,6 +14,8 @@ namespace StorageOffice.classes.UsersManagement.Services
     {
         private const string _passwordFilePath = "../../../Data/users.txt";
         public static event Action<string, bool> PasswordVerified;
+        public static event Action<string> FileErrorFound;
+        public static event Action<string, string> UserDataChanged;
 
         static PasswordManager()
         {
@@ -21,10 +25,12 @@ namespace StorageOffice.classes.UsersManagement.Services
                 File.Create(_passwordFilePath).Dispose();
             }
 
-            PasswordVerified += (username, success) => LogManager.AddNewLog($"Login of user {username}: {(success ? "successful" : "unsuccessful")}");
+            PasswordVerified += (username, success) => LogManager.AddNewLog($"Info: login of user {username} - {(success ? "successful" : "unsuccessful")}");
+            FileErrorFound += (problem) => LogManager.AddNewLog($"Error: problem in users.txt file found - {problem}");
+            UserDataChanged += (actionType, username) => LogManager.AddNewLog($"Info: action was performed on data of a user named {username} - {actionType}");
         }
 
-        public static void SaveNewUser(string username, string password, List<Role> roles)
+        public static void SaveNewUser(string username, string password, Role role)
         {
             if (File.ReadLines(_passwordFilePath).Any(line => line.Split(',')[0] == username))
             {
@@ -33,14 +39,9 @@ namespace StorageOffice.classes.UsersManagement.Services
             }
 
             string hashedPassword = HashPassword(password);
-            /*Console.Write($"Podaj rolę nowego użytkownika({string.Join(", ", Enum.GetNames(typeof(Role)))}): ");
-            Role role;
-            while (!Enum.TryParse(Console.ReadLine(), ignoreCase: true, out role))
-            {
-                Console.WriteLine($"Podano niepoprawną rolę! Podaj poprawną({string.Join(", ", Enum.GetNames(typeof(Role)))}):");
-            }*/
-            File.AppendAllText(_passwordFilePath, $"{username},{hashedPassword},{string.Join(';', roles)}\n");
+            File.AppendAllText(_passwordFilePath, $"{username},{hashedPassword},{role}\n");
             Console.WriteLine($"User {username} has been saved");
+            UserDataChanged?.Invoke("added a new user", username);
         }
 
         public static void DeleteUser(string username)
@@ -56,6 +57,7 @@ namespace StorageOffice.classes.UsersManagement.Services
             fileLines.RemoveAt(userIndex);
             File.WriteAllLines(_passwordFilePath, fileLines.ToArray());
             Console.WriteLine($"User {username} has been deleted");
+            UserDataChanged?.Invoke("deleted a user", username);
         }
 
         public static bool CheckFile()
@@ -67,6 +69,7 @@ namespace StorageOffice.classes.UsersManagement.Services
                 {
                     if(line.Split(',').Length < 3)
                     {
+                        FileErrorFound?.Invoke("an anomaly was detected in number of users' data");
                         throw new FormatException("Error: An anomaly was detected in the system data!");
                     }
                 }
@@ -75,7 +78,7 @@ namespace StorageOffice.classes.UsersManagement.Services
             return false;
         }
 
-        public static List<Role> VerifyPasswordAndGetRoles(string username, string password)
+        public static Role? VerifyPasswordAndGetRole(string username, string password)
         {
             string hashedPassword = HashPassword(password);
             foreach (var line in File.ReadLines(_passwordFilePath))
@@ -83,20 +86,17 @@ namespace StorageOffice.classes.UsersManagement.Services
                 var parts = line.Split(',');
                 if (parts[0] == username && parts[1] == hashedPassword)
                 {
-                    List<Role> userRoles = new List<Role>();
                     PasswordVerified?.Invoke(username, true);
-                    foreach(string role in parts[2].Split(';').ToList())
+                    if (!Enum.TryParse(parts[2], true, out Role userRole))
                     {
-                        if(Enum.TryParse(role, true, out Role userRole))
-                        {
-                            userRoles.Add(userRole);
-                        }
+                        FileErrorFound?.Invoke($"incorrect user's role was found in users.txt file for user {username}");
+                        throw new FormatException($"Error: Incorrect user's role was found in users.txt file for user {username}");
                     }
-                    return userRoles;
+                    return userRole;
                 }
             }
             PasswordVerified?.Invoke(username, false);
-            return new List<Role>();
+            return null;
         }
 
         private static string HashPassword(string password)
