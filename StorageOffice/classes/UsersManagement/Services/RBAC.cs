@@ -18,10 +18,13 @@ namespace StorageOffice.classes.UsersManagement.Services
 
     enum Permission
     {
-        Read,
-        Write,
-        Delete,
-        ManageUsers
+        BrowseWarehouse,
+        AssignTask,
+        DoTasks,
+        ManageShipments,
+        BrowseShipments,
+        ManageUsers,
+        ViewLogs
     }
 
     internal class RBAC
@@ -33,10 +36,10 @@ namespace StorageOffice.classes.UsersManagement.Services
         {
             _rolePermissions = new Dictionary<Role, List<Permission>>
             {
-                { Role.Administrator, new List<Permission>{ Permission.Read, Permission.Write, Permission.Delete, Permission.ManageUsers }},
-                { Role.WarehouseManager, new List<Permission>{ Permission.Read, Permission.Write }},
-                { Role.Logistician, new List<Permission>{ Permission.Read } },
-                { Role.Warehouseman, new List<Permission>{} }
+                { Role.Administrator, new List<Permission>{ Permission.ManageUsers, Permission.ViewLogs }},
+                { Role.WarehouseManager, new List<Permission>{ Permission.BrowseWarehouse, Permission.AssignTask, Permission.BrowseShipments }},
+                { Role.Logistician, new List<Permission>{ Permission.ManageShipments } },
+                { Role.Warehouseman, new List<Permission>{ Permission.BrowseWarehouse, Permission.DoTasks, Permission.BrowseShipments } }
             };
         }
 

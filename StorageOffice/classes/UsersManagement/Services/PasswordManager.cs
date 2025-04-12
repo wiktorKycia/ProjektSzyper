@@ -60,6 +60,21 @@ namespace StorageOffice.classes.UsersManagement.Services
             UserDataChanged?.Invoke("deleted a user", username);
         }
 
+        public static void ChangeUserRole(string username, Role role)
+        {
+            if (File.ReadLines(_passwordFilePath).Any(line => line.Split(',')[0] == username))
+            {
+                string[] fileLines = File.ReadAllLines(_passwordFilePath);
+                int userIndex = Array.FindIndex(fileLines, line => line.Split(',')[0] == username);
+                string userLineInFile = fileLines[userIndex];
+                string[] parts = userLineInFile.Split(',');
+                parts[2] = role.ToString();
+                fileLines[userIndex] = string.Join(",", parts);
+                File.WriteAllLines(_passwordFilePath, fileLines);
+                UserDataChanged?.Invoke("changed user's role", username);
+            }
+        }
+
         public static bool CheckFile()
         {
             List<string> lines = File.ReadAllLines(_passwordFilePath).ToList();
