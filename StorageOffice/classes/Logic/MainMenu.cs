@@ -9,6 +9,8 @@ public class MainMenu
     public Select Select { get; set; }
     public Dictionary<ConsoleKey, KeyboardAction> KeyboardActions { get; set; }
     public Dictionary<string, string> DisplayKeyboardActions { get; set; }
+    private bool _shouldExit = false;
+    
     public MainMenu(string title, string heading, Select select)
     {
         Title = title;
@@ -18,21 +20,21 @@ public class MainMenu
             { ConsoleKey.UpArrow, select.MoveUp },
             { ConsoleKey.DownArrow, select.MoveDown },
             { ConsoleKey.Enter, select.SelectOption },
-            { ConsoleKey.Escape, () => Environment.Exit(0) }
+            { ConsoleKey.Escape, () => _shouldExit = true }
         };
         DisplayKeyboardActions = new Dictionary<string, string>(){
             { "\u2191", "move up" },
             { "\u2193", "move down" },
             { "<Enter>", "select" },
-            { "<Esc>", "exit" }
+            { "<Esc>", "back/exit" }
         };
         Display();
-
     }
+    
     public void Run()
     {
-        bool running = true;
-        while(running)
+        _shouldExit = false;
+        while(!_shouldExit)
         {
             Display();
             var key = ConsoleInput.GetConsoleKey();
@@ -42,6 +44,7 @@ public class MainMenu
             }
         }
     }
+    
     public void Display()
     {
         Console.Clear();
