@@ -7,7 +7,7 @@ public class MenuHandler
 {
     public static void MainMenu()
     {
-        Console.OutputEncoding = System.Text.Encoding.Unicode;
+        
         var menu = new Menu("Storage System manager", "Welcome", new RadioSelect(new List<RadioOption>
         {
             new RadioOption("Option 1"),
