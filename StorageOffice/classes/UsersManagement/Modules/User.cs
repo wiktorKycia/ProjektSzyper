@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using StorageOffice.classes.UsersManagement.Services;
 
@@ -33,6 +34,10 @@ namespace StorageOffice.classes.UsersManagement.Modules
                 if (string.IsNullOrEmpty(value))
                 {
                     throw new ArgumentNullException(null, "The username must not be empty! ");
+                }
+                else if(!Regex.IsMatch(value, @"^[a-zA-Z0-9_.ąćęłńóśźżĄĆĘŁŃÓŚŹŻ]+$"))
+                {
+                    throw new ArgumentException("The username can only contain letters, numbers, characters '_' and '.'! ");
                 }
                 else
                 {

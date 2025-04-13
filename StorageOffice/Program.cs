@@ -45,6 +45,10 @@ namespace StorageOffice
                     {
                         Console.Write(e.Message);
                     }
+                    catch (ArgumentException e)
+                    {
+                        Console.Write(e.Message);
+                    }
                 }
 
                 bool isPasswordCorrect = false;

@@ -61,53 +61,52 @@ namespace StorageOffice.classes.UsersManagement.Services
             UserDataChanged?.Invoke("deleted a user", username);
         }
 
+        public static bool OverwriteUserData(string username, string newData, int dataColumnNumber)
+        {
+            try
+            {
+                if (File.ReadLines(_passwordFilePath).Any(line => line.Split(',')[0] == username))
+                {
+                    string[] fileLines = File.ReadAllLines(_passwordFilePath);
+                    int userIndex = Array.FindIndex(fileLines, line => line.Split(',')[0] == username);
+                    string userLineInFile = fileLines[userIndex];
+                    string[] parts = userLineInFile.Split(',');
+
+                    parts[dataColumnNumber] = newData;
+                    fileLines[userIndex] = string.Join(",", parts);
+
+                    File.WriteAllLines(_passwordFilePath, fileLines);
+                    return true;
+                }
+                return false;
+            }
+            catch(FileNotFoundException)
+            {
+                FileErrorFound?.Invoke("the file doesn't exist");
+                throw new FileNotFoundException("The file users.txt doesn't exist!");
+            }
+        }
+
         public static void ChangeUsername(string username, string newUsername)
         {
-            if (File.ReadLines(_passwordFilePath).Any(line => line.Split(',')[0] == username))
+            if (OverwriteUserData(username, newUsername, 0))
             {
-                string[] fileLines = File.ReadAllLines(_passwordFilePath);
-                int userIndex = Array.FindIndex(fileLines, line => line.Split(',')[0] == username);
-                string userLineInFile = fileLines[userIndex];
-                string[] parts = userLineInFile.Split(',');
-
-                parts[0] = newUsername;
-                fileLines[userIndex] = string.Join(",", parts);
-
-                File.WriteAllLines(_passwordFilePath, fileLines);
                 UserDataChanged?.Invoke($"changed user's name to {newUsername}", username);
             }
         }
 
         public static void ChangeUserPassword(string username, string password)
         {
-            if (File.ReadLines(_passwordFilePath).Any(line => line.Split(',')[0] == username))
+            if(OverwriteUserData(username, HashPassword(password), 1))
             {
-                string[] fileLines = File.ReadAllLines(_passwordFilePath);
-                int userIndex = Array.FindIndex(fileLines, line => line.Split(',')[0] == username);
-                string userLineInFile = fileLines[userIndex];
-                string[] parts = userLineInFile.Split(',');
-
-                parts[1] = HashPassword(password);
-                fileLines[userIndex] = string.Join(",", parts);
-
-                File.WriteAllLines(_passwordFilePath, fileLines);
                 UserDataChanged?.Invoke("changed user's password", username);
             }
         }
 
         public static void ChangeUserRole(string username, Role role)
         {
-            if (File.ReadLines(_passwordFilePath).Any(line => line.Split(',')[0] == username))
+            if(OverwriteUserData(username, role.ToString(), 2))
             {
-                string[] fileLines = File.ReadAllLines(_passwordFilePath);
-                int userIndex = Array.FindIndex(fileLines, line => line.Split(',')[0] == username);
-                string userLineInFile = fileLines[userIndex];
-                string[] parts = userLineInFile.Split(',');
-
-                parts[2] = role.ToString();
-                fileLines[userIndex] = string.Join(",", parts);
-
-                File.WriteAllLines(_passwordFilePath, fileLines);
                 UserDataChanged?.Invoke("changed user's role", username);
             }
         }
