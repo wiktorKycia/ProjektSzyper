@@ -9,10 +9,15 @@ public class MenuHandler
     {
         var menu = new MainMenu("Storage System manager", "Welcome", new RadioSelect(new List<RadioOption>
         {
-            new RadioOption("Option 1"),
-            new RadioOption("Option 2"),
-            new RadioOption("Option 3")
+            new RadioOption("Option 1", DetailsMenu),
+            new RadioOption("Option 2", () => {}),
+            new RadioOption("Option 3", () => {})
         }));
         // menu.Run();
+    }
+    public static void DetailsMenu()
+    {
+        var details = new DetailsMenu("Details for Option 1");
+        // details.Display();
     }
 }

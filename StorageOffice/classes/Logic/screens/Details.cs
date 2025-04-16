@@ -4,33 +4,44 @@ namespace StorageOffice.classes.Logic;
 
 class DetailsMenu
 {
-    public readonly string Title;
-    public readonly string Text;
-    public Dictionary<ConsoleKey, KeyboardAction> KeyboardActions { get; set; }
-    public Dictionary<string, string> DisplayKeyboardActions { get; set; }
-    public DetailsMenu(string text)
+    private readonly string Title;
+    private readonly string Text;
+    private readonly Dictionary<ConsoleKey, KeyboardAction> _keyboardActions;
+    private readonly Dictionary<string, string> _displayKeyboardActions;
+
+    public DetailsMenu(string text, Action? onExit = null)
     {
         Title = "Details";
         Text = text;
-        KeyboardActions = new Dictionary<ConsoleKey, KeyboardAction>(){
-            { ConsoleKey.Escape, () => Environment.Exit(0) }
+        _keyboardActions = new Dictionary<ConsoleKey, KeyboardAction>(){
+            { ConsoleKey.Escape, () => { if(onExit is null){Environment.Exit(0);}else{onExit.Invoke();} } }
         };
-        DisplayKeyboardActions = new Dictionary<string, string>(){
-            { "<Esc>", "exit" }
+        _displayKeyboardActions = new Dictionary<string, string>(){
+            { "<Esc>", "back" }
         };
-        Display();
-        var key = ConsoleInput.GetConsoleKey();
-        if (KeyboardActions.ContainsKey(key))
+        Run();
+    }
+
+    private void Run()
+    {
+        bool running = true;
+        while(running)
         {
-            KeyboardActions[key]?.Invoke();
+            Display();
+            var key = ConsoleInput.GetConsoleKey();
+            if (_keyboardActions.ContainsKey(key))
+            {
+                _keyboardActions[key]();
+            }
         }
     }
+
     public void Display()
     {
         Console.Clear();
         Console.WriteLine(ConsoleOutput.UIFrame(Title, Text));
 
-        foreach (var action in DisplayKeyboardActions)
+        foreach (var action in _displayKeyboardActions)
         {
             Console.WriteLine($"{action.Key} - {action.Value}");
         }
