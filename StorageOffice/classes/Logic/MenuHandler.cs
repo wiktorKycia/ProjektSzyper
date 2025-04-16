@@ -7,13 +7,12 @@ public class MenuHandler
 {
     public static void MainMenu()
     {
-        
         var menu = new MainMenu("Storage System manager", "Welcome", new RadioSelect(new List<RadioOption>
         {
             new RadioOption("Option 1"),
             new RadioOption("Option 2"),
             new RadioOption("Option 3")
         }));
-        menu.Run();
+        // menu.Run();
     }
 }
