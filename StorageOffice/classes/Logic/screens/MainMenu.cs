@@ -18,7 +18,7 @@ public class MainMenu
         _keyboardActions = new Dictionary<ConsoleKey, KeyboardAction>(){
             { ConsoleKey.UpArrow, select.MoveUp },
             { ConsoleKey.DownArrow, select.MoveDown },
-            { ConsoleKey.Enter, select.SelectOption },
+            { ConsoleKey.Enter, select.InvokeOperation },
             { ConsoleKey.Escape, () => Environment.Exit(0) }
         };
         _displayKeyboardActions = new Dictionary<string, string>(){

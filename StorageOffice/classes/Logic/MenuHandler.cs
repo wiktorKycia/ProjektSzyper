@@ -17,7 +17,7 @@ public class MenuHandler
     }
     public static void DetailsMenu()
     {
-        var details = new DetailsMenu("Details for Option 1");
+        var details = new DetailsMenu("Details for Option 1", MainMenu);
         // details.Display();
     }
 }
