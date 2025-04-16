@@ -6,9 +6,9 @@ public class MainMenu
 {
     private readonly string _title;
     private readonly string _heading;
-    private Select _select;
-    private Dictionary<ConsoleKey, KeyboardAction> _keyboardActions;
-    private Dictionary<string, string> _displayKeyboardActions;
+    private readonly Select _select;
+    private readonly Dictionary<ConsoleKey, KeyboardAction> _keyboardActions;
+    private readonly Dictionary<string, string> _displayKeyboardActions;
 
     public MainMenu(string title, string heading, Select select)
     {
