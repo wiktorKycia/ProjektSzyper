@@ -2,22 +2,24 @@ using System;
 using StorageOffice.classes.CLI;
 namespace StorageOffice.classes.Logic;
 
-class DetailsMenu
+class Dialog
 {
     private readonly string Title;
     private readonly string Text;
     private readonly Dictionary<ConsoleKey, KeyboardAction> _keyboardActions;
     private readonly Dictionary<string, string> _displayKeyboardActions;
 
-    public DetailsMenu(string text, Action onExit)
+    public Dialog(string text, Action onExit, Action onAccept)
     {
-        Title = "Details";
+        Title = "Dialog";
         Text = text;
         _keyboardActions = new Dictionary<ConsoleKey, KeyboardAction>(){
-            { ConsoleKey.Escape, onExit.Invoke }
+            { ConsoleKey.Escape, onExit.Invoke },
+            { ConsoleKey.Enter, onAccept.Invoke }
         };
         _displayKeyboardActions = new Dictionary<string, string>(){
-            { "<Esc>", "back" }
+            { "<Esc>", "cancel" },
+            { "<Enter>", "accept" }
         };
         Run();
     }
