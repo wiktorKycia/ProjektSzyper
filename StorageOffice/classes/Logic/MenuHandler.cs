@@ -13,11 +13,9 @@ public class MenuHandler
             new RadioOption("Option 2", () => {}),
             new RadioOption("Option 3", () => {})
         }));
-        // menu.Run();
     }
     public static void DetailsMenu()
     {
-        var details = new DetailsMenu("Details for Option 1", MainMenu);
-        // details.Display();
+        var details = new Details("Details for Option 1", MainMenu);
     }
 }

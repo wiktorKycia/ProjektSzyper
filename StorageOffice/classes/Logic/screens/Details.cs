@@ -2,14 +2,14 @@ using System;
 using StorageOffice.classes.CLI;
 namespace StorageOffice.classes.Logic;
 
-class DetailsMenu
+class Details
 {
     private readonly string Title;
     private readonly string Text;
     private readonly Dictionary<ConsoleKey, KeyboardAction> _keyboardActions;
     private readonly Dictionary<string, string> _displayKeyboardActions;
 
-    public DetailsMenu(string text, Action onExit)
+    public Details(string text, Action onExit)
     {
         Title = "Details";
         Text = text;
