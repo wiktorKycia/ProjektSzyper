@@ -31,23 +31,11 @@ public class RadioOption: ISelectable
         Operation = operation;
     }
 
-    public void InvokeOperation()
-    {
-        Operation?.Invoke();
-    }
-    public void AddOperation(Action operation)
-    {
-        Operation += operation;
-    }
-    public void RemoveOperation(Action operation)
-    {
-        Operation -= operation;
-    }
+    public void InvokeOperation() => Operation?.Invoke();
+    public void AddOperation(Action operation) => Operation += operation;
+    public void RemoveOperation(Action operation) => Operation -= operation;
 
-    public void Toggle()
-    {
-        IsSelected = !IsSelected;
-    }
+    public void Toggle() => IsSelected = !IsSelected;
     public override string ToString()
     {
         if (IsSelected)
@@ -76,29 +64,14 @@ public class CheckBoxOption: ISelectable, IHighlightable
         Operation = operation;
     }
 
-    public void InvokeOperation()
-    {
-        Operation?.Invoke();
-    }
-    public void AddOperation(Action operation)
-    {
-        Operation += operation;
-    }
-    public void RemoveOperation(Action operation)
-    {
-        Operation -= operation;
-    }
+    public void InvokeOperation() => Operation?.Invoke();
+    public void AddOperation(Action operation) => Operation += operation;
+    public void RemoveOperation(Action operation) => Operation -= operation;
 
-    public void Toggle()
-    {
-        IsSelected = !IsSelected;
-    }
-    public void ToggleHighlight()
-    {
-        IsHighlighted = !IsHighlighted;
-    }
+    public void Toggle() => IsSelected = !IsSelected;
+    public void ToggleHighlight() => IsHighlighted = !IsHighlighted;
     public override string ToString()
-    {
+    { 
         return $"[{SpecialSign}] {Text}";
     }
 }
