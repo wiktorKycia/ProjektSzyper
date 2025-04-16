@@ -24,10 +24,11 @@ public class RadioOption: ISelectable
     public char SpecialSign { get; set; }
     public event Action Operation;
 
-    public RadioOption(string text, char specialSign = '\u2022')
+    public RadioOption(string text, Action operation, char specialSign = '\u2022')
     {
         Text = text;
         SpecialSign = specialSign;
+        Operation = operation;
     }
 
     public void InvokeOperation()
@@ -68,10 +69,11 @@ public class CheckBoxOption: ISelectable, IHighlightable
     public bool IsHighlighted { get; set; } = false;
     public event Action Operation;
 
-    public CheckBoxOption(string text, char specialSign = '\u2713')
+    public CheckBoxOption(string text, Action operation, char specialSign = '\u2713')
     {
         Text = text;
         SpecialSign = specialSign;
+        Operation = operation;
     }
 
     public void InvokeOperation()
