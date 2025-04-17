@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reflection.Metadata.Ecma335;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using StorageOffice.classes.LogServices;
 using StorageOffice.classes.UsersManagement.Modules;
@@ -33,35 +34,51 @@ namespace StorageOffice.classes.UsersManagement.Services
 
         public static void SaveNewUser(string username, string password, Role role)
         {
-            if (File.ReadLines(_passwordFilePath).Any(line => line.Split(',')[0] == username))
+            try
             {
-                Console.WriteLine($"User {username} already exists in the system");
-                return;
-            }
+                if (File.ReadLines(_passwordFilePath).Any(line => line.Split(',')[0] == username))
+                {
+                    Console.WriteLine($"User {username} already exists in the system");
+                    return;
+                }
 
-            string hashedPassword = HashPassword(password);
-            File.AppendAllText(_passwordFilePath, $"{username},{hashedPassword},{role}\n");
-            Console.WriteLine($"User {username} has been saved");
-            UserDataChanged?.Invoke("added a new user", username);
+                string hashedPassword = HashPassword(password);
+                File.AppendAllText(_passwordFilePath, $"{username},{hashedPassword},{role}\n");
+                Console.WriteLine($"User {username} has been saved");
+                UserDataChanged?.Invoke("added a new user", username);
+            }
+            catch (FileNotFoundException)
+            {
+                FileErrorFound?.Invoke("the file was removed while the application was running");
+                throw new FileNotFoundException("The file users.txt was removed while the application was running!");
+            }
         }
 
         public static void DeleteUser(string username)
         {
-            if(!File.ReadLines(_passwordFilePath).Any(line => line.Split(',')[0] == username))
+            try
             {
-                Console.WriteLine($"User {username} does not exist in the system");
-                return;
-            }
+                if (!File.ReadLines(_passwordFilePath).Any(line => line.Split(',')[0] == username))
+                {
+                    Console.WriteLine($"User {username} does not exist in the system");
+                    return;
+                }
 
-            List<string> fileLines = File.ReadAllLines(_passwordFilePath).ToList();
-            int userIndex = fileLines.FindIndex(line => line.Split(',')[0] == username);
-            fileLines.RemoveAt(userIndex);
-            File.WriteAllLines(_passwordFilePath, fileLines.ToArray());
-            Console.WriteLine($"User {username} has been deleted");
-            UserDataChanged?.Invoke("deleted a user", username);
+                List<string> fileLines = File.ReadAllLines(_passwordFilePath).ToList();
+                int userIndex = fileLines.FindIndex(line => line.Split(',')[0] == username);
+                fileLines.RemoveAt(userIndex);
+                File.WriteAllLines(_passwordFilePath, fileLines.ToArray());
+                Console.WriteLine($"User {username} has been deleted");
+                UserDataChanged?.Invoke("deleted a user", username);
+            }
+            catch (FileNotFoundException)
+            {
+                FileErrorFound?.Invoke("the file was removed while the application was running");
+                throw new FileNotFoundException("The file users.txt was removed while the application was running!");
+            }
         }
 
-        public static bool OverwriteUserData(string username, string newData, int dataColumnNumber)
+        public static void OverwriteUserData(string username, string newData, int dataColumnNumber)
         {
             try
             {
@@ -76,105 +93,133 @@ namespace StorageOffice.classes.UsersManagement.Services
                     fileLines[userIndex] = string.Join(",", parts);
 
                     File.WriteAllLines(_passwordFilePath, fileLines);
-                    return true;
                 }
-                return false;
+                else
+                {
+                    throw new InvalidOperationException($"User '{username}' does not exist");
+                }
             }
             catch(FileNotFoundException)
             {
-                FileErrorFound?.Invoke("the file doesn't exist");
-                throw new FileNotFoundException("The file users.txt doesn't exist!");
+                FileErrorFound?.Invoke("the file was removed while the application was running");
+                throw new FileNotFoundException("The file users.txt was removed while the application was running!");
             }
         }
 
         public static void ChangeUsername(string username, string newUsername)
         {
-            if (OverwriteUserData(username, newUsername, 0))
+            if (string.IsNullOrEmpty(newUsername))
             {
-                UserDataChanged?.Invoke($"changed user's name to {newUsername}", username);
+                throw new ArgumentNullException(null, "The new username must not be empty! ");
             }
+            else if (!Regex.IsMatch(newUsername, @"^[a-zA-Z0-9_.ąćęłńóśźżĄĆĘŁŃÓŚŹŻ]+$"))
+            {
+                throw new ArgumentException("The new username can only contain letters, numbers, characters '_' and '.'! ");
+            }
+            OverwriteUserData(username, newUsername, 0);
+            UserDataChanged?.Invoke($"changed user's name to {newUsername}", username);
         }
 
         public static void ChangeUserPassword(string username, string password)
         {
-            if(OverwriteUserData(username, HashPassword(password), 1))
-            {
-                UserDataChanged?.Invoke("changed user's password", username);
-            }
+            OverwriteUserData(username, HashPassword(password), 1);
+            UserDataChanged?.Invoke("changed user's password", username);
         }
 
         public static void ChangeUserRole(string username, Role role)
         {
-            if(OverwriteUserData(username, role.ToString(), 2))
-            {
-                UserDataChanged?.Invoke("changed user's role", username);
-            }
+            OverwriteUserData(username, role.ToString(), 2);
+            UserDataChanged?.Invoke("changed user's role", username);
         }
 
         public static List<User> GetAllUsers()
         {
-            List<User> users = new List<User>();
-            List<string> usersData = File.ReadAllLines(_passwordFilePath).ToList();
-
-            foreach (string line in usersData)
+            try
             {
-                string[] parts = line.Split(',');
+                List<User> users = new List<User>();
+                List<string> usersData = File.ReadAllLines(_passwordFilePath).ToList();
 
-                if (!Enum.TryParse(parts[2], true, out Role userRole))
+                foreach (string line in usersData)
                 {
-                    FileErrorFound?.Invoke($"incorrect user's role was found in users.txt file for user {parts[0]}");
-                    throw new FormatException($"Error: Incorrect user's role was found in users.txt file for user {parts[0]}");
+                    string[] parts = line.Split(',');
+
+                    if (!Enum.TryParse(parts[2], true, out Role userRole))
+                    {
+                        FileErrorFound?.Invoke($"incorrect user's role was found in users.txt file for user {parts[0]}");
+                        throw new FormatException($"Error: Incorrect user's role was found in users.txt file for user {parts[0]}");
+                    }
+
+                    User user = new User(parts[0], userRole);
+                    users.Add(user);
                 }
 
-                User user = new User(parts[0], userRole);
-                users.Add(user);
+                return users;
             }
-
-            return users;
+            catch (FileNotFoundException)
+            {
+                FileErrorFound?.Invoke("the file was removed while the application was running");
+                throw new FileNotFoundException("The file users.txt was removed while the application was running!");
+            }
         }
 
         public static bool CheckFile()
         {
-            List<string> lines = File.ReadAllLines(_passwordFilePath).ToList();
-            if (lines.Count > 0)
+            try
             {
-                foreach (string line in lines)
+                List<string> lines = File.ReadAllLines(_passwordFilePath).ToList();
+                if (lines.Count > 0)
                 {
-                    if(line.Split(',').Length < 3)
+                    foreach (string line in lines)
                     {
-                        FileErrorFound?.Invoke("an anomaly was detected in number of users' data");
-                        throw new FormatException("Error: An anomaly was detected in the system data!");
+                        if (line.Split(',').Length < 3)
+                        {
+                            FileErrorFound?.Invoke("an anomaly was detected in number of users' data");
+                            throw new FormatException("Error: An anomaly was detected in the system data!");
+                        }
                     }
+
+                    return true;
                 }
 
-                return true;
+                return false;
             }
-
-            return false;
+            catch (FileNotFoundException)
+            {
+                FileErrorFound?.Invoke("the file was removed while the application was running");
+                throw new FileNotFoundException("The file users.txt was removed while the application was running!");
+            }
         }
 
         public static Role? VerifyPasswordAndGetRole(string username, string password)
         {
-            string hashedPassword = HashPassword(password);
-            foreach (var line in File.ReadLines(_passwordFilePath))
+            try
             {
-                var parts = line.Split(',');
-
-                if (parts[0] == username && parts[1] == hashedPassword)
+                string hashedPassword = HashPassword(password);
+                foreach (var line in File.ReadLines(_passwordFilePath))
                 {
-                    PasswordVerified?.Invoke(username, true);
-                    if (!Enum.TryParse(parts[2], true, out Role userRole))
+                    var parts = line.Split(',');
+
+                    if (parts[0] == username && parts[1] == hashedPassword)
                     {
-                        FileErrorFound?.Invoke($"incorrect user's role was found in users.txt file for user {username}");
-                        throw new FormatException($"Error: Incorrect user's role was found in users.txt file for user {username}");
+                        PasswordVerified?.Invoke(username, true);
+                        if (!Enum.TryParse(parts[2], true, out Role userRole))
+                        {
+                            FileErrorFound?.Invoke($"incorrect user's role was found in users.txt file for user {username}");
+                            throw new FormatException($"Error: Incorrect user's role was found in users.txt file for user {username}");
+                        }
+
+                        return userRole;
                     }
-
-                    return userRole;
                 }
-            }
-            PasswordVerified?.Invoke(username, false);
+                PasswordVerified?.Invoke(username, false);
 
-            return null;
+                return null;
+            }
+            catch (FileNotFoundException)
+            {
+                FileErrorFound?.Invoke("the file was removed while the application was running");
+                throw new FileNotFoundException("The file users.txt was removed while the application was running!");
+            }
         }
 
         private static string HashPassword(string password)
