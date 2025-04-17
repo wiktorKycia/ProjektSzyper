@@ -81,6 +81,11 @@ public static partial class ConsoleOutput
             Repeat(Char, length)
         );
     }
+    public static string RightMargin(this string text, char Char = ' ')
+    {
+        int length = UIWidth - text.Length;
+        return text + Repeat(Char, length);
+    }
     internal static string Truncate(string text, int finalLength)
     {
         if(text.Length > finalLength){ return text[..(finalLength - 3)] + "...";}
@@ -106,8 +111,8 @@ public static partial class ConsoleOutput
     public static string UIFrame(string title, string content)
     {
         return (
-            Header(title) +
-            content +
+            Header(title, '=') + "\n" +
+            content + "\n" +
             HorizontalLine('=')
         );
     }

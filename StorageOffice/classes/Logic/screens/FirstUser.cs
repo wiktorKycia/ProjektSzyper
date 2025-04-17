@@ -128,8 +128,8 @@ public class FirstUser
         string content = _heading;
         // string content = CenteredText(_heading, true) + "\n" + "No user has been created on the system, so the details currently provided will be used to create the first administrator. Enter the details for him/her.\n";
         
-        Console.WriteLine(ConsoleOutput.UIFrame(_title, content));
-
+        Console.WriteLine(ConsoleOutput.UIFrame(_title, content.RightMargin()));
+        
         foreach (var action in _displayKeyboardActions)
         {
             Console.WriteLine($"{action.Key} - {action.Value}");

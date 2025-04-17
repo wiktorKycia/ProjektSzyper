@@ -123,7 +123,7 @@ public class Login
         Console.Clear();
         string content = _heading;
         
-        Console.WriteLine(ConsoleOutput.UIFrame(_title, content));
+        Console.WriteLine(ConsoleOutput.UIFrame(_title, content.RightMargin()));
 
         foreach (var action in _displayKeyboardActions)
         {
