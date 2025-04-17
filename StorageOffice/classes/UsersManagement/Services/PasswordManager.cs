@@ -38,8 +38,7 @@ namespace StorageOffice.classes.UsersManagement.Services
             {
                 if (File.ReadLines(_passwordFilePath).Any(line => line.Split(',')[0] == username))
                 {
-                    Console.WriteLine($"User {username} already exists in the system");
-                    return;
+                    throw new InvalidOperationException($"User {username} already exists in the system");
                 }
 
                 string hashedPassword = HashPassword(password);
@@ -60,8 +59,7 @@ namespace StorageOffice.classes.UsersManagement.Services
             {
                 if (!File.ReadLines(_passwordFilePath).Any(line => line.Split(',')[0] == username))
                 {
-                    Console.WriteLine($"User {username} does not exist in the system");
-                    return;
+                    throw new InvalidOperationException($"User {username} does not exist in the system");
                 }
 
                 List<string> fileLines = File.ReadAllLines(_passwordFilePath).ToList();
