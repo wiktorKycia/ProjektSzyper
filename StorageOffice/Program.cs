@@ -13,21 +13,21 @@ namespace StorageOffice
         static void Main(string[] args)
         {
 
-            // Console.OutputEncoding = System.Text.Encoding.Unicode;
-            // MenuHandler.MainMenu();
+            Console.OutputEncoding = System.Text.Encoding.Unicode;
+            MenuHandler.LoginMenu();
 
-            bool loggedIn = true;
-            RBAC rbacSystem = new RBAC();
+            // bool loggedIn = true;
+            // RBAC rbacSystem = new RBAC();
 
             while (true)
             {
-                Console.Clear();
-                bool isAnyUserCreated = PasswordManager.CheckFile();
-                if (!isAnyUserCreated)
-                {
-                    Console.WriteLine("No user has been created on the system, so the details currently provided will be used to create the first administrator. Enter the details for him/her.\n");
-                }
-                Console.WriteLine("Welcome to the logistics warehouse management system!");
+                // Console.Clear();
+                // bool isAnyUserCreated = PasswordManager.CheckFile();
+                // if (!isAnyUserCreated)
+                // {
+                //     Console.WriteLine("No user has been created on the system, so the details currently provided will be used to create the first administrator. Enter the details for him/her.\n");
+                // }
+                // Console.WriteLine("Welcome to the logistics warehouse management system!");
 
                 User user = new User();
                 bool isUsernameCorrect = false;
