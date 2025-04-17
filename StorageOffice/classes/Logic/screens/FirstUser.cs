@@ -10,10 +10,11 @@ public class FirstUser
 {
     private readonly string _title;
     private readonly string _heading;
+    private readonly Action _nextMenu;
     private readonly Dictionary<ConsoleKey, KeyboardAction> _keyboardActions;
     private readonly Dictionary<string, string> _displayKeyboardActions;
 
-    public FirstUser(string title, string heading)
+    public FirstUser(string title, string heading, Action nextMenu)
     {
         _title = title;
         _heading = heading;
@@ -24,6 +25,7 @@ public class FirstUser
             { "<Esc>", "exit" },
             { "Any other key", "enter username and password" }
         };
+        _nextMenu = nextMenu;
         Run();
     }
 
@@ -48,6 +50,7 @@ public class FirstUser
                 {
                     PasswordManager.SaveNewUser(user.Username, password, Role.Administrator);
                     LogManager.AddNewLog($"Info: login of user {user.Username} - successful");
+                    _nextMenu.Invoke();
                 }
             }
         }

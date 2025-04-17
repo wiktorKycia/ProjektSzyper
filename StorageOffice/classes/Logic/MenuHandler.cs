@@ -14,14 +14,16 @@ public class MenuHandler
         {
             var loginMenu = new Login(
                 title: "Login menu",
-                heading: "Welcome to the logistics warehouse management system!"
+                heading: "Welcome to the logistics warehouse management system!",
+                MainMenu
             );
         }
         else
         {
             var firstUserMenu = new FirstUser(
                 title: "Register first user",
-                heading: "No user has been created on the system, so the details currently provided will be used to create the first administrator. Enter the details for him/her.\n"
+                heading: "No user has been created on the system, so the details currently provided will be used to create the first administrator. Enter the details for him/her.\n",
+                MainMenu
             );
         }
     }

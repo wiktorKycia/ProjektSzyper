@@ -10,10 +10,11 @@ public class Login
 {
     private readonly string _title;
     private readonly string _heading;
+    private readonly Action _nextMenu;
     private readonly Dictionary<ConsoleKey, KeyboardAction> _keyboardActions;
     private readonly Dictionary<string, string> _displayKeyboardActions;
 
-    public Login(string title, string heading)
+    public Login(string title, string heading, Action nextMenu)
     {
         _title = title;
         _heading = heading;
@@ -24,6 +25,7 @@ public class Login
             { "<Esc>", "exit" },
             { "Any other key", "enter username and password" }
         };
+        _nextMenu = nextMenu;
         Run();
     }
 
@@ -54,6 +56,7 @@ public class Login
                 else
                 {
                     user.Role = (Role)role;
+                    _nextMenu.Invoke();
                 }
             }
         }
