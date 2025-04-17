@@ -165,6 +165,7 @@ namespace StorageOffice.classes.UsersManagement.Services
             try
             {
                 List<string> lines = File.ReadAllLines(_passwordFilePath).ToList();
+                Console.WriteLine(lines.Count);
                 if (lines.Count > 0)
                 {
                     foreach (string line in lines)

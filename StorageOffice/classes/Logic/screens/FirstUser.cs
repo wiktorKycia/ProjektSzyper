@@ -44,8 +44,11 @@ public class FirstUser
                 GetUsername(user);
                 string password = GetPassword();
 
-                PasswordManager.SaveNewUser(user.Username, password, Role.Administrator);
-                LogManager.AddNewLog($"Info: login of user {user.Username} - successful");
+                if(GetConfirm(ref running))
+                {
+                    PasswordManager.SaveNewUser(user.Username, password, Role.Administrator);
+                    LogManager.AddNewLog($"Info: login of user {user.Username} - successful");
+                }
             }
         }
     }
@@ -108,6 +111,16 @@ public class FirstUser
             }
         }
     }
+    private bool GetConfirm(ref bool running)
+    {
+        string answer = ConsoleInput.GetUserString("Is the information correct? (y/n): ");
+        if (answer.ToLower() == "y")
+        {
+            running = false;
+            return true;
+        }
+        return false;
+    }
 
     private void Display()
     {
@@ -122,7 +135,7 @@ public class FirstUser
             Console.WriteLine($"{action.Key} - {action.Value}");
         }
 
-        ConsoleOutput.HorizontalLine('-');
+        Console.WriteLine(ConsoleOutput.HorizontalLine('-'));
 
     }
 }

@@ -130,7 +130,7 @@ public class Login
             Console.WriteLine($"{action.Key} - {action.Value}");
         }
 
-        ConsoleOutput.HorizontalLine('-');
+        Console.WriteLine(ConsoleOutput.HorizontalLine('-'));
 
     }
 }
