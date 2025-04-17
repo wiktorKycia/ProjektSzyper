@@ -1,0 +1,2 @@
+[2025-04-17 14:54:00] Info: login of user Jan - unsuccessful
+[2025-04-17 14:54:10] Info: login of user wikrot - unsuccessful

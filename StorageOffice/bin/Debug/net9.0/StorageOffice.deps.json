@@ -9,6 +9,7 @@
       "StorageOffice/1.0.0": {
         "dependencies": {
           "Microsoft.EntityFrameworkCore": "9.0.3",
+          "Microsoft.EntityFrameworkCore.Analyzers": "9.0.4",
           "Microsoft.EntityFrameworkCore.Sqlite": "9.0.3"
         },
         "runtime": {
@@ -29,7 +30,7 @@
       "Microsoft.EntityFrameworkCore/9.0.3": {
         "dependencies": {
           "Microsoft.EntityFrameworkCore.Abstractions": "9.0.3",
-          "Microsoft.EntityFrameworkCore.Analyzers": "9.0.3",
+          "Microsoft.EntityFrameworkCore.Analyzers": "9.0.4",
           "Microsoft.Extensions.Caching.Memory": "9.0.3",
           "Microsoft.Extensions.Logging": "9.0.3"
         },
@@ -48,7 +49,7 @@
           }
         }
       },
-      "Microsoft.EntityFrameworkCore.Analyzers/9.0.3": {},
+      "Microsoft.EntityFrameworkCore.Analyzers/9.0.4": {},
       "Microsoft.EntityFrameworkCore.Relational/9.0.3": {
         "dependencies": {
           "Microsoft.EntityFrameworkCore": "9.0.3",
@@ -345,7 +346,14 @@
         }
       },
       "System.Memory/4.5.3": {},
-      "System.Text.Json/9.0.3": {}
+      "System.Text.Json/9.0.3": {
+        "runtime": {
+          "lib/net9.0/System.Text.Json.dll": {
+            "assemblyVersion": "9.0.0.0",
+            "fileVersion": "9.0.325.11113"
+          }
+        }
+      }
     }
   },
   "libraries": {
@@ -375,12 +383,12 @@
       "path": "microsoft.entityframeworkcore.abstractions/9.0.3",
       "hashPath": "microsoft.entityframeworkcore.abstractions.9.0.3.nupkg.sha512"
     },
-    "Microsoft.EntityFrameworkCore.Analyzers/9.0.3": {
+    "Microsoft.EntityFrameworkCore.Analyzers/9.0.4": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-M+iOxejD3HqPV8/KE148wIehHA3cmMF+FgnpiN8CFB7DLokVSKQPPrwtHjcrNYJ/BDEssviEPNok/jtQWxj7xA==",
-      "path": "microsoft.entityframeworkcore.analyzers/9.0.3",
-      "hashPath": "microsoft.entityframeworkcore.analyzers.9.0.3.nupkg.sha512"
+      "sha512": "sha512-cMsm1O7g9X5qbB2wjHf3BVVvGwkG+zeXQ+M91I1Bm6RfylFMImqBPzs0+vmuef7fPxr2yOzPhIfJ2wQJfmtaSw==",
+      "path": "microsoft.entityframeworkcore.analyzers/9.0.4",
+      "hashPath": "microsoft.entityframeworkcore.analyzers.9.0.4.nupkg.sha512"
     },
     "Microsoft.EntityFrameworkCore.Relational/9.0.3": {
       "type": "package",
