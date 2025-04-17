@@ -10,17 +10,20 @@ public class MenuHandler
 {
     public static void LoginMenu()
     {
-        bool isAnyUserCreated = ;
-        if (!isAnyUserCreated)
+        if(PasswordManager.CheckFile())
         {
-            // Console.WriteLine("No user has been created on the system, so the details currently provided will be used to create the first administrator. Enter the details for him/her.\n");
+            var loginMenu = new Login(
+                title: "Login menu",
+                heading: "Welcome to the logistics warehouse management system!",
+            );
         }
-
-        var loginMenu = new Login(
-            title: "Login menu",
-            heading: "Welcome to the logistics warehouse management system!",
-            firstUser: !PasswordManager.CheckFile()
-        );
+        else
+        {
+            var firstUserMenu = new FirstUser(
+                title: "Register first user",
+                heading: "No user has been created on the system, so the details currently provided will be used to create the first administrator. Enter the details for him/her.\n"
+            );
+        }
     }
     public static void MainMenu()
     {
