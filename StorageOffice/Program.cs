@@ -1,4 +1,4 @@
-﻿using StorageOffice.classes.CLI;
+using StorageOffice.classes.CLI;
 using StorageOffice.classes.Logic;
 
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
@@ -12,13 +12,9 @@ namespace StorageOffice
     {
         static void Main(string[] args)
         {
-            // Console.OutputEncoding = System.Text.Encoding.UTF8;
-            // var menu = new Menu("Storage Office", "Welcome to Storage Office", new RadioSelect([
-            //     new RadioOption("Option 1"),
-            //     new RadioOption("Option 2"),
-            //     new RadioOption("Option 3")
-            // ]));
-            // menu.Run();
+
+            // Console.OutputEncoding = System.Text.Encoding.Unicode;
+            // MenuHandler.MainMenu();
 
             bool loggedIn = true;
             RBAC rbacSystem = new RBAC();

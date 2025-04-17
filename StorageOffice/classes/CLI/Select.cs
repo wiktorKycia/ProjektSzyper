@@ -11,6 +11,7 @@ public abstract class Select
     public abstract void SelectOption();
     public abstract void MoveUp();
     public abstract void MoveDown();
+    public abstract void InvokeOperation();
 }
 
 public class RadioSelect : Select
@@ -29,6 +30,11 @@ public class RadioSelect : Select
     protected override IEnumerable<ISelectable> GetOptions()
     {
         return RadioOptions.Cast<ISelectable>().ToList();
+    }
+
+    public override void InvokeOperation()
+    {
+        RadioOptions[CurrentIndex].InvokeOperation();
     }
 
     public override void SelectOption()
@@ -66,6 +72,14 @@ public class CheckBoxSelect(List<CheckBoxOption> options) : Select
     protected override IEnumerable<ISelectable> GetOptions()
     {
         return CheckBoxOptions.Cast<ISelectable>().ToList();
+    }
+
+    public override void InvokeOperation()
+    {
+        foreach (var option in CheckBoxOptions.Where(o => o.IsSelected))
+        {
+            option.InvokeOperation();
+        }
     }
 
     public override void SelectOption()
