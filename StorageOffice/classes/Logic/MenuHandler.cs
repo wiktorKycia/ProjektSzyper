@@ -14,7 +14,7 @@ public class MenuHandler
         {
             var loginMenu = new Login(
                 title: "Login menu",
-                heading: "Welcome to the logistics warehouse management system!",
+                heading: "Welcome to the logistics warehouse management system!"
             );
         }
         else
