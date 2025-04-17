@@ -31,15 +31,30 @@ public class MenuHandler
     }
     internal static void MainMenu(User user)
     {
-        var menu = new MainMenu("Storage System manager", $"Logged in as {user.Username}", new RadioSelect(new List<RadioOption>
+        RBAC rbac = new();
+        // prepare options according to permissions
+        Dictionary<Permission, RadioOption> options = new Dictionary<Permission, RadioOption>
         {
-            new RadioOption("Option 1", ()=>{DetailsMenu(user);}),
-            new RadioOption("Option 2", () => {}),
-            new RadioOption("Option 3", () => {})
-        }));
+            {Permission.BrowseWarehouse, new RadioOption("Warehouse", () => {DetailsMenu(user, "Warehouser");})},
+            {Permission.AssignTask, new RadioOption("Assign task", () => {DetailsMenu(user, "Assign task");})},
+            {Permission.DoTasks, new RadioOption("Do tasks", () => {DetailsMenu(user, "Do tasks");})},
+            {Permission.ManageShipments, new RadioOption("Manage shipments", () => {DetailsMenu(user, "Manage shipments");})},
+            {Permission.BrowseShipments, new RadioOption("Browse shipments", () => {DetailsMenu(user, "Browse shipments");})},
+            {Permission.ManageUsers, new RadioOption("Manage users", () => {DetailsMenu(user, "Manage users");})},
+            {Permission.ViewLogs, new RadioOption("View logs", () => {DetailsMenu(user, "View logs");})}
+        };
+
+        // check if user has permission to each option
+        var radioOptions = options
+            .Where(option => rbac.HasPermission(user, option.Key))
+            .Select(option => option.Value)
+            .ToList();
+
+
+        var menu = new MainMenu("Storage System manager", $"Logged in as {user.Username}", new RadioSelect(radioOptions));
     }
-    internal static void DetailsMenu(User user)
+    internal static void DetailsMenu(User user, string _details)
     {
-        var details = new Details("Details for Option 1", () => {MainMenu(user);});
+        var details = new Details(_details, () => {MainMenu(user);});
     }
 }
