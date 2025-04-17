@@ -18,7 +18,6 @@ public class DataSeeder
         // Generate fake Users
         var userFaker = new Faker<User>()
             .RuleFor(u => u.Username, f => f.Person.FirstName)
-            .RuleFor(u => u.Password, f => f.Internet.Password())
             .RuleFor(u => u.Role, f => f.PickRandom<UserRole>());
 
         var users = userFaker.Generate(5);
@@ -54,7 +53,6 @@ public class DataSeeder
         };
 
         var products = new List<Product>();
-        int productId = 1;
 
         // Generate products from each category
         foreach (var category in productCategories)

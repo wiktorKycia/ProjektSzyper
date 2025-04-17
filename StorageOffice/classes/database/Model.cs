@@ -1,8 +1,10 @@
+using Bogus.Bson;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Text.RegularExpressions;
 
 namespace StorageOffice.classes.database;
 
@@ -100,6 +102,14 @@ public class Shop
 
     // Navigation property: One shop can have many shipments.
     public List<Shipment> Shipments { get; set; }
+
+    public static void Validate(string? shopName, string? location)
+    {
+        if (string.IsNullOrEmpty(shopName) || string.IsNullOrEmpty(location))
+        {
+            throw new ArgumentNullException(null, "Shop's name and location can't be empty!");
+        }
+    }
 }
 
 // Product table: holds product details.
@@ -116,6 +126,14 @@ public class Product
 
     // Navigation: One product can appear in many shipment items.
     public List<ShipmentItem> ShipmentItems { get; set; }
+
+    public static void Validate(string? name, string? category, string? unit, string? description)
+    {
+        if(string.IsNullOrEmpty(name) || string.IsNullOrEmpty(category) || string.IsNullOrEmpty(unit) || string.IsNullOrEmpty(description))
+        { 
+            throw new ArgumentNullException(null, "Product's name, category, unit, description can't be empty!"); 
+        }    
+    }
 }
 
 // Stock table: maintains current inventory per product.
@@ -128,6 +146,18 @@ public class Stock
 
     // Navigation: Reference back to the product.
     public Product Product { get; set; }
+
+    public static void Validate(int quantity, DateTime date)
+    {
+        if(quantity < 0)
+        {
+            throw new ArgumentException("The stock's quantity can't be smaller than 0!");
+        }
+        else if(date > DateTime.Now)
+        {
+            throw new ArgumentException("The stock's last update date can't be from the future!");
+        }
+    }
 }
 
 // Shipper table: represents external shipping companies.
@@ -139,6 +169,14 @@ public class Shipper
 
     // Navigation: One shipper can be associated with many shipments.
     public List<Shipment> Shipments { get; set; }
+
+    public static void Validate(string? name, string? contactInfo)
+    {
+        if(string.IsNullOrEmpty(name) || string.IsNullOrEmpty(contactInfo))
+        {
+            throw new ArgumentNullException(null, "Shipper's name and contact info can't be empty!");
+        }
+    }
 }
 
 // Shipment table: represents shipments involving the warehouse.
@@ -169,6 +207,14 @@ public class Shipment
 
     // Navigation: One shipment contains multiple shipment items.
     public List<ShipmentItem> ShipmentItems { get; set; }
+
+    public static void Validate(string? shipmentType)
+    {
+        if(!Enum.TryParse(shipmentType, out ShipmentType result))
+        {
+            throw new ArgumentException("Shipment's type was incorrect");
+        }
+    }
 }
 
 // ShipmentItem table: holds details of products in each shipment.
@@ -184,38 +230,38 @@ public class ShipmentItem
 
     // Navigation: Each shipment item refers to one product.
     public Product Product { get; set; }
+
+    public static void Validate(int quantity)
+    {
+        if(quantity < 0)
+        {
+            throw new ArgumentException("The shipment's item quantity can't be smaller than 0!");
+        }
+    }
 }
 
 public class User
 {
     public int UserId { get; set; }
     public string Username { get; set; }
-    public string Password { get; set; }
     public UserRole Role { get; set; } 
 
     // Navigation property: One user can have many shipments.
     public List<Shipment> Shipments { get; set; } 
+
+    public static void Validate(string? username, string? role)
+    {
+        if (string.IsNullOrEmpty(username))
+        {
+            throw new ArgumentNullException(null, "User's username can't be empty");
+        }
+        else if (!Regex.IsMatch(username, @"^[a-zA-Z0-9_.πÊÍ≥ÒÛúüø•∆ £—”åèØ]+$"))
+        {
+            throw new ArgumentException("The username can only contain letters, numbers, characters '_' and '.'! ");
+        }
+        else if(!Enum.TryParse(role, out UserRole userRole))
+        {
+            throw new ArgumentException("User's role was incorrect");
+        }
+    }
 }
-
-
-//public class Product
-//{
-//    public int Id { get; set; }
-//    public string Name { get; set; }
-//    public int Quantity { get; set; }
-//    public string Unit { get; set; }
-
-//    public List<Transaction> Transactions { get; set; }
-//}
-
-//public class Transaction
-//{
-//    public int Id { get; set; }
-//    public string SubjectName { get; set; }
-//    public int ProuctId { get; set; }
-//    public Product Product { get; set; }
-//    public DateTime Date { get; set; }
-//    public int Quantity { get; set; }
-//    public string Unit { get; set; }
-//    public string Type { get; set; }
-//}
