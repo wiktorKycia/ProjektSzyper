@@ -14,7 +14,7 @@ namespace StorageOffice
         {
 
             Console.OutputEncoding = System.Text.Encoding.Unicode;
-            MenuHandler.LoginMenu();
+            MenuHandler.Start();
 
             // bool loggedIn = true;
             // RBAC rbacSystem = new RBAC();

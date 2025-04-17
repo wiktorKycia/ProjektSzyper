@@ -8,7 +8,7 @@ namespace StorageOffice.classes.Logic;
 
 public class MenuHandler
 {
-    public static void LoginMenu()
+    public static void Start()
     {
         if(PasswordManager.CheckFile())
         {
