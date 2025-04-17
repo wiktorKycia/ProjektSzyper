@@ -42,7 +42,10 @@ public class FirstUser
             {
                 User user = new User();
                 GetUsername(user);
-                
+                string password = GetPassword();
+
+                PasswordManager.SaveNewUser(user.Username, password, Role.Administrator);
+                LogManager.AddNewLog($"Info: login of user {user.Username} - successful");
             }
         }
     }
@@ -54,29 +57,57 @@ public class FirstUser
             try
             {
                 user.Username = ConsoleInput.GetUserString("Enter the username of the first administrator: ");
-                isCorrect = true; // Assume correct if setter doesn't throw
+                isCorrect = true;
             }
             catch (ArgumentNullException e)
             {
-                Console.WriteLine(e.Message); // Use WriteLine for clarity
+                ConsoleOutput.PrintColorMessage(e.Message + "\n", ConsoleColor.Red);
                 Console.WriteLine("Press any key to try again...");
                 ConsoleInput.WaitForAnyKey();
             }
             catch (ArgumentException e)
             {
-                Console.WriteLine(e.Message); // Use WriteLine for clarity
+                ConsoleOutput.PrintColorMessage(e.Message + "\n", ConsoleColor.Red);
                 Console.WriteLine("Press any key to try again...");
                 ConsoleInput.WaitForAnyKey();
             }
-             catch (Exception e) // Catch unexpected errors
+            catch (Exception e)
             {
-                 Console.WriteLine($"An unexpected error occurred: {e.Message}");
-                 Console.WriteLine("Press any key to try again...");
-                 ConsoleInput.WaitForAnyKey();
+                ConsoleOutput.PrintColorMessage($"An unexpected error occurred: {e.Message}\n", ConsoleColor.Red);
+                Console.WriteLine("Press any key to try again...");
+                ConsoleInput.WaitForAnyKey();
             }
         }
     }
-
+    private string GetPassword()
+    {
+        while(true)
+        {
+            try
+            {
+                string password = ConsoleInput.GetUserString("Enter the password of the first administrator: ");
+                return password;
+            }
+            catch (ArgumentNullException e)
+            {
+                ConsoleOutput.PrintColorMessage(e.Message + "\n", ConsoleColor.Red);
+                Console.WriteLine("Press any key to try again...");
+                ConsoleInput.WaitForAnyKey();
+            }
+            catch (ArgumentException e)
+            {
+                ConsoleOutput.PrintColorMessage(e.Message + "\n", ConsoleColor.Red);
+                Console.WriteLine("Press any key to try again...");
+                ConsoleInput.WaitForAnyKey();
+            }
+            catch (Exception e)
+            {
+                ConsoleOutput.PrintColorMessage($"An unexpected error occurred: {e.Message}\n", ConsoleColor.Red);
+                Console.WriteLine("Press any key to try again...");
+                ConsoleInput.WaitForAnyKey();
+            }
+        }
+    }
 
     private void Display()
     {
