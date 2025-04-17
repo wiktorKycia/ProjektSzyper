@@ -1,6 +1,6 @@
 namespace StorageOffice.classes.CLI;
 
-public static class ConsoleInput
+public static partial class ConsoleInput
 {
     public static ConsoleKey GetConsoleKey()
     {
