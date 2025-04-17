@@ -11,10 +11,11 @@ public class Login
     private readonly string _title;
     private readonly string _heading;
     private readonly Action _nextMenu;
+    private readonly User _user;
     private readonly Dictionary<ConsoleKey, KeyboardAction> _keyboardActions;
     private readonly Dictionary<string, string> _displayKeyboardActions;
 
-    public Login(string title, string heading, Action nextMenu)
+    internal Login(string title, string heading, Action nextMenu, User user)
     {
         _title = title;
         _heading = heading;
@@ -26,6 +27,7 @@ public class Login
             { "Any other key", "enter username and password" }
         };
         _nextMenu = nextMenu;
+        _user = user;
         Run();
     }
 
@@ -42,11 +44,10 @@ public class Login
             }
             else
             {
-                User user = new User();
-                GetUsername(user);
+                GetUsername(_user);
                 string password = GetPassword();
 
-                Role? role = PasswordManager.VerifyPasswordAndGetRole(user.Username, password);
+                Role? role = PasswordManager.VerifyPasswordAndGetRole(_user.Username, password);
                 if (role == null)
                 {
                     Console.WriteLine("Username or password is incorrect. Press any key and try again");
@@ -55,7 +56,7 @@ public class Login
                 }
                 else
                 {
-                    user.Role = (Role)role;
+                    _user.Role = (Role)role;
                     _nextMenu.Invoke();
                 }
             }

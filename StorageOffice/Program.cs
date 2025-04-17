@@ -12,10 +12,11 @@ namespace StorageOffice
     {
         static void Main(string[] args)
         {
-
+            User user = new User();
             Console.OutputEncoding = System.Text.Encoding.Unicode;
-            MenuHandler.Start();
+            MenuHandler.Start(user);
 
+            #region comment
             // bool loggedIn = true;
             // RBAC rbacSystem = new RBAC();
 
@@ -107,6 +108,7 @@ namespace StorageOffice
                 // Console.WriteLine("LoggedIn");
                 // Console.ReadKey();
             // }
+            #endregion
         }
     }
 }

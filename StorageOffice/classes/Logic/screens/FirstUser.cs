@@ -11,10 +11,11 @@ public class FirstUser
     private readonly string _title;
     private readonly string _heading;
     private readonly Action _nextMenu;
+    private readonly User _user;
     private readonly Dictionary<ConsoleKey, KeyboardAction> _keyboardActions;
     private readonly Dictionary<string, string> _displayKeyboardActions;
 
-    public FirstUser(string title, string heading, Action nextMenu)
+    internal FirstUser(string title, string heading, Action nextMenu, User user)
     {
         _title = title;
         _heading = heading;
@@ -26,6 +27,7 @@ public class FirstUser
             { "Any other key", "enter username and password" }
         };
         _nextMenu = nextMenu;
+        _user = user;
         Run();
     }
 
@@ -42,14 +44,13 @@ public class FirstUser
             }
             else
             {
-                User user = new User();
-                GetUsername(user);
+                GetUsername(_user);
                 string password = GetPassword();
 
                 if(GetConfirm(ref running))
                 {
-                    PasswordManager.SaveNewUser(user.Username, password, Role.Administrator);
-                    LogManager.AddNewLog($"Info: login of user {user.Username} - successful");
+                    PasswordManager.SaveNewUser(_user.Username, password, Role.Administrator);
+                    LogManager.AddNewLog($"Info: login of user {_user.Username} - successful");
                     _nextMenu.Invoke();
                 }
             }

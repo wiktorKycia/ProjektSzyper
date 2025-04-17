@@ -8,14 +8,15 @@ namespace StorageOffice.classes.Logic;
 
 public class MenuHandler
 {
-    public static void Start()
+    internal static void Start(User user)
     {
         if(PasswordManager.CheckFile())
         {
             var loginMenu = new Login(
                 title: "Login menu",
                 heading: "Welcome to the logistics warehouse management system!",
-                MainMenu
+                nextMenu: () => {MainMenu(user);},
+                user: user
             );
         }
         else
@@ -23,21 +24,22 @@ public class MenuHandler
             var firstUserMenu = new FirstUser(
                 title: "Register first user",
                 heading: "No user has been created on the system, so the details currently provided will be used to create the first administrator. Enter the details for him/her.\n",
-                MainMenu
+                nextMenu: () => {MainMenu(user);},
+                user: user
             );
         }
     }
-    public static void MainMenu()
+    internal static void MainMenu(User user)
     {
-        var menu = new MainMenu("Storage System manager", "Welcome", new RadioSelect(new List<RadioOption>
+        var menu = new MainMenu("Storage System manager", $"Logged in as {user.Username}", new RadioSelect(new List<RadioOption>
         {
-            new RadioOption("Option 1", DetailsMenu),
+            new RadioOption("Option 1", ()=>{DetailsMenu(user);}),
             new RadioOption("Option 2", () => {}),
             new RadioOption("Option 3", () => {})
         }));
     }
-    public static void DetailsMenu()
+    internal static void DetailsMenu(User user)
     {
-        var details = new Details("Details for Option 1", MainMenu);
+        var details = new Details("Details for Option 1", () => {MainMenu(user);});
     }
 }
