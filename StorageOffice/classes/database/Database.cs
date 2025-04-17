@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Bogus.DataSets;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,12 +18,15 @@ namespace StorageOffice.classes.database
             _context.Database.SetCommandTimeout(5);
             _context.Database.Migrate();
         }
-        // tu piszemy metody do dodawania, usuwania i edytowania danych w bazie
 
         // Stores management methods
         public void AddShop(string? shopName, string? location)
         {
             Shop.Validate(shopName, location);
+            if (_context.Shops.Any(s => s.ShopName == shopName))
+            {
+                throw new InvalidOperationException("A shop with this name already exists!");
+            }
             Shop shop = new Shop() { ShopName = shopName!, Location = location!};
             _context.Shops.Add(shop);
             _context.SaveChanges();
@@ -33,6 +37,10 @@ namespace StorageOffice.classes.database
             Shop shop = GetShopById(shopId);
             if (!string.IsNullOrEmpty(shopName))
             {
+                if (_context.Shops.Any(s => s.ShopName == shopName))
+                {
+                    throw new InvalidOperationException("A shop with this name already exists!");
+                }
                 shop.ShopName = shopName;
             }
             if (!string.IsNullOrEmpty(location))
@@ -65,6 +73,10 @@ namespace StorageOffice.classes.database
         public void AddProductAndStock(string? name, string? category, string? unit, string? description)
         {
             Product.Validate(name, category, unit, description);
+            if (_context.Products.Any(p => p.Name == name))
+            {
+                throw new InvalidOperationException("A product with this name already exists!");
+            }
             Product product = new Product() { Name = name!, Category = category!, Unit = unit!, Description = description!, Stock = new Stock() { Quantity = 0, LastUpdated = DateTime.Now } };
             _context.Products.Add(product);
             _context.SaveChanges();
@@ -76,6 +88,10 @@ namespace StorageOffice.classes.database
             Product product = GetProductById(productId);
             if (!string.IsNullOrEmpty(name))
             {
+                if (_context.Products.Any(p => p.Name == name))
+                {
+                    throw new InvalidOperationException("A product with this name already exists!");
+                }
                 product.Name = name;
             }
             if (!string.IsNullOrEmpty(category))
@@ -146,6 +162,10 @@ namespace StorageOffice.classes.database
         public void AddShipper(string? name, string? contactInfo)
         {
             Shipper.Validate(name, contactInfo);
+            if (_context.Shippers.Any(s => s.Name == name))
+            {
+                throw new InvalidOperationException("A shipper with this name already exists!");
+            }
             Shipper shipper = new Shipper() { Name = name!, ContactInfo = contactInfo!};
             _context.Shippers.Add(shipper);
             _context.SaveChanges();
@@ -156,6 +176,10 @@ namespace StorageOffice.classes.database
             Shipper shipper = GetShipperById(shipperId);
             if (!string.IsNullOrEmpty(name))
             {
+                if (_context.Shippers.Any(s => s.Name == name))
+                {
+                    throw new InvalidOperationException("A shipper with this name already exists!");
+                }
                 shipper.Name = name;
             }
             if (!string.IsNullOrEmpty(contactInfo))
@@ -270,11 +294,11 @@ namespace StorageOffice.classes.database
         }
 
         // ShipmentItems management methods
-        public void AddShipmentItem(int quantity, int shipmentId, int productID)
+        public void AddShipmentItem(int quantity, int shipmentId, int productId)
         {
             ShipmentItem.Validate(quantity);
             Shipment shipment = GetShipmentById(shipmentId);
-            Product product = GetProductById(productID);
+            Product product = GetProductById(productId);
 
             ShipmentItem shipmentItem = new ShipmentItem() { Quantity = quantity, Product = product, Shipment = shipment};
             _context.ShipmentItems.Add(shipmentItem);
@@ -312,6 +336,10 @@ namespace StorageOffice.classes.database
         public void AddUser(string? username, string? role)
         {
             User.Validate(username, role);
+            if (_context.Users.Any(s => s.Username == username))
+            {
+                throw new InvalidOperationException("A user with this username already exists!");
+            }
             UserRole userRole;
             Enum.TryParse(role, out userRole);
             User user = new User() { Username = username!, Role = userRole};
@@ -324,6 +352,10 @@ namespace StorageOffice.classes.database
             User user = GetUserById(userId);
             if (!string.IsNullOrEmpty(username))
             {
+                if (_context.Users.Any(s => s.Username == username))
+                {
+                    throw new InvalidOperationException("A user with this username already exists!");
+                }
                 user.Username = username;
             }
             if (!string.IsNullOrEmpty(role))
