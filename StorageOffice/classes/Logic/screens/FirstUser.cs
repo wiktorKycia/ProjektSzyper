@@ -1,6 +1,8 @@
 using System;
 using StorageOffice.classes.CLI;
-
+using StorageOffice.classes.LogServices;
+using StorageOffice.classes.UsersManagement.Modules;
+using StorageOffice.classes.UsersManagement.Services;
 
 namespace StorageOffice.classes.Logic;
 
@@ -38,10 +40,43 @@ public class FirstUser
             }
             else
             {
+                User user = new User();
+                GetUsername(user);
                 
             }
         }
     }
+    private void GetUsername(User user)
+    {
+        bool isCorrect = false;
+        while(!isCorrect)
+        {
+            try
+            {
+                user.Username = ConsoleInput.GetUserString("Enter the username of the first administrator: ");
+                isCorrect = true; // Assume correct if setter doesn't throw
+            }
+            catch (ArgumentNullException e)
+            {
+                Console.WriteLine(e.Message); // Use WriteLine for clarity
+                Console.WriteLine("Press any key to try again...");
+                ConsoleInput.WaitForAnyKey();
+            }
+            catch (ArgumentException e)
+            {
+                Console.WriteLine(e.Message); // Use WriteLine for clarity
+                Console.WriteLine("Press any key to try again...");
+                ConsoleInput.WaitForAnyKey();
+            }
+             catch (Exception e) // Catch unexpected errors
+            {
+                 Console.WriteLine($"An unexpected error occurred: {e.Message}");
+                 Console.WriteLine("Press any key to try again...");
+                 ConsoleInput.WaitForAnyKey();
+            }
+        }
+    }
+
 
     private void Display()
     {

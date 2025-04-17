@@ -29,7 +29,7 @@ namespace StorageOffice
                 // }
                 // Console.WriteLine("Welcome to the logistics warehouse management system!");
 
-                User user = new User();
+                // User user = new User();
                 bool isUsernameCorrect = false;
                 string username = "";
                 while (!isUsernameCorrect)

@@ -8,19 +8,8 @@ public static partial class ConsoleInput
         string result = "";
         while(result == "")
         {
-            try
-            {
-                Console.Write(message);
-                result = Console.ReadLine() ?? "";
-            }
-            catch (ArgumentNullException e)
-            {
-                Console.Write(e.Message);
-            }
-            catch (ArgumentException e)
-            {
-                Console.Write(e.Message);
-            }
+            Console.Write(message);
+            result = Console.ReadLine() ?? "";
         }
         return result;
     }

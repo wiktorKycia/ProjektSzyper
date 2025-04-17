@@ -9,7 +9,7 @@ public class Login
     private readonly Dictionary<ConsoleKey, KeyboardAction> _keyboardActions;
     private readonly Dictionary<string, string> _displayKeyboardActions;
 
-    public Login(string title, string heading, bool firstUser)
+    public Login(string title, string heading)
     {
         _title = title;
         _heading = heading;
