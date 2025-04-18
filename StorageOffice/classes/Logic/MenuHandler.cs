@@ -54,7 +54,7 @@ public static class MenuHandler
             .ToList();
 
 
-        var menu = new MainMenu("Storage System manager", $"Logged in as {user.Username}", new RadioSelect(radioOptions));
+        var menu = new MainMenu("Storage System manager", $"Logged in as {user.Username}", new RadioSelect(radioOptions), ()=>Start(user));
     }
 
     internal static void DetailsMenu(User user, string _details)
