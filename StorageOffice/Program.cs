@@ -15,14 +15,18 @@ namespace StorageOffice
     {
         static void Main(string[] args)
         {
-            classes.UsersManagement.Modules.User user = new();
             Console.OutputEncoding = System.Text.Encoding.Unicode;
+
+            // Create database and seed data
+            var db = new StorageDatabase();
+            db.ClearDatabase();
+            db.SeedData();
+
+            // Create an object to store the info about logged-in user
+            classes.UsersManagement.Modules.User user = new();
+
+            // Start the application
             MenuHandler.Start(user);
-
-            // var db = new StorageDatabase();
-            // db.ClearDatabase();
-            // db.SeedData(); // Add this line to populate the database
-
         }
     }
 }
