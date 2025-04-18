@@ -53,7 +53,7 @@ public class ManageUsers
         {
             foreach (var option in _select.Options)
             {
-                content += "\n" + ConsoleOutput.CenteredText(option?.ToString() ?? "[ ] No Text", true);
+                content += "\n" + ConsoleOutput.CenteredText(option?.ToString() + "\n" ?? "[ ] No Text" + "\n", true);
             }
         }
         else
