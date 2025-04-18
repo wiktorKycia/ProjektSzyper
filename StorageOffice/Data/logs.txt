@@ -78,3 +78,7 @@
 [2025-04-18 22:16:17] Info: login of user Jan - successful
 [2025-04-18 22:21:31] Info: login of user Jan - successful
 [2025-04-18 22:22:11] Info: login of user wiesio - successful
+[2025-04-18 23:15:18] Info: login of user wiktor - successful
+[2025-04-18 23:15:41] Info: login of user Jan - successful
+[2025-04-18 23:16:32] Info: login of user wiesio - successful
+[2025-04-18 23:17:25] Info: login of user mietek - successful

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Wiktor\\Programowanie\\projekt_szyper\\ProjektSzyper\\StorageOffice\\StorageOffice.csproj": {}
+    "D:\\Wiktor\\Programowanie\\projekt_szyper2\\StorageOffice\\StorageOffice.csproj": {}
   },
   "projects": {
-    "D:\\Wiktor\\Programowanie\\projekt_szyper\\ProjektSzyper\\StorageOffice\\StorageOffice.csproj": {
+    "D:\\Wiktor\\Programowanie\\projekt_szyper2\\StorageOffice\\StorageOffice.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Wiktor\\Programowanie\\projekt_szyper\\ProjektSzyper\\StorageOffice\\StorageOffice.csproj",
+        "projectUniqueName": "D:\\Wiktor\\Programowanie\\projekt_szyper2\\StorageOffice\\StorageOffice.csproj",
         "projectName": "StorageOffice",
-        "projectPath": "D:\\Wiktor\\Programowanie\\projekt_szyper\\ProjektSzyper\\StorageOffice\\StorageOffice.csproj",
+        "projectPath": "D:\\Wiktor\\Programowanie\\projekt_szyper2\\StorageOffice\\StorageOffice.csproj",
         "packagesPath": "C:\\Users\\wikto\\.nuget\\packages\\",
-        "outputPath": "D:\\Wiktor\\Programowanie\\projekt_szyper\\ProjektSzyper\\StorageOffice\\obj\\",
+        "outputPath": "D:\\Wiktor\\Programowanie\\projekt_szyper2\\StorageOffice\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
