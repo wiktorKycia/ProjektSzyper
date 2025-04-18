@@ -52,11 +52,8 @@ public class EditRole
                     if(GetConfirm(newRole))
                     {
                         int userId = MenuHandler.db?.GetUserIdByUsername(_username) ?? 0;
+                        MenuHandler.db?.UpdateUser(userId, null, newRole.ToString());
                         PasswordManager.ChangeUserRole(_username, newRole);
-                        if (MenuHandler.db != null)
-                        {
-                            MenuHandler.db.UpdateUser(userId, null, newRole.ToString());
-                        }
                         ConsoleOutput.PrintColorMessage($"Role successfully changed to {newRole}", ConsoleColor.Green);
                         Console.WriteLine("Press any key to continue...");
                         ConsoleInput.WaitForAnyKey();

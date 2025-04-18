@@ -51,11 +51,10 @@ public class EditUsername
                     if(GetConfirm())
                     {
                         int userId = MenuHandler.db?.GetUserIdByUsername(_username) ?? 0;
+                        MenuHandler.db?.UpdateUser(userId, newUsername, null);
+
                         PasswordManager.ChangeUsername(_username, newUsername);
-                        if (MenuHandler.db != null)
-                        {
-                            MenuHandler.db.UpdateUser(userId, newUsername, null);
-                        }
+                        
                         ConsoleOutput.PrintColorMessage($"Username successfully changed to {newUsername}", ConsoleColor.Green);
                         Console.WriteLine("Press any key to continue...");
                         ConsoleInput.WaitForAnyKey();

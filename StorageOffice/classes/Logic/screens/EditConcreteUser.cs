@@ -14,7 +14,7 @@ public class EditConcreteUser
     private readonly Dictionary<string, string> _displayKeyboardActions;
     private readonly Select _select;
 
-    internal EditConcreteUser(string title, string username, Select select, Action onExit)
+    internal EditConcreteUser(string username, Select select, Action onExit)
     {
         _title = "Edit User";
         _username = username;

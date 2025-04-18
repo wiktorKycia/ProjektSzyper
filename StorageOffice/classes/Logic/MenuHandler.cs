@@ -99,16 +99,6 @@ public static class MenuHandler
         var addUser = new AddUser(() => {ManageUsers(user);}, user);
     }
 
-    internal static void EditUserMenu(User user)
-    {
-        var users = PasswordManager.GetAllUsers();
-        var radioOptions = users.Select(u => new RadioOption(u.Username, () => {
-            EditConcreteUser(user, u.Username);
-        })).ToList();
-
-        var editUser = new EditUser("Edit user", new RadioSelect(radioOptions), () => {ManageUsers(user);});
-    }
-
     internal static void DeleteUser(User user)
     {
         var users = PasswordManager.GetAllUsers();
@@ -120,15 +110,37 @@ public static class MenuHandler
         var deleteUser = new DeleteUser(new CheckBoxSelect(checkBoxOptions), () => {ManageUsers(user);});
     }
 
+    internal static void EditUserMenu(User user)
+    {
+        var users = PasswordManager.GetAllUsers();
+        var radioOptions = users.Select(u => new RadioOption(u.Username, () => {
+            EditConcreteUser(user, u.Username);
+        })).ToList();
+
+        var editUser = new EditUser("Edit user", new RadioSelect(radioOptions), () => {ManageUsers(user);});
+    }
+
     internal static void EditConcreteUser(User user, string username)
     {
         var radioOptions = new List<RadioOption>
         {
-            new RadioOption("Edit Username", () => { PasswordManager.EditUsername(username); }),
-            new RadioOption("Edit Password", () => { PasswordManager.EditPassword(username); }),
-            new RadioOption("Edit Role", () => { PasswordManager.EditRole(username); })
+            new RadioOption("Edit Username", () => { EditUsername(user, username); }),
+            new RadioOption("Edit Password", () => { EditPassword(user, username); }),
+            new RadioOption("Edit Role", () => { EditRole(user, username); })
         };
-        var editConcreteUser = new EditConcreteUser(username, , () => {EditUserMenu(user);});
+        var editConcreteUser = new EditConcreteUser(username:username, select:new RadioSelect(radioOptions), onExit:() => {EditUserMenu(user);});
     }
 
+    internal static void EditUsername(User user, string username)
+    {
+        var editUsername = new EditUsername(username, () => {ManageUsers(user);});
+    }
+    internal static void EditPassword(User user, string username)
+    {
+        var editPassword = new EditPassword(username, () => {ManageUsers(user);});
+    }
+    internal static void EditRole(User user, string username)
+    {
+        var editRole = new EditRole(username, () => {ManageUsers(user);});
+    }
 }
