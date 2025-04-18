@@ -95,9 +95,14 @@ public class DataSeeder
         var products = new List<Product>();
 
         // Generate products from each category
+        int totalProducts = 20; // Limit to 20 products total
+        int categoriesCount = productCategories.Count;
+        int productsPerCategory = totalProducts / categoriesCount;
+
         foreach (var category in productCategories)
         {
-            foreach (var productName in category.Value)
+            var selectedProducts = category.Value.OrderBy(x => Guid.NewGuid()).Take(productsPerCategory).ToList();
+            foreach (var productName in selectedProducts)
             {
                 var faker = new Faker();
                 var product = new Product
@@ -108,10 +113,26 @@ public class DataSeeder
                     Description = $"High-quality {productName.ToLower()} for {GetDescriptionSuffix(category.Key)}"
                 };
                 products.Add(product);
-                
-                if (products.Count >= 20) break; // Limit to 20 products total
             }
-            if (products.Count >= 20) break;
+        }
+
+        // If there are fewer than totalProducts, fill the remaining slots randomly
+        while (products.Count < totalProducts)
+        {
+            var randomCategory = productCategories.ElementAt(random.Next(categoriesCount));
+            var remainingProducts = randomCategory.Value.Except(products.Select(p => p.Name)).ToList();
+            if (remainingProducts.Any())
+            {
+                var productName = remainingProducts[random.Next(remainingProducts.Count)];
+                var product = new Product
+                {
+                    Name = productName,
+                    Category = randomCategory.Key,
+                    Unit = units[randomCategory.Key],
+                    Description = $"High-quality {productName.ToLower()} for {GetDescriptionSuffix(randomCategory.Key)}"
+                };
+                products.Add(product);
+            }
         }
 
         context.Products.AddRange(products);
