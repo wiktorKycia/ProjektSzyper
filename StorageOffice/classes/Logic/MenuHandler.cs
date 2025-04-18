@@ -41,7 +41,7 @@ public class MenuHandler
             {Permission.ManageShipments, new RadioOption("Shipments", () => {DetailsMenu(user, "Manage shipments");})},
             {Permission.BrowseShipments, new RadioOption("Shipments", () => {DetailsMenu(user, "Browse shipments");})},
             {Permission.ManageUsers, new RadioOption("Manage users", () => {DetailsMenu(user, "Manage users");})},
-            {Permission.ViewLogs, new RadioOption("View logs", () => {DetailsMenu(user, "View logs");})}
+            {Permission.ViewLogs, new RadioOption("View logs", () => {Logs(user);})}
         };
 
         // check if user has permission to each option
@@ -56,5 +56,17 @@ public class MenuHandler
     internal static void DetailsMenu(User user, string _details)
     {
         var details = new Details(_details, () => {MainMenu(user);});
+    }
+    internal static void Logs(User user)
+    {
+        try
+        {
+            var logs = new Logs(LogManager.GetAllLogs(), () => {MainMenu(user);});
+        }
+        catch(FileNotFoundException e)
+        {
+            // ! error handling
+            var logs = new Logs("the file with logs was removed", () => {MainMenu(user);});
+        }
     }
 }
