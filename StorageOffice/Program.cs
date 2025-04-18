@@ -1,4 +1,4 @@
-using StorageOffice.classes.CLI;
+﻿using StorageOffice.classes.CLI;
 using StorageOffice.classes.Logic;
 
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
@@ -7,7 +7,6 @@ using StorageOffice.classes.UsersManagement.Modules;
 using StorageOffice.classes.UsersManagement.Services;
 
 
-using StorageOffice.classes.CLI;
 using StorageOffice.classes.database;
 
 namespace StorageOffice
@@ -16,7 +15,7 @@ namespace StorageOffice
     {
         static void Main(string[] args)
         {
-            User user = new User();
+            classes.UsersManagement.Modules.User user = new();
             Console.OutputEncoding = System.Text.Encoding.Unicode;
             MenuHandler.Start(user);
 
