@@ -16,7 +16,7 @@ namespace StorageOffice
     {
         static void Main(string[] args)
         {
-            User user = new User();
+            classes.UsersManagement.Modules.User user = new classes.UsersManagement.Modules.User();
             Console.OutputEncoding = System.Text.Encoding.Unicode;
             MenuHandler.Start(user);
 
