@@ -6,7 +6,7 @@ using StorageOffice.classes.UsersManagement.Services;
 
 namespace StorageOffice.classes.Logic;
 
-public class MenuHandler
+public static class MenuHandler
 {
     internal static void Start(User user)
     {

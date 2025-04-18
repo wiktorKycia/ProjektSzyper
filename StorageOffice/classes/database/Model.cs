@@ -87,7 +87,7 @@ public enum ShipmentType
 }
 public enum UserRole
 {
-    Administrator,
+    Administrator = 1,
     Warehouseman,
     Logistician,
     WarehouseManager

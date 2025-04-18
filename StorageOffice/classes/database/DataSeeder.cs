@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 using Bogus;
+using StorageOffice.classes.UsersManagement.Services;
 
 namespace StorageOffice.classes.database;
 
@@ -15,13 +16,17 @@ public class DataSeeder
 
         var random = new Random();
 
-        // Generate fake Users
-        var userFaker = new Faker<User>()
-            .RuleFor(u => u.Username, f => f.Person.FirstName)
-            .RuleFor(u => u.Role, f => f.PickRandom<UserRole>());
-
-        var users = userFaker.Generate(5);
-        context.Users.AddRange(users);
+        var users = PasswordManager.GetAllUsers();
+        List<User> userList = new List<User>();
+        foreach (var user in users)
+        {
+            userList.Add(new User
+            {
+                Username = user.Username,
+                Role = (UserRole)user.Role
+            });
+        }
+        context.Users.AddRange(userList);
         context.SaveChanges();
 
         // Generate fake Shops
@@ -114,7 +119,7 @@ public class DataSeeder
             .RuleFor(s => s.Shipper, f => f.Random.Bool(0.8f) ? f.PickRandom(shippers) : null)
             .RuleFor(s => s.ShipmentType, f => f.Random.Enum<ShipmentType>())
             .RuleFor(s => s.ShippedDate, f => f.Date.Past(1))
-            .RuleFor(s => s.User, f => f.PickRandom(users));
+            .RuleFor(s => s.User, f => f.PickRandom(userList.Where(u => u.Role == UserRole.Warehouseman)));
 
         var shipments = shipmentFaker.Generate(30);
         context.Shipments.AddRange(shipments);
