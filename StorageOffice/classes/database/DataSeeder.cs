@@ -51,11 +51,36 @@ public class DataSeeder
         // Create realistic product categories with appropriate products
         var productCategories = new Dictionary<string, List<string>>
         {
-            ["Electronics"] = new List<string> { "Smartphone", "Laptop", "Tablet", "Headphones", "Smart Watch", "Power Bank", "Wireless Speaker" },
-            ["Clothing"] = new List<string> { "T-Shirt", "Jeans", "Hoodie", "Sweater", "Dress", "Jacket", "Socks", "Athletic Shoes" },
-            ["Food"] = new List<string> { "Pasta", "Rice", "Cereal", "Chocolate", "Coffee", "Tea", "Juice", "Frozen Pizza" },
-            ["Sporting Goods"] = new List<string> { "Basketball", "Tennis Racket", "Running Shoes", "Yoga Mat", "Dumbbells", "Football" },
-            ["Home Goods"] = new List<string> { "Sofa", "Coffee Table", "Bed Frame", "Lamp", "Kitchen Knife Set", "Cutlery", "Dining Table" }
+            ["Electronics"] = new List<string> 
+            { 
+            "Smartphone", "Laptop", "Tablet", "Headphones", "Smart Watch", "Power Bank", 
+            "Wireless Speaker", "Gaming Console", "Digital Camera", "Bluetooth Earbuds", 
+            "External Hard Drive", "Smart Home Hub", "4K Monitor", "VR Headset", "Drone"
+            },
+            ["Clothing"] = new List<string> 
+            { 
+            "T-Shirt", "Jeans", "Hoodie", "Sweater", "Dress", "Jacket", "Socks", 
+            "Athletic Shoes", "Scarf", "Gloves", "Cap", "Raincoat", "Shorts", 
+            "Blazer", "Pajamas", "Swimsuit"
+            },
+            ["Food"] = new List<string> 
+            { 
+            "Pasta", "Rice", "Cereal", "Chocolate", "Coffee", "Tea", "Juice", 
+            "Frozen Pizza", "Cheese", "Yogurt", "Bread", "Cookies", "Chips", 
+            "Peanut Butter", "Jam", "Honey", "Olive Oil", "Spices"
+            },
+            ["Sporting Goods"] = new List<string> 
+            { 
+            "Basketball", "Tennis Racket", "Running Shoes", "Yoga Mat", "Dumbbells", 
+            "Football", "Baseball Bat", "Golf Clubs", "Hiking Backpack", "Cycling Helmet", 
+            "Resistance Bands", "Boxing Gloves", "Skateboard", "Fishing Rod", "Kayak Paddle"
+            },
+            ["Home Goods"] = new List<string> 
+            { 
+            "Sofa", "Coffee Table", "Bed Frame", "Lamp", "Kitchen Knife Set", "Cutlery", 
+            "Dining Table", "Bookshelf", "Curtains", "Rug", "Wall Clock", "Vacuum Cleaner", 
+            "Blender", "Toaster", "Microwave", "Air Purifier", "Laundry Basket"
+            }
         };
 
         var units = new Dictionary<string, string>
@@ -127,7 +152,7 @@ public class DataSeeder
         var shipmentFaker = new Faker<Shipment>()
             .RuleFor(s => s.Shop, f => f.Random.Bool() ? f.PickRandom(shops) : null)
             .RuleFor(s => s.Shipper, (f, s) => s.Shop == null ? f.PickRandom(shippers) : null)
-            .RuleFor(s => s.ShipmentType, f => f.Random.Enum<ShipmentType>())
+            .RuleFor(s => s.ShipmentType, (f, s) => s.Shop == null ? ShipmentType.Outbound : ShipmentType.Inbound)
             .RuleFor(s => s.ShippedDate, f => f.Date.Past(1))
             .RuleFor(s => s.User, f => f.PickRandom(userList.Where(u => u.Role == UserRole.Warehouseman)));
 
