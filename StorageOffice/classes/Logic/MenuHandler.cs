@@ -86,4 +86,16 @@ public class MenuHandler
         var users = PasswordManager.GetAllUsers();
         var viewUsers = new Users(users, () => {ManageUsers(user);});
     }
+    internal static void AddUser(User user)
+    {
+        // var addUser = new AddUser("Add user", () => {ManageUsers(user);});
+    }
+    internal static void EditUser(User user)
+    {
+        // var editUser = new EditUser("Edit user", () => {ManageUsers(user);});
+    }
+    internal static void DeleteUser(User user)
+    {
+        // var deleteUser = new DeleteUser("Delete user", () => {ManageUsers(user);});
+    }
 }
