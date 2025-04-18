@@ -45,5 +45,9 @@ namespace StorageOffice.classes.UsersManagement.Modules
                 }
             }
         }
+        public override string ToString()
+        {
+            return $"Username: {Username}, Role: {Role}";
+        }
     }
 }
