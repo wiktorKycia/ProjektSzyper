@@ -26,6 +26,7 @@ public class DeleteUser
             { "\u2191", "move up" },
             { "\u2193", "move down" },
             { "<Enter>", "select" },
+            { "<Del>", "delete" },
             { "<Esc>", "back" }
         };
         Run();

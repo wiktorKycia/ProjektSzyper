@@ -63,11 +63,19 @@ public class RadioSelect : Select
     }
 }
 
-public class CheckBoxSelect(List<CheckBoxOption> options) : Select
+public class CheckBoxSelect : Select
 {
-    public List<CheckBoxOption> CheckBoxOptions { get; set; } = options;
+    public List<CheckBoxOption> CheckBoxOptions { get; set; }
 
-    protected override int CurrentIndex { get; set; } = 0;
+    protected override int CurrentIndex { get; set; }
+
+    public CheckBoxSelect(List<CheckBoxOption> options)
+    {
+        CheckBoxOptions = options;
+        CurrentIndex = 0;
+        SelectOption();
+        HighlightOption();
+    }
 
     protected override IEnumerable<ISelectable> GetOptions()
     {

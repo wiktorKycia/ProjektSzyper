@@ -35,3 +35,6 @@
 [2025-04-18 11:24:56] Info: login of user wikrot - successful
 [2025-04-18 11:28:03] Info: login of user wikrot - successful
 [2025-04-18 11:29:22] Info: login of user wikrot - successful
+[2025-04-18 12:08:22] Info: login of user wikrot - successful
+[2025-04-18 12:11:36] Info: login of user wikrot - successful
+[2025-04-18 12:11:54] Info: action was performed on data of a user named grzesio - deleted a user
