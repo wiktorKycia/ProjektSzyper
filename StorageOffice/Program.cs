@@ -8,6 +8,8 @@ using StorageOffice.classes.UsersManagement.Services;
 
 
 using StorageOffice.classes.database;
+using StorageOffice.classes.TestsServices.Modules;
+using StorageOffice.classes.Tests.Modules;
 
 namespace StorageOffice
 {
@@ -15,11 +17,14 @@ namespace StorageOffice
     {
         static void Main(string[] args)
         {
+
             Console.WriteLine("Loading...");
+
             Console.OutputEncoding = System.Text.Encoding.Unicode;
 
             // Create database and seed data
             var db = new StorageDatabase();
+
             // db.ClearDatabase();
             // db.SeedData();
             MenuHandler.db = db;
