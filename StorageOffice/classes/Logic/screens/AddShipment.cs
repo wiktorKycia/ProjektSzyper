@@ -125,22 +125,9 @@ public class AddShipment
             var shipments = MenuHandler.db?.GetAllNotCompletedInboundShipments();
             _shipmentId = shipments?.LastOrDefault()?.ShipmentId ?? -1;
             
-            // Assign the logged-in user to the shipment
+            // No longer automatically assigning the user to the shipment
             if (_shipmentId > 0)
-            {
-                try
-                {
-                    int currentUserId = MenuHandler.db?.GetUserIdByUsername(_user.Username) ?? 0;
-                    if (currentUserId > 0)
-                    {
-                        MenuHandler.db?.UpdateUserAssaignedToShipment(currentUserId, _shipmentId);
-                    }
-                }
-                catch (Exception)
-                {
-                    // If we can't assign the user, continue anyway
-                }
-                
+            {                
                 ConsoleOutput.PrintColorMessage("Inbound shipment created successfully!\n", ConsoleColor.Green);
                 Console.WriteLine("Press any key to add products to this shipment...");
                 ConsoleInput.WaitForAnyKey();
@@ -210,22 +197,9 @@ public class AddShipment
             var shipments = MenuHandler.db?.GetAllNotCompletedOutboundShipments();
             _shipmentId = shipments?.LastOrDefault()?.ShipmentId ?? -1;
             
-            // Assign the logged-in user to the shipment
+            // No longer automatically assigning the user to the shipment
             if (_shipmentId > 0)
-            {
-                try
-                {
-                    int currentUserId = MenuHandler.db?.GetUserIdByUsername(_user.Username) ?? 0;
-                    if (currentUserId > 0)
-                    {
-                        MenuHandler.db?.UpdateUserAssaignedToShipment(currentUserId, _shipmentId);
-                    }
-                }
-                catch (Exception)
-                {
-                    // If we can't assign the user, continue anyway
-                }
-                
+            {                
                 ConsoleOutput.PrintColorMessage("Outbound shipment created successfully!\n", ConsoleColor.Green);
                 Console.WriteLine("Press any key to add products to this shipment...");
                 ConsoleInput.WaitForAnyKey();
