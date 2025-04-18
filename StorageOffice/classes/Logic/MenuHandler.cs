@@ -1,4 +1,5 @@
 using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 using StorageOffice.classes.CLI;
 using StorageOffice.classes.LogServices;
 using StorageOffice.classes.UsersManagement.Modules;
@@ -38,11 +39,11 @@ public static class MenuHandler
         // prepare options according to permissions
         Dictionary<Permission, RadioOption> options = new Dictionary<Permission, RadioOption>
         {
-            {Permission.BrowseWarehouse, new RadioOption("Warehouse", () => {DetailsMenu(user, "Warehouser");})},
+            {Permission.BrowseWarehouse, new RadioOption("Warehouse", () => {DetailsMenu(user, "Warehouse");})},
             {Permission.AssignTask, new RadioOption("Tasks", () => {DetailsMenu(user, "Assign task");})},
             {Permission.DoTasks, new RadioOption("Tasks", () => {DetailsMenu(user, "Do tasks");})},
-            {Permission.ManageShipments, new RadioOption("Shipments", () => {DetailsMenu(user, "Manage shipments");})},
-            {Permission.BrowseShipments, new RadioOption("Shipments", () => {DetailsMenu(user, "Browse shipments");})},
+            {Permission.ManageShipments, new RadioOption("Shipments", () => {ManageShipmentsMenu(user);})},
+            {Permission.BrowseShipments, new RadioOption("Shipments", () => {BrowseShipmentsMenu(user);})},
             {Permission.ManageUsers, new RadioOption("Manage users", () => {ManageUsers(user);})},
             {Permission.ViewLogs, new RadioOption("View logs", () => {Logs(user);})}
         };
@@ -142,5 +143,222 @@ public static class MenuHandler
     internal static void EditRole(User user, string username)
     {
         var editRole = new EditRole(username, () => {ManageUsers(user);});
+    }
+
+    internal static void ManageShipmentsMenu(User user)
+    {
+        var manageShipments = new ManageShipments(new RadioSelect(new List<RadioOption>
+        {
+            new RadioOption("Create Inbound Shipment (Import)", () => AddShipment(user, database.ShipmentType.Inbound)),
+            new RadioOption("Create Outbound Shipment (Export)", () => AddShipment(user, database.ShipmentType.Outbound)),
+            new RadioOption("View All Shipments", () => ViewAllShipments(user)),
+            new RadioOption("View Pending Shipments", () => ViewPendingShipments(user)),
+            new RadioOption("View Completed Shipments", () => ViewCompletedShipments(user)),
+            new RadioOption("Manage My Assigned Shipments", () => ManageAssignedShipments(user))
+        }), () => MainMenu(user));
+    }
+
+    internal static void BrowseShipmentsMenu(User user)
+    {
+        var browseShipments = new ManageShipments(new RadioSelect(new List<RadioOption>
+        {
+            new RadioOption("View All Shipments", () => ViewAllShipments(user)),
+            new RadioOption("View Pending Shipments", () => ViewPendingShipments(user)),
+            new RadioOption("View Completed Shipments", () => ViewCompletedShipments(user))
+        }), () => MainMenu(user));
+    }
+
+    internal static void AddShipment(User user, database.ShipmentType shipmentType)
+    {
+        var addShipment = new AddShipment(() => ManageShipmentsMenu(user), user, shipmentType);
+    }
+
+    internal static void ViewAllShipments(User user)
+    {
+        var shipments = db?.GetAllShipments() ?? new List<database.Shipment>();
+        var viewShipments = new ViewShipments(shipments, () => ManageShipmentsMenu(user), "All Shipments");
+    }
+
+    internal static void ViewPendingShipments(User user)
+    {
+        var shipments = db?.GetNotCompletedShipments() ?? new List<database.Shipment>();
+        var viewShipments = new ViewShipments(shipments, () => ManageShipmentsMenu(user), "Pending Shipments", false, true);
+    }
+
+    internal static void ViewCompletedShipments(User user)
+    {
+        var allShipments = db?.GetAllShipments() ?? new List<database.Shipment>();
+        var completedShipments = allShipments.Where(s => s.IsCompleted).ToList();
+        var viewShipments = new ViewShipments(completedShipments, () => ManageShipmentsMenu(user), "Completed Shipments", true);
+    }
+
+    internal static void ManageAssignedShipments(User user)
+    {
+        try {
+            int userId = db?.GetUserIdByUsername(user.Username) ?? 0;
+            if (userId == 0)
+            {
+                throw new InvalidOperationException("User not found in database");
+            }
+            
+            var shipments = db?.GetNotCompletedShipmentsAssignedToUser(userId) ?? new List<database.Shipment>();
+            
+            if (!shipments.Any())
+            {
+                var error = new Error("You don't have any pending shipments assigned to you.", () => ManageShipmentsMenu(user));
+                return;
+            }
+            
+            var shipmentOptions = shipments.Select(s => new RadioOption(
+                $"ID: {s.ShipmentId} - {s.ShipmentType} - {(s.ShipmentType == database.ShipmentType.Inbound ? s.Shipper?.Name : s.Shop?.ShopName)}", 
+                () => EditAssignedShipment(user, s)
+            )).ToList();
+            
+            var selectShipment = new EditUser("Your Assigned Shipments", new RadioSelect(shipmentOptions), () => ManageShipmentsMenu(user));
+        }
+        catch (Exception ex)
+        {
+            var error = new Error($"Error: {ex.Message}", () => ManageShipmentsMenu(user));
+        }
+    }
+
+    internal static void EditAssignedShipment(User user, database.Shipment shipment)
+    {
+        var shipmentOptions = new List<RadioOption>
+        {
+            new RadioOption("Add Products", () => AddProductsToShipment(user, shipment)),
+            new RadioOption("Mark as Complete", () => MarkShipmentComplete(user, shipment))
+        };
+        
+        var editShipment = new EditShipment(shipment, new RadioSelect(shipmentOptions), () => ManageAssignedShipments(user), user);
+    }
+
+    internal static void AddProductsToShipment(User user, database.Shipment shipment)
+    {
+        try
+        {
+            // Get all products
+            var products = db?.GetAllProducts();
+            if (products == null || !products.Any())
+            {
+                var error = new Error("No products available.", () => EditAssignedShipment(user, shipment));
+                return;
+            }
+
+            bool adding = true;
+            while (adding)
+            {
+                Console.Clear();
+                Console.WriteLine($"Adding Products to Shipment {shipment.ShipmentId}");
+                Console.WriteLine(ConsoleOutput.HorizontalLine('-'));
+                
+                // Display current shipment items
+                Console.WriteLine("\nCurrent Shipment Items:");
+                Console.WriteLine("--------------------------------------------------");
+                
+                if (shipment.ShipmentItems == null || !shipment.ShipmentItems.Any())
+                {
+                    Console.WriteLine("No items added to this shipment yet.");
+                }
+                else
+                {
+                    Console.WriteLine($"{"Product",-20} {"Quantity",-10} {"Unit",-10}");
+                    foreach (var item in shipment.ShipmentItems)
+                    {
+                        Console.WriteLine($"{item.Product.Name,-20} {item.Quantity,-10} {item.Product.Unit,-10}");
+                    }
+                }
+                
+                Console.WriteLine("\n1. Add product");
+                Console.WriteLine("2. Finish adding products");
+                
+                int choice = ConsoleInput.GetUserInt("Select an option: ");
+                
+                if (choice == 1)
+                {
+                    // Display products for selection
+                    Console.WriteLine("\nAvailable Products:");
+                    for (int i = 0; i < products.Count; i++)
+                    {
+                        Console.WriteLine($"{i + 1}. {products[i].Name} - {products[i].Category} - Current Stock: {products[i].Stock.Quantity} {products[i].Unit}");
+                    }
+
+                    int productIndex = ConsoleInput.GetUserInt("Select product (number): ") - 1;
+                    int productId = products[productIndex].ProductId;
+                    
+                    // Get quantity
+                    int maxQuantity = shipment.ShipmentType == database.ShipmentType.Outbound ? products[productIndex].Stock.Quantity : 10000;
+                    int quantity = ConsoleInput.GetUserInt($"Enter quantity (1-{maxQuantity}): ");
+                    
+                    try
+                    {
+                        // Add to shipment
+                        db?.AddShipmentItem(quantity, shipment.ShipmentId, productId);
+                        
+                        // Refresh shipment data
+                        shipment = db.GetShipmentById(shipment.ShipmentId);
+                        
+                        ConsoleOutput.PrintColorMessage("Product added to shipment successfully!\n", ConsoleColor.Green);
+                        Console.WriteLine("Press any key to continue...");
+                        ConsoleInput.WaitForAnyKey();
+                    }
+                    catch (Exception ex)
+                    {
+                        ConsoleOutput.PrintColorMessage($"Error: {ex.Message}\n", ConsoleColor.Red);
+                        Console.WriteLine("Press any key to continue...");
+                        ConsoleInput.WaitForAnyKey();
+                    }
+                }
+                else
+                {
+                    adding = false;
+                }
+            }
+            
+            EditAssignedShipment(user, shipment);
+        }
+        catch (Exception ex)
+        {
+            var error = new Error($"Error: {ex.Message}", () => EditAssignedShipment(user, shipment));
+        }
+    }
+
+    internal static void MarkShipmentComplete(User user, database.Shipment shipment)
+    {
+        try
+        {
+            Console.Clear();
+            Console.WriteLine($"Mark Shipment {shipment.ShipmentId} as Complete");
+            Console.WriteLine(ConsoleOutput.HorizontalLine('-'));
+            
+            if (shipment.ShipmentItems == null || !shipment.ShipmentItems.Any())
+            {
+                ConsoleOutput.PrintColorMessage("Cannot complete a shipment with no items!\n", ConsoleColor.Red);
+                Console.WriteLine("Press any key to continue...");
+                ConsoleInput.WaitForAnyKey();
+                EditAssignedShipment(user, shipment);
+                return;
+            }
+            
+            Console.WriteLine("Are you sure you want to mark this shipment as complete? (y/n)");
+            var key = ConsoleInput.GetConsoleKey();
+            
+            if (key == ConsoleKey.Y)
+            {
+                db?.MarkShipmentAsDone(shipment.ShipmentId);
+                ConsoleOutput.PrintColorMessage("Shipment marked as complete successfully!\n", ConsoleColor.Green);
+                Console.WriteLine("Press any key to continue...");
+                ConsoleInput.WaitForAnyKey();
+                ManageShipmentsMenu(user);
+            }
+            else
+            {
+                EditAssignedShipment(user, shipment);
+            }
+        }
+        catch (Exception ex)
+        {
+            var error = new Error($"Error: {ex.Message}", () => EditAssignedShipment(user, shipment));
+        }
     }
 }
