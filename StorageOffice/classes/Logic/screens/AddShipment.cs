@@ -61,29 +61,17 @@ public class AddShipment
                 // After creating the shipment, add products to it if valid shipmentId
                 if (_shipmentId > 0)
                 {
-                    AddProductsToShipment(_shipmentId);
-                    
-                    // Ask if the user wants to mark the shipment as completed
-                    if (ConfirmCompletion())
-                    {
-                        try
-                        {
-                            MenuHandler.db?.MarkShipmentAsDone(_shipmentId);
-                            ConsoleOutput.PrintColorMessage("Shipment marked as completed successfully!\n", ConsoleColor.Green);
-                            Console.WriteLine("Press any key to continue...");
-                            ConsoleInput.WaitForAnyKey();
-                        }
-                        catch (Exception ex)
-                        {
-                            ConsoleOutput.PrintColorMessage($"Error: {ex.Message}\n", ConsoleColor.Red);
-                            Console.WriteLine("Press any key to continue...");
-                            ConsoleInput.WaitForAnyKey();
-                        }
-                    }
+                    var productManager = new ShipmentProductManager(
+                        MenuHandler.db?.GetShipmentById(_shipmentId),
+                        () => { running = false; _onExit.Invoke(); },
+                        _user
+                    );
                 }
-
-                running = false;
-                _onExit.Invoke();
+                else
+                {
+                    running = false;
+                    _onExit.Invoke();
+                }
             }
         }
     }
@@ -103,18 +91,35 @@ public class AddShipment
                 return;
             }
 
-            // Display shippers for selection
-            Console.WriteLine("\nAvailable Shippers:");
-            for (int i = 0; i < shippers.Count; i++)
+            // Display shippers as a table
+            string[] headers = { "ID", "Name", "Contact Info" };
+            List<string[]> shipperRows = new List<string[]>();
+            
+            foreach (var shipper in shippers)
             {
-                Console.WriteLine($"{i + 1}. {shippers[i].Name} - {shippers[i].ContactInfo}");
+                shipperRows.Add(new string[] { 
+                    shipper.ShipperId.ToString(), 
+                    shipper.Name, 
+                    shipper.ContactInfo 
+                });
+            }
+            
+            Console.WriteLine("\nAvailable Shippers:");
+            Console.WriteLine(ConsoleOutput.WriteTable(shipperRows, headers));
+
+            int shipperIndex = ConsoleInput.GetUserInt("Select shipper ID: ");
+            var selectedShipper = shippers.FirstOrDefault(s => s.ShipperId == shipperIndex);
+            
+            if (selectedShipper == null)
+            {
+                ConsoleOutput.PrintColorMessage("Invalid shipper ID.\n", ConsoleColor.Red);
+                Console.WriteLine("Press any key to try again...");
+                ConsoleInput.WaitForAnyKey();
+                return;
             }
 
-            int shipperIndex = ConsoleInput.GetUserInt("Select shipper (number): ") - 1;
-            int shipperId = shippers[shipperIndex].ShipperId;
-
             // Create the shipment
-            MenuHandler.db?.AddInboundShipment(shipperId);
+            MenuHandler.db?.AddInboundShipment(selectedShipper.ShipperId);
             
             // Get the newly created shipment ID
             var shipments = MenuHandler.db?.GetAllNotCompletedInboundShipments();
@@ -171,18 +176,35 @@ public class AddShipment
                 return;
             }
 
-            // Display shops for selection
-            Console.WriteLine("\nAvailable Shops:");
-            for (int i = 0; i < shops.Count; i++)
+            // Display shops as a table
+            string[] headers = { "ID", "Name", "Location" };
+            List<string[]> shopRows = new List<string[]>();
+            
+            foreach (var shop in shops)
             {
-                Console.WriteLine($"{i + 1}. {shops[i].ShopName} - {shops[i].Location}");
+                shopRows.Add(new string[] { 
+                    shop.ShopId.ToString(), 
+                    shop.ShopName, 
+                    shop.Location 
+                });
+            }
+            
+            Console.WriteLine("\nAvailable Shops:");
+            Console.WriteLine(ConsoleOutput.WriteTable(shopRows, headers));
+
+            int shopId = ConsoleInput.GetUserInt("Select shop ID: ");
+            var selectedShop = shops.FirstOrDefault(s => s.ShopId == shopId);
+            
+            if (selectedShop == null)
+            {
+                ConsoleOutput.PrintColorMessage("Invalid shop ID.\n", ConsoleColor.Red);
+                Console.WriteLine("Press any key to try again...");
+                ConsoleInput.WaitForAnyKey();
+                return;
             }
 
-            int shopIndex = ConsoleInput.GetUserInt("Select shop (number): ") - 1;
-            int shopId = shops[shopIndex].ShopId;
-
             // Create the shipment
-            MenuHandler.db?.AddOutboundShipment(shopId);
+            MenuHandler.db?.AddOutboundShipment(selectedShop.ShopId);
             
             // Get the newly created shipment ID
             var shipments = MenuHandler.db?.GetAllNotCompletedOutboundShipments();
@@ -222,114 +244,6 @@ public class AddShipment
             Console.WriteLine("Press any key to try again...");
             ConsoleInput.WaitForAnyKey();
         }
-    }
-
-    private void AddProductsToShipment(int shipmentId)
-    {
-        bool addingProducts = true;
-        
-        while (addingProducts)
-        {
-            Console.Clear();
-            Console.WriteLine($"{_title} - Adding Products");
-            Console.WriteLine(ConsoleOutput.HorizontalLine('-'));
-            
-            // Show current shipment items
-            DisplayCurrentShipmentItems(shipmentId);
-            
-            Console.WriteLine("\n1. Add product to shipment");
-            Console.WriteLine("2. Finish adding products");
-            
-            int choice = ConsoleInput.GetUserInt("Select an option: ");
-            
-            if (choice == 1)
-            {
-                AddProductToShipment(shipmentId);
-            }
-            else
-            {
-                addingProducts = false;
-            }
-        }
-    }
-    
-    private void AddProductToShipment(int shipmentId)
-    {
-        try
-        {
-            // Get all products
-            var products = MenuHandler.db?.GetAllProducts();
-            if (products == null || !products.Any())
-            {
-                ConsoleOutput.PrintColorMessage("No products available.\n", ConsoleColor.Yellow);
-                Console.WriteLine("Press any key to continue...");
-                ConsoleInput.WaitForAnyKey();
-                return;
-            }
-
-            // Display products for selection
-            Console.WriteLine("\nAvailable Products:");
-            for (int i = 0; i < products.Count; i++)
-            {
-                Console.WriteLine($"{i + 1}. {products[i].Name} - {products[i].Category} - Current Stock: {products[i].Stock.Quantity} {products[i].Unit}");
-            }
-
-            int productIndex = ConsoleInput.GetUserInt("Select product (number): ") - 1;
-            int productId = products[productIndex].ProductId;
-            
-            // Get quantity
-            int maxQuantity = _shipmentType == database.ShipmentType.Outbound ? products[productIndex].Stock.Quantity : 10000;
-            int quantity = ConsoleInput.GetUserInt($"Enter quantity (1-{maxQuantity}): ");
-            
-            // Add to shipment
-            MenuHandler.db?.AddShipmentItem(quantity, shipmentId, productId);
-            
-            ConsoleOutput.PrintColorMessage("Product added to shipment successfully!\n", ConsoleColor.Green);
-            Console.WriteLine("Press any key to continue...");
-            ConsoleInput.WaitForAnyKey();
-        }
-        catch (Exception ex)
-        {
-            ConsoleOutput.PrintColorMessage($"Error: {ex.Message}\n", ConsoleColor.Red);
-            Console.WriteLine("Press any key to continue...");
-            ConsoleInput.WaitForAnyKey();
-        }
-    }
-    
-    private void DisplayCurrentShipmentItems(int shipmentId)
-    {
-        try
-        {
-            Console.WriteLine("\nCurrent Shipment Items:");
-            Console.WriteLine("--------------------------------------------------");
-            
-            var shipment = MenuHandler.db?.GetShipmentById(shipmentId);
-            
-            if (shipment?.ShipmentItems == null || !shipment.ShipmentItems.Any())
-            {
-                Console.WriteLine("No items added to this shipment yet.");
-                return;
-            }
-            
-            Console.WriteLine($"{"Product",-20} {"Category",-15} {"Quantity",-10} {"Unit",-10}");
-            Console.WriteLine("--------------------------------------------------");
-            
-            foreach (var item in shipment.ShipmentItems)
-            {
-                Console.WriteLine($"{item.Product.Name,-20} {item.Product.Category,-15} {item.Quantity,-10} {item.Product.Unit,-10}");
-            }
-        }
-        catch (Exception ex)
-        {
-            ConsoleOutput.PrintColorMessage($"Error displaying shipment items: {ex.Message}\n", ConsoleColor.Red);
-        }
-    }
-    
-    private bool ConfirmCompletion()
-    {
-        Console.WriteLine("\nDo you want to mark this shipment as completed? (y/n): ");
-        var key = ConsoleInput.GetConsoleKey();
-        return key == ConsoleKey.Y;
     }
 
     private void Display()

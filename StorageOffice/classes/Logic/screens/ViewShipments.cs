@@ -106,41 +106,55 @@ public class ViewShipments
                 .Take(_itemsPerPage)
                 .ToList();
 
+            // Display shipments in a table format
+            string[] headers = { "ID", "Type", "Status", "From/To", "Handler", "Date" };
+            List<string[]> shipmentRows = new List<string[]>();
+            
             foreach (var shipment in pageShipments)
             {
-                content += $"ID: {shipment.ShipmentId}\n";
-                content += $"Type: {shipment.ShipmentType}\n";
-                content += $"Status: {(shipment.IsCompleted ? "Completed" : "Pending")}\n";
+                string fromTo = shipment.ShipmentType == ShipmentType.Inbound ? 
+                    shipment.Shipper?.Name ?? "Unknown" : 
+                    shipment.Shop?.ShopName ?? "Unknown";
                 
-                if (shipment.ShipmentType == ShipmentType.Inbound)
-                {
-                    content += $"Shipper: {shipment.Shipper?.Name ?? "Not assigned"}\n";
-                }
-                else
-                {
-                    content += $"Shop: {shipment.Shop?.ShopName ?? "Not assigned"}\n";
-                }
+                shipmentRows.Add(new string[] { 
+                    shipment.ShipmentId.ToString(), 
+                    shipment.ShipmentType.ToString(), 
+                    shipment.IsCompleted ? "Completed" : "Pending", 
+                    fromTo,
+                    shipment.User?.Username ?? "Unassigned",
+                    shipment.ShippedDate?.ToShortDateString() ?? "Not shipped"
+                });
+            }
+            
+            content += ConsoleOutput.WriteTable(shipmentRows, headers);
+
+            // For each shipment, show its items
+            foreach (var shipment in pageShipments)
+            {
+                content += $"\nShipment #{shipment.ShipmentId} Items:\n";
                 
-                content += $"Handled by: {shipment.User?.Username ?? "Not assigned"}\n";
-                
-                if (shipment.ShippedDate.HasValue)
-                {
-                    content += $"Shipped date: {shipment.ShippedDate.Value.ToShortDateString()}\n";
-                }
-                
-                content += "Items:\n";
-                if (shipment.ShipmentItems != null && shipment.ShipmentItems.Any())
-                {
-                    foreach (var item in shipment.ShipmentItems)
-                    {
-                        content += $"  - {item.Product.Name}: {item.Quantity} {item.Product.Unit}\n";
-                    }
-                }
-                else
+                if (shipment.ShipmentItems == null || !shipment.ShipmentItems.Any())
                 {
                     content += "  - No items\n";
                 }
-                content += "--------------------------------\n";
+                else
+                {
+                    string[] itemHeaders = { "Product", "Quantity", "Unit" };
+                    List<string[]> itemRows = new List<string[]>();
+                    
+                    foreach (var item in shipment.ShipmentItems)
+                    {
+                        itemRows.Add(new string[] { 
+                            item.Product.Name, 
+                            item.Quantity.ToString(), 
+                            item.Product.Unit 
+                        });
+                    }
+                    
+                    content += ConsoleOutput.WriteTable(itemRows, itemHeaders);
+                }
+                
+                content += "\n" + ConsoleOutput.HorizontalLine('-') + "\n";
             }
         }
 

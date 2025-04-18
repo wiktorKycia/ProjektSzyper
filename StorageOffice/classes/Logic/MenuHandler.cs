@@ -1,5 +1,4 @@
 using System;
-using Microsoft.EntityFrameworkCore.Migrations;
 using StorageOffice.classes.CLI;
 using StorageOffice.classes.LogServices;
 using StorageOffice.classes.UsersManagement.Modules;
@@ -235,130 +234,11 @@ public static class MenuHandler
 
     internal static void AddProductsToShipment(User user, database.Shipment shipment)
     {
-        try
-        {
-            // Get all products
-            var products = db?.GetAllProducts();
-            if (products == null || !products.Any())
-            {
-                var error = new Error("No products available.", () => EditAssignedShipment(user, shipment));
-                return;
-            }
-
-            bool adding = true;
-            while (adding)
-            {
-                Console.Clear();
-                Console.WriteLine($"Adding Products to Shipment {shipment.ShipmentId}");
-                Console.WriteLine(ConsoleOutput.HorizontalLine('-'));
-                
-                // Display current shipment items
-                Console.WriteLine("\nCurrent Shipment Items:");
-                Console.WriteLine("--------------------------------------------------");
-                
-                if (shipment.ShipmentItems == null || !shipment.ShipmentItems.Any())
-                {
-                    Console.WriteLine("No items added to this shipment yet.");
-                }
-                else
-                {
-                    Console.WriteLine($"{"Product",-20} {"Quantity",-10} {"Unit",-10}");
-                    foreach (var item in shipment.ShipmentItems)
-                    {
-                        Console.WriteLine($"{item.Product.Name,-20} {item.Quantity,-10} {item.Product.Unit,-10}");
-                    }
-                }
-                
-                Console.WriteLine("\n1. Add product");
-                Console.WriteLine("2. Finish adding products");
-                
-                int choice = ConsoleInput.GetUserInt("Select an option: ");
-                
-                if (choice == 1)
-                {
-                    // Display products for selection
-                    Console.WriteLine("\nAvailable Products:");
-                    for (int i = 0; i < products.Count; i++)
-                    {
-                        Console.WriteLine($"{i + 1}. {products[i].Name} - {products[i].Category} - Current Stock: {products[i].Stock.Quantity} {products[i].Unit}");
-                    }
-
-                    int productIndex = ConsoleInput.GetUserInt("Select product (number): ") - 1;
-                    int productId = products[productIndex].ProductId;
-                    
-                    // Get quantity
-                    int maxQuantity = shipment.ShipmentType == database.ShipmentType.Outbound ? products[productIndex].Stock.Quantity : 10000;
-                    int quantity = ConsoleInput.GetUserInt($"Enter quantity (1-{maxQuantity}): ");
-                    
-                    try
-                    {
-                        // Add to shipment
-                        db?.AddShipmentItem(quantity, shipment.ShipmentId, productId);
-                        
-                        // Refresh shipment data
-                        shipment = db.GetShipmentById(shipment.ShipmentId);
-                        
-                        ConsoleOutput.PrintColorMessage("Product added to shipment successfully!\n", ConsoleColor.Green);
-                        Console.WriteLine("Press any key to continue...");
-                        ConsoleInput.WaitForAnyKey();
-                    }
-                    catch (Exception ex)
-                    {
-                        ConsoleOutput.PrintColorMessage($"Error: {ex.Message}\n", ConsoleColor.Red);
-                        Console.WriteLine("Press any key to continue...");
-                        ConsoleInput.WaitForAnyKey();
-                    }
-                }
-                else
-                {
-                    adding = false;
-                }
-            }
-            
-            EditAssignedShipment(user, shipment);
-        }
-        catch (Exception ex)
-        {
-            var error = new Error($"Error: {ex.Message}", () => EditAssignedShipment(user, shipment));
-        }
+        var productManager = new ShipmentProductManager(shipment, () => EditAssignedShipment(user, shipment), user);
     }
 
     internal static void MarkShipmentComplete(User user, database.Shipment shipment)
     {
-        try
-        {
-            Console.Clear();
-            Console.WriteLine($"Mark Shipment {shipment.ShipmentId} as Complete");
-            Console.WriteLine(ConsoleOutput.HorizontalLine('-'));
-            
-            if (shipment.ShipmentItems == null || !shipment.ShipmentItems.Any())
-            {
-                ConsoleOutput.PrintColorMessage("Cannot complete a shipment with no items!\n", ConsoleColor.Red);
-                Console.WriteLine("Press any key to continue...");
-                ConsoleInput.WaitForAnyKey();
-                EditAssignedShipment(user, shipment);
-                return;
-            }
-            
-            Console.WriteLine("Are you sure you want to mark this shipment as complete? (y/n)");
-            var key = ConsoleInput.GetConsoleKey();
-            
-            if (key == ConsoleKey.Y)
-            {
-                db?.MarkShipmentAsDone(shipment.ShipmentId);
-                ConsoleOutput.PrintColorMessage("Shipment marked as complete successfully!\n", ConsoleColor.Green);
-                Console.WriteLine("Press any key to continue...");
-                ConsoleInput.WaitForAnyKey();
-                ManageShipmentsMenu(user);
-            }
-            else
-            {
-                EditAssignedShipment(user, shipment);
-            }
-        }
-        catch (Exception ex)
-        {
-            var error = new Error($"Error: {ex.Message}", () => EditAssignedShipment(user, shipment));
-        }
+        var completeManager = new CompleteShipment(shipment, () => ManageShipmentsMenu(user), () => EditAssignedShipment(user, shipment));
     }
 }
