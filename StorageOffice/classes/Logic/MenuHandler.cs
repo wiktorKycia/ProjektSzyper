@@ -107,7 +107,10 @@ public static class MenuHandler
     internal static void DeleteUser(User user)
     {
         var users = PasswordManager.GetAllUsers();
-        var checkBoxOptions = users.Select(u => new CheckBoxOption(u.Username, ()=>{PasswordManager.DeleteUser(u.Username);})).ToList();
+        var checkBoxOptions = users.Select(u => new CheckBoxOption(u.Username, ()=>{
+            PasswordManager.DeleteUser(u.Username);
+            db!.DeleteUser(db.GetUserIdByUsername(u.Username));
+        })).ToList();
 
         var deleteUser = new DeleteUser(new CheckBoxSelect(checkBoxOptions), () => {ManageUsers(user);});
     }
