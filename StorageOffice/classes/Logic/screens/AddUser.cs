@@ -117,8 +117,7 @@ public class AddUser
     }
     private Role GetRole()
     {
-        bool isCorrect = false;
-        while(!isCorrect)
+        while(true)
         {
             try
             {
@@ -129,8 +128,7 @@ public class AddUser
                 int roleIndex = ConsoleInput.GetUserInt("Enter the role: ");
                 if (Enum.IsDefined(typeof(Role), roleIndex))
                 {
-                    _user.Role = (Role)roleIndex;
-                    isCorrect = true;
+                    return (Role)roleIndex;
                 }
                 else
                 {
