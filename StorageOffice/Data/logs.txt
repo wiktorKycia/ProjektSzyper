@@ -54,3 +54,11 @@
 [2025-04-18 15:34:54] Info: login of user wiktor - successful
 [2025-04-18 15:35:26] Info: login of user Jan - successful
 [2025-04-18 16:06:15] Info: login of user Jan - successful
+[2025-04-18 16:29:18] Info: login of user Jan - successful
+[2025-04-18 16:51:19] Info: login of user Jan - successful
+[2025-04-18 16:55:41] Info: login of user Jan - successful
+[2025-04-18 17:03:50] Info: login of user Jan - successful
+[2025-04-18 17:06:11] Info: login of user wiktor - successful
+[2025-04-18 17:06:42] Info: action was performed on data of a user named grzesio - deleted a user
+[2025-04-18 17:08:22] Info: login of user wiktor - unsuccessful
+[2025-04-18 17:08:29] Info: login of user wiktor - successful

@@ -181,14 +181,14 @@ public static class MenuHandler
     internal static void ViewPendingShipments(User user)
     {
         var shipments = db?.GetNotCompletedShipments() ?? new List<database.Shipment>();
-        var viewShipments = new ViewShipments(shipments, () => ManageShipmentsMenu(user), "Pending Shipments", false, true);
+        var viewShipments = new ViewShipments(shipments, () => ManageShipmentsMenu(user), "Pending Shipments", showPendingOnly:true);
     }
 
     internal static void ViewCompletedShipments(User user)
     {
         var allShipments = db?.GetAllShipments() ?? new List<database.Shipment>();
         var completedShipments = allShipments.Where(s => s.IsCompleted).ToList();
-        var viewShipments = new ViewShipments(completedShipments, () => ManageShipmentsMenu(user), "Completed Shipments", true);
+        var viewShipments = new ViewShipments(completedShipments, () => ManageShipmentsMenu(user), "Completed Shipments", showCompletedOnly:true);
     }
 
     internal static void ManageAssignedShipments(User user)

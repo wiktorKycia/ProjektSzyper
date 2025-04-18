@@ -310,7 +310,10 @@ namespace StorageOffice.classes.database
 
         public List<Shipment> GetAllNotCompletedOutboundShipments() => [.. _context.Shipments.Where(s => s.ShipmentType == ShipmentType.Outbound && s.IsCompleted == false).Include(s => s.Shop).Include(s => s.ShipmentItems).ThenInclude(si => si.Product)];
 
-        public List<Shipment> GetAllShipments() => GetAllInboundShipments().Concat(GetAllOutboundShipments()).ToList();
+        public List<Shipment> GetAllShipments() => GetAllInboundShipments()
+            .Concat(GetAllOutboundShipments())
+            .OrderBy(s => s.ShipmentId)
+            .ToList();
 
         public List<Shipment> GetNotCompletedShipmentsAssignedToUser(int userId)
         {
