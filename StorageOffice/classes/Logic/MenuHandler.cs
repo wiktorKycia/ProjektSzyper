@@ -71,4 +71,14 @@ public class MenuHandler
             );
         }
     }
+    internal static void ManageUsers(User user)
+    {
+        var manageUsers = new ManageUsers("Users", "", RadioSelect(new List<RadioOption>
+        {
+            new RadioOption("Add user", () => {AddUser(user);}),
+            new RadioOption("Edit user", () => {EditUser(user);}),
+            new RadioOption("Delete user", () => {DeleteUser(user);}),
+            new RadioOption("View users", () => {ViewUsers(user);})
+        }));
+    }
 }
