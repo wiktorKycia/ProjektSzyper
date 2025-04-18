@@ -3,6 +3,7 @@ using System.Linq;
 using System.Collections.Generic;
 using Bogus;
 using StorageOffice.classes.UsersManagement.Services;
+using Microsoft.EntityFrameworkCore;
 
 namespace StorageOffice.classes.database;
 
@@ -15,6 +16,15 @@ public class DataSeeder
             return;
 
         var random = new Random();
+
+        // Set the starting value for each table's primary key to 1
+        context.Database.ExecuteSqlRaw("DELETE FROM sqlite_sequence WHERE name = 'Shops';");
+        context.Database.ExecuteSqlRaw("DELETE FROM sqlite_sequence WHERE name = 'Products';");
+        context.Database.ExecuteSqlRaw("DELETE FROM sqlite_sequence WHERE name = 'Stocks';");
+        context.Database.ExecuteSqlRaw("DELETE FROM sqlite_sequence WHERE name = 'Shippers';");
+        context.Database.ExecuteSqlRaw("DELETE FROM sqlite_sequence WHERE name = 'Shipments';");
+        context.Database.ExecuteSqlRaw("DELETE FROM sqlite_sequence WHERE name = 'ShipmentItems';");
+        context.Database.ExecuteSqlRaw("DELETE FROM sqlite_sequence WHERE name = 'Users';");
 
         var users = PasswordManager.GetAllUsers();
         List<User> userList = new List<User>();
@@ -113,10 +123,10 @@ public class DataSeeder
         context.Shippers.AddRange(shippers);
         context.SaveChanges();
 
-        // Rest of the code remains the same
+        // Ensure that each shipment has either a Shop or a Shipper, but not both
         var shipmentFaker = new Faker<Shipment>()
-            .RuleFor(s => s.Shop, f => f.PickRandom(shops))
-            .RuleFor(s => s.Shipper, f => f.Random.Bool(0.8f) ? f.PickRandom(shippers) : null)
+            .RuleFor(s => s.Shop, f => f.Random.Bool() ? f.PickRandom(shops) : null)
+            .RuleFor(s => s.Shipper, (f, s) => s.Shop == null ? f.PickRandom(shippers) : null)
             .RuleFor(s => s.ShipmentType, f => f.Random.Enum<ShipmentType>())
             .RuleFor(s => s.ShippedDate, f => f.Date.Past(1))
             .RuleFor(s => s.User, f => f.PickRandom(userList.Where(u => u.Role == UserRole.Warehouseman)));
