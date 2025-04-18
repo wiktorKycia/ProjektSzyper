@@ -15,7 +15,7 @@ class Dialog
         Text = text;
         _keyboardActions = new Dictionary<ConsoleKey, KeyboardAction>(){
             { ConsoleKey.Escape, onExit.Invoke },
-            { ConsoleKey.Enter, onAccept.Invoke }
+            { ConsoleKey.Enter, ()=> { onAccept.Invoke(); onExit.Invoke(); } }
         };
         _displayKeyboardActions = new Dictionary<string, string>(){
             { "<Esc>", "cancel" },

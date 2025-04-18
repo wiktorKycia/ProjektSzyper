@@ -49,8 +49,13 @@ public class FirstUser
 
                 if(GetConfirm(ref running))
                 {
-                    PasswordManager.SaveNewUser(_user.Username, password, Role.Administrator);
+                    PasswordManager.SaveNewUser(_user.Username, password, Role.Administrator);                    
+                    MenuHandler.db?.AddUser(_user.Username, "Administrator");
+                    
                     LogManager.AddNewLog($"Info: login of user {_user.Username} - successful");
+                    ConsoleOutput.PrintColorMessage("User successfully created\n", ConsoleColor.Green);
+                    Console.WriteLine("Press any key to continue...");
+                    ConsoleInput.WaitForAnyKey();
                     _nextMenu.Invoke();
                 }
             }

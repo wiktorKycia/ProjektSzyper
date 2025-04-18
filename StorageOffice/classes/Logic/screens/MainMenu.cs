@@ -10,7 +10,7 @@ public class MainMenu
     private readonly Dictionary<ConsoleKey, KeyboardAction> _keyboardActions;
     private readonly Dictionary<string, string> _displayKeyboardActions;
 
-    public MainMenu(string title, string heading, Select select)
+    public MainMenu(string title, string heading, Select select, Action onExit)
     {
         _title = title;
         _heading = heading;
@@ -19,7 +19,7 @@ public class MainMenu
             { ConsoleKey.UpArrow, select.MoveUp },
             { ConsoleKey.DownArrow, select.MoveDown },
             { ConsoleKey.Enter, select.InvokeOperation },
-            { ConsoleKey.Escape, () => Environment.Exit(0) }
+            { ConsoleKey.Escape, () => onExit.Invoke() }
         };
         _displayKeyboardActions = new Dictionary<string, string>(){
             { "\u2191", "move up" },
@@ -53,7 +53,7 @@ public class MainMenu
         {
             foreach (var option in _select.Options)
             {
-                content += "\n" + ConsoleOutput.CenteredText(option?.ToString() ?? "[ ] No Text", true);
+                content += "\n" + ConsoleOutput.CenteredText(option?.ToString() + "\n" ?? "[ ] No Text" + "\n", true);
             }
         }
         else

@@ -8,9 +8,9 @@ using StorageOffice.classes.UsersManagement.Modules;
 
 namespace StorageOffice.classes.UsersManagement.Services
 {
-    enum Role
+    public enum Role
     {
-        Administrator,
+        Administrator = 1,
         Warehouseman,
         Logistician,
         WarehouseManager

@@ -17,3 +17,64 @@
 [2025-04-17 21:29:02] Info: login of user wikrot - successful
 [2025-04-17 22:26:37] Info: login of user wikrot - successful
 [2025-04-17 22:27:48] Info: login of user wikrot - successful
+[2025-04-18 10:04:47] Info: login of user wikrot - successful
+[2025-04-18 10:09:50] Info: login of user wikrot - unsuccessful
+[2025-04-18 10:09:57] Info: login of user wikrot - successful
+[2025-04-18 10:18:03] Info: login of user wikrot - successful
+[2025-04-18 10:47:39] Info: login of user wikrot - successful
+[2025-04-18 10:48:42] Info: login of user wikrot - successful
+[2025-04-18 10:50:45] Info: login of user wikrot - successful
+[2025-04-18 11:04:12] Info: login of user wikrot - successful
+[2025-04-18 11:09:29] Info: login of user wikrot - successful
+[2025-04-18 11:09:58] Info: action was performed on data of a user named Jan - added a new user
+[2025-04-18 11:16:14] Info: login of user wikrot - successful
+[2025-04-18 11:17:08] Info: action was performed on data of a user named mietek - added a new user
+[2025-04-18 11:17:45] Info: action was performed on data of a user named wiesio - added a new user
+[2025-04-18 11:18:13] Info: action was performed on data of a user named grzesio - added a new user
+[2025-04-18 11:23:51] Info: login of user wikrot - successful
+[2025-04-18 11:24:56] Info: login of user wikrot - successful
+[2025-04-18 11:28:03] Info: login of user wikrot - successful
+[2025-04-18 11:29:22] Info: login of user wikrot - successful
+[2025-04-18 12:08:22] Info: login of user wikrot - successful
+[2025-04-18 12:11:36] Info: login of user wikrot - successful
+[2025-04-18 12:11:54] Info: action was performed on data of a user named grzesio - deleted a user
+[2025-04-18 12:15:20] Info: login of user wikrot - unsuccessful
+[2025-04-18 12:15:26] Info: login of user wikrot - successful
+[2025-04-18 13:34:12] Info: login of user wikrot - successful
+[2025-04-18 13:34:25] Info: action was performed on data of a user named g - added a new user
+[2025-04-18 14:38:47] Info: login of user wikrot - successful
+[2025-04-18 14:39:03] Info: action was performed on data of a user named g - changed user's name to grzesio
+[2025-04-18 14:39:25] Info: action was performed on data of a user named grzesio - changed user's password
+[2025-04-18 14:39:47] Info: action was performed on data of a user named grzesio - changed user's role
+[2025-04-18 14:49:11] Info: login of user wikrot - successful
+[2025-04-18 14:49:20] Info: action was performed on data of a user named wikrot - changed user's name to wiktor
+[2025-04-18 14:49:35] Info: action was performed on data of a user named wiktor - changed user's password
+[2025-04-18 14:49:52] Info: action was performed on data of a user named a - added a new user
+[2025-04-18 14:50:08] Info: action was performed on data of a user named a - deleted a user
+[2025-04-18 15:34:54] Info: login of user wiktor - successful
+[2025-04-18 15:35:26] Info: login of user Jan - successful
+[2025-04-18 16:06:15] Info: login of user Jan - successful
+[2025-04-18 16:29:18] Info: login of user Jan - successful
+[2025-04-18 16:51:19] Info: login of user Jan - successful
+[2025-04-18 16:55:41] Info: login of user Jan - successful
+[2025-04-18 17:03:50] Info: login of user Jan - successful
+[2025-04-18 17:06:11] Info: login of user wiktor - successful
+[2025-04-18 17:06:42] Info: action was performed on data of a user named grzesio - deleted a user
+[2025-04-18 17:08:22] Info: login of user wiktor - unsuccessful
+[2025-04-18 17:08:29] Info: login of user wiktor - successful
+[2025-04-18 17:22:16] Info: login of user Jan - successful
+[2025-04-18 20:28:01] Info: login of user Jan - successful
+[2025-04-18 20:41:32] Info: login of user Jan - successful
+[2025-04-18 21:32:11] Info: login of user wiesio - successful
+[2025-04-18 21:33:28] Info: login of user mietek - successful
+[2025-04-18 21:47:30] Info: login of user mietek - successful
+[2025-04-18 21:53:03] Info: login of user mietek - successful
+[2025-04-18 21:56:29] Info: login of user mietek - successful
+[2025-04-18 22:00:37] Info: login of user Jan - successful
+[2025-04-18 22:01:23] Info: login of user wiesio - successful
+[2025-04-18 22:12:10] Info: login of user Jan - successful
+[2025-04-18 22:13:01] Info: login of user wiesio - successful
+[2025-04-18 22:13:46] Info: login of user mietek - successful
+[2025-04-18 22:16:17] Info: login of user Jan - successful
+[2025-04-18 22:21:31] Info: login of user Jan - successful
+[2025-04-18 22:22:11] Info: login of user wiesio - successful

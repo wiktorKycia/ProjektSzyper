@@ -22,13 +22,13 @@ public class StorageContext : DbContext
 
     public StorageContext(string? customDbPath = null)
     {
-        var folder = Environment.SpecialFolder.LocalApplicationData;
+        var solutionDirectory = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "../../../"));
+        var appPath = Path.Combine(solutionDirectory, "Data");
 
-        // Create app folder in AppData/Local (MS Windows) if it doesn't exist yet
-        var appPath = Path.Join(Environment.GetFolderPath(folder), "StorageOffice");
+        // Create the Data folder in the solution's base directory if it doesn't exist yet
         Directory.CreateDirectory(appPath);
 
-        this.DbPath = customDbPath ?? Path.Join(appPath, "StorageOffice.db");
+        this.DbPath = customDbPath ?? Path.Combine(appPath, "StorageOffice.db");
     }
     protected override void OnConfiguring(DbContextOptionsBuilder options)
     {
@@ -87,10 +87,10 @@ public enum ShipmentType
 }
 public enum UserRole
 {
-    Admin,
-    Manager,
+    Administrator = 1,
     Warehouseman,
-    Guest
+    Logistician,
+    WarehouseManager
 }
 
 // Shop table: holds shop details.
@@ -263,7 +263,7 @@ public class User
         {
             throw new ArgumentNullException(null, "User's username can't be empty");
         }
-        else if (!Regex.IsMatch(username, @"^[a-zA-Z0-9_.¹æê³ñóœŸ¿¥ÆÊ£ÑÓŒ¯]+$"))
+        else if (!Regex.IsMatch(username, @"^[a-zA-Z0-9_.ï¿½ï¿½ï¿½ï¿½óœŸ¿ï¿½ï¿½Ê£ï¿½ÓŒï¿½ï¿½]+$"))
         {
             throw new ArgumentException("The username can only contain letters, numbers, characters '_' and '.'! ");
         }

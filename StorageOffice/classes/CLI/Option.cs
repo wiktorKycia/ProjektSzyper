@@ -72,6 +72,13 @@ public class CheckBoxOption: ISelectable, IHighlightable
     public void ToggleHighlight() => IsHighlighted = !IsHighlighted;
     public override string ToString()
     { 
-        return $"[{SpecialSign}] {Text}";
+        if (IsSelected)
+        {
+            return $"[{SpecialSign}] {Text}";
+        }
+        else
+        {
+            return $"[ ] {Text}";
+        }
     }
 }

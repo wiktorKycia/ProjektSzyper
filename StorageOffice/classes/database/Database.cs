@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace StorageOffice.classes.database
 {
-    class StorageDatabase
+    public class StorageDatabase
     {
         private StorageContext _context = new();
         public string Path { get { return _context.DbPath; } }
@@ -310,7 +310,10 @@ namespace StorageOffice.classes.database
 
         public List<Shipment> GetAllNotCompletedOutboundShipments() => [.. _context.Shipments.Where(s => s.ShipmentType == ShipmentType.Outbound && s.IsCompleted == false).Include(s => s.Shop).Include(s => s.ShipmentItems).ThenInclude(si => si.Product)];
 
-        public List<Shipment> GetAllShipments() => GetAllInboundShipments().Concat(GetAllOutboundShipments()).ToList();
+        public List<Shipment> GetAllShipments() => GetAllInboundShipments()
+            .Concat(GetAllOutboundShipments())
+            .OrderBy(s => s.ShipmentId)
+            .ToList();
 
         public List<Shipment> GetNotCompletedShipmentsAssignedToUser(int userId)
         {
@@ -425,6 +428,25 @@ namespace StorageOffice.classes.database
                 return user;
             }
             throw new InvalidOperationException("The given user's id doesn't exist in database!");
+        }
+
+        public User GetUserByUsername(string username)
+        {
+            User? user = _context.Users.SingleOrDefault(u => u.Username == username);
+            if (user != null)
+            {
+                return user;
+            }
+            throw new InvalidOperationException("The given user's username doesn't exist in database!");
+        }
+        public int GetUserIdByUsername(string username)
+        {
+            User? user = _context.Users.SingleOrDefault(u => u.Username == username);
+            if (user != null)
+            {
+                return user.UserId;
+            }
+            throw new InvalidOperationException("The given user's username doesn't exist in database!");
         }
 
         public void SeedData() => DataSeeder.Seed(_context);
