@@ -51,7 +51,7 @@ public class EditPassword
                     if(GetConfirm())
                     {
                         PasswordManager.ChangeUserPassword(_username, newPassword);
-                        ConsoleOutput.PrintColorMessage("Password successfully changed", ConsoleColor.Green);
+                        ConsoleOutput.PrintColorMessage("Password successfully changed\n", ConsoleColor.Green);
                         Console.WriteLine("Press any key to continue...");
                         ConsoleInput.WaitForAnyKey();
                     }
@@ -70,8 +70,10 @@ public class EditPassword
 
     private bool GetConfirm()
     {
-        string answer = ConsoleInput.GetUserString("Are you sure you want to change the password? (y/n): ");
-        return answer.ToLower() == "y";
+        Console.WriteLine("Is the password correct? (y/n): ");
+        var key = ConsoleInput.GetConsoleKey();
+        if (key == ConsoleKey.Y) return true;
+        else return false;
     }
 
     private void Display()

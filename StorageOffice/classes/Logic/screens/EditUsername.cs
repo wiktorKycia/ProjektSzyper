@@ -54,8 +54,8 @@ public class EditUsername
                         MenuHandler.db?.UpdateUser(userId, newUsername, null);
 
                         PasswordManager.ChangeUsername(_username, newUsername);
-                        
-                        ConsoleOutput.PrintColorMessage($"Username successfully changed to {newUsername}", ConsoleColor.Green);
+
+                        ConsoleOutput.PrintColorMessage($"Username successfully changed to {newUsername}\n", ConsoleColor.Green);
                         Console.WriteLine("Press any key to continue...");
                         ConsoleInput.WaitForAnyKey();
                     }
@@ -74,8 +74,10 @@ public class EditUsername
 
     private bool GetConfirm()
     {
-        string answer = ConsoleInput.GetUserString("Are you sure you want to change the username? (y/n): ");
-        return answer.ToLower() == "y";
+        Console.WriteLine("Is the username correct? (y/n): ");
+        var key = ConsoleInput.GetConsoleKey();
+        if (key == ConsoleKey.Y) return true;
+        else return false;
     }
 
     private void Display()

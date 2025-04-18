@@ -49,12 +49,12 @@ public class EditRole
                 {
                     Role newRole = GetRole();
                     
-                    if(GetConfirm(newRole))
+                    if(GetConfirm())
                     {
                         int userId = MenuHandler.db?.GetUserIdByUsername(_username) ?? 0;
                         MenuHandler.db?.UpdateUser(userId, null, newRole.ToString());
                         PasswordManager.ChangeUserRole(_username, newRole);
-                        ConsoleOutput.PrintColorMessage($"Role successfully changed to {newRole}", ConsoleColor.Green);
+                        ConsoleOutput.PrintColorMessage($"Role successfully changed to {newRole}\n", ConsoleColor.Green);
                         Console.WriteLine("Press any key to continue...");
                         ConsoleInput.WaitForAnyKey();
                     }
@@ -101,10 +101,12 @@ public class EditRole
         }
     }
 
-    private bool GetConfirm(Role newRole)
+    private bool GetConfirm()
     {
-        string answer = ConsoleInput.GetUserString($"Are you sure you want to change the role to {newRole}? (y/n): ");
-        return answer.ToLower() == "y";
+        Console.WriteLine("Is the role correct? (y/n): ");
+        var key = ConsoleInput.GetConsoleKey();
+        if (key == ConsoleKey.Y) return true;
+        else return false;
     }
 
     private void Display()
