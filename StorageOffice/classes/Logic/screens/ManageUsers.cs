@@ -10,7 +10,7 @@ public class ManageUsers
     private readonly Dictionary<ConsoleKey, KeyboardAction> _keyboardActions;
     private readonly Dictionary<string, string> _displayKeyboardActions;
 
-    public ManageUsers(string title, string heading, Select select)
+    public ManageUsers(string title, string heading, Select select, Action onExit)
     {
         _title = title;
         _heading = heading;
@@ -19,13 +19,13 @@ public class ManageUsers
             { ConsoleKey.UpArrow, select.MoveUp },
             { ConsoleKey.DownArrow, select.MoveDown },
             { ConsoleKey.Enter, select.InvokeOperation },
-            { ConsoleKey.Escape, () => Environment.Exit(0) }
+            { ConsoleKey.Escape, onExit.Invoke }
         };
         _displayKeyboardActions = new Dictionary<string, string>(){
             { "\u2191", "move up" },
             { "\u2193", "move down" },
             { "<Enter>", "select" },
-            { "<Esc>", "exit" }
+            { "<Esc>", "back" }
         };
         Run();
     }

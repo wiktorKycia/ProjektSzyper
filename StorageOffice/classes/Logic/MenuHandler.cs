@@ -40,7 +40,7 @@ public class MenuHandler
             {Permission.DoTasks, new RadioOption("Tasks", () => {DetailsMenu(user, "Do tasks");})},
             {Permission.ManageShipments, new RadioOption("Shipments", () => {DetailsMenu(user, "Manage shipments");})},
             {Permission.BrowseShipments, new RadioOption("Shipments", () => {DetailsMenu(user, "Browse shipments");})},
-            {Permission.ManageUsers, new RadioOption("Manage users", () => {DetailsMenu(user, "Manage users");})},
+            {Permission.ManageUsers, new RadioOption("Manage users", () => {ManageUsers(user);})},
             {Permission.ViewLogs, new RadioOption("View logs", () => {Logs(user);})}
         };
 
@@ -79,7 +79,7 @@ public class MenuHandler
             new RadioOption("Edit user", () => {EditUser(user);}),
             new RadioOption("Delete user", () => {DeleteUser(user);}),
             new RadioOption("View users", () => {ViewUsers(user);})
-        }));
+        }), () => {MainMenu(user);});
     }
     internal static void ViewUsers(User user)
     {
