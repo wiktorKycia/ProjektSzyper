@@ -14,7 +14,7 @@ namespace StorageOffice.classes.Tests.Services
             File.Copy(path, backupFilePath, true);
             try
             {
-                testLogic();
+                testLogic?.Invoke();
             }
             finally
             {
