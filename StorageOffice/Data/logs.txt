@@ -1,2 +1,19 @@
 [2025-04-17 14:54:00] Info: login of user Jan - unsuccessful
 [2025-04-17 14:54:10] Info: login of user wikrot - unsuccessful
+[2025-04-17 20:58:45] Info: login of user Jan - unsuccessful
+[2025-04-17 20:59:01] Info: login of user asdf - unsuccessful
+[2025-04-17 20:59:06] Info: login of user fd - unsuccessful
+[2025-04-17 20:59:48] Error: problem in users.txt file found - an anomaly was detected in number of users' data
+[2025-04-17 21:04:04] Error: problem in users.txt file found - an anomaly was detected in number of users' data
+[2025-04-17 21:04:19] Error: problem in users.txt file found - an anomaly was detected in number of users' data
+[2025-04-17 21:05:13] Error: problem in users.txt file found - an anomaly was detected in number of users' data
+[2025-04-17 21:06:40] Info: action was performed on data of a user named wiktor - added a new user
+[2025-04-17 21:06:40] Info: login of user wiktor - successful
+[2025-04-17 21:12:11] Info: login of user wiktor - successful
+[2025-04-17 21:12:43] Info: action was performed on data of a user named wiktor - added a new user
+[2025-04-17 21:12:43] Info: login of user wiktor - successful
+[2025-04-17 21:12:57] Info: action was performed on data of a user named wikrot - added a new user
+[2025-04-17 21:12:57] Info: login of user wikrot - successful
+[2025-04-17 21:29:02] Info: login of user wikrot - successful
+[2025-04-17 22:26:37] Info: login of user wikrot - successful
+[2025-04-17 22:27:48] Info: login of user wikrot - successful

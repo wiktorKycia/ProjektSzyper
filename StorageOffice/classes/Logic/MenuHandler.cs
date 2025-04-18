@@ -1,21 +1,60 @@
 using System;
 using StorageOffice.classes.CLI;
-namespace StorageOffice.classes.Logic;
+using StorageOffice.classes.LogServices;
+using StorageOffice.classes.UsersManagement.Modules;
+using StorageOffice.classes.UsersManagement.Services;
 
+namespace StorageOffice.classes.Logic;
 
 public class MenuHandler
 {
-    public static void MainMenu()
+    internal static void Start(User user)
     {
-        var menu = new MainMenu("Storage System manager", "Welcome", new RadioSelect(new List<RadioOption>
+        if(PasswordManager.CheckFile())
         {
-            new RadioOption("Option 1", DetailsMenu),
-            new RadioOption("Option 2", () => {}),
-            new RadioOption("Option 3", () => {})
-        }));
+            var loginMenu = new Login(
+                title: "Login menu",
+                heading: "Welcome to the logistics warehouse management system!",
+                nextMenu: () => {MainMenu(user);},
+                user: user
+            );
+        }
+        else
+        {
+            var firstUserMenu = new FirstUser(
+                title: "Register first user",
+                heading: "No user has been created on the system, so the details currently provided will be used to create the first administrator. Enter the details for him/her.\n",
+                nextMenu: () => {MainMenu(user);},
+                user: user
+            );
+        }
     }
-    public static void DetailsMenu()
+    internal static void MainMenu(User user)
     {
-        var details = new Details("Details for Option 1", MainMenu);
+        RBAC rbac = new();
+        // prepare options according to permissions
+        Dictionary<Permission, RadioOption> options = new Dictionary<Permission, RadioOption>
+        {
+            {Permission.BrowseWarehouse, new RadioOption("Warehouse", () => {DetailsMenu(user, "Warehouser");})},
+            {Permission.AssignTask, new RadioOption("Assign task", () => {DetailsMenu(user, "Assign task");})},
+            {Permission.DoTasks, new RadioOption("Do tasks", () => {DetailsMenu(user, "Do tasks");})},
+            {Permission.ManageShipments, new RadioOption("Manage shipments", () => {DetailsMenu(user, "Manage shipments");})},
+            {Permission.BrowseShipments, new RadioOption("Browse shipments", () => {DetailsMenu(user, "Browse shipments");})},
+            {Permission.ManageUsers, new RadioOption("Manage users", () => {DetailsMenu(user, "Manage users");})},
+            {Permission.ViewLogs, new RadioOption("View logs", () => {DetailsMenu(user, "View logs");})}
+        };
+
+        // check if user has permission to each option
+        var radioOptions = options
+            .Where(option => rbac.HasPermission(user, option.Key))
+            .Select(option => option.Value)
+            .ToList();
+
+
+        var menu = new MainMenu("Storage System manager", $"Logged in as {user.Username}", new RadioSelect(radioOptions));
+    }
+    internal static void DetailsMenu(User user, string _details)
+    {
+        var details = new Details(_details, () => {MainMenu(user);});
     }
 }
