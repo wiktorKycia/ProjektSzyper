@@ -73,7 +73,6 @@ public class CheckBoxSelect : Select
     {
         CheckBoxOptions = options;
         CurrentIndex = 0;
-        SelectOption();
         HighlightOption();
     }
 
