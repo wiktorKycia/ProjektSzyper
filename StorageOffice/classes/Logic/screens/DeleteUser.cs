@@ -41,6 +41,9 @@ public class DeleteUser
         if (key == ConsoleKey.Y)
         {
             _select.InvokeOperation();
+            ConsoleOutput.PrintColorMessage("Users successfully deleted!\n", ConsoleColor.Green);
+            Console.WriteLine("Press any key to continue...");
+            ConsoleInput.WaitForAnyKey();
             exit.Invoke();
         }
     }

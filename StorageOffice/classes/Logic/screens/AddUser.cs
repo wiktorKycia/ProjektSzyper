@@ -52,6 +52,9 @@ public class AddUser
                 {
                     PasswordManager.SaveNewUser(_user.Username, password, role);
                     MenuHandler.db?.AddUser(_user.Username, role.ToString());
+                    ConsoleOutput.PrintColorMessage("User successfully created!\n", ConsoleColor.Green);
+                    Console.WriteLine("Press any key to continue...");
+                    ConsoleInput.WaitForAnyKey();
                     _backMenu.Invoke();
                 }
             }

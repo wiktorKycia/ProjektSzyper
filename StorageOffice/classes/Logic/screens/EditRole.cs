@@ -57,9 +57,9 @@ public class EditRole
                         ConsoleOutput.PrintColorMessage($"Role successfully changed to {newRole}\n", ConsoleColor.Green);
                         Console.WriteLine("Press any key to continue...");
                         ConsoleInput.WaitForAnyKey();
+                        running = false;
+                        _onExit.Invoke();
                     }
-                    running = false;
-                    _onExit.Invoke();
                 }
                 catch (ArgumentException e)
                 {

@@ -54,9 +54,9 @@ public class EditPassword
                         ConsoleOutput.PrintColorMessage("Password successfully changed\n", ConsoleColor.Green);
                         Console.WriteLine("Press any key to continue...");
                         ConsoleInput.WaitForAnyKey();
+                        running = false;
+                        _onExit.Invoke();
                     }
-                    running = false;
-                    _onExit.Invoke();
                 }
                 catch (ArgumentException e)
                 {
