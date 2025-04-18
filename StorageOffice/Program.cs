@@ -9,7 +9,6 @@ namespace StorageOffice
             var db = new StorageDatabase();
             db.ClearDatabase();
             db.SeedData(); // Add this line to populate the database
-            db.AddProduct("Janko", "człowiek", "pkg", "An 17 years old man");
         }
     }
 }

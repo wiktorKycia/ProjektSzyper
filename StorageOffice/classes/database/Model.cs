@@ -147,6 +147,14 @@ public class Stock
     // Navigation: Reference back to the product.
     public Product Product { get; set; }
 
+    public static void Validate(int quantity)
+    {
+        if (quantity < 0)
+        {
+            throw new ArgumentException("The stock's quantity can't be smaller than 0!");
+        }
+    }
+
     public static void Validate(int quantity, DateTime date)
     {
         if(quantity < 0)

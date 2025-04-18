@@ -23,7 +23,7 @@ namespace StorageOffice.classes.database
         public void AddShop(string? shopName, string? location)
         {
             Shop.Validate(shopName, location);
-            if (_context.Shops.Any(s => s.ShopName == shopName))
+            if (_context.Shops.Any(s => s.ShopName.ToLower() == shopName!.ToLower()))
             {
                 throw new InvalidOperationException("A shop with this name already exists!");
             }
@@ -37,7 +37,7 @@ namespace StorageOffice.classes.database
             Shop shop = GetShopById(shopId);
             if (!string.IsNullOrEmpty(shopName))
             {
-                if (_context.Shops.Any(s => s.ShopName == shopName))
+                if (_context.Shops.Any(s => s.ShopName.ToLower() == shopName.ToLower()))
                 {
                     throw new InvalidOperationException("A shop with this name already exists!");
                 }
@@ -66,14 +66,14 @@ namespace StorageOffice.classes.database
             {
                 return shop;
             }
-            throw new ArgumentException("The given shop's id doesn't exist in database!");
+            throw new InvalidOperationException("The given shop's id doesn't exist in database!");
         }
 
         // Products and Stocks management methods
         public void AddProductAndStock(string? name, string? category, string? unit, string? description)
         {
             Product.Validate(name, category, unit, description);
-            if (_context.Products.Any(p => p.Name == name))
+            if (_context.Products.Any(p => p.Name.ToLower() == name!.ToLower()))
             {
                 throw new InvalidOperationException("A product with this name already exists!");
             }
@@ -88,7 +88,7 @@ namespace StorageOffice.classes.database
             Product product = GetProductById(productId);
             if (!string.IsNullOrEmpty(name))
             {
-                if (_context.Products.Any(p => p.Name == name))
+                if (_context.Products.Any(p => p.Name.ToLower() == name.ToLower()))
                 {
                     throw new InvalidOperationException("A product with this name already exists!");
                 }
@@ -116,7 +116,11 @@ namespace StorageOffice.classes.database
             _context.SaveChanges();
         }
 
-        public List<Product> GetAllProducts() => [.. _context.Products];
+        public List<Product> GetAllProducts() => [.. _context.Products.Include(p => p.Stock)];
+
+        public List<Product> GetAllproductsByName(string name) => _context.Products.Where(p => p.Name == name).Include(p => p.Stock).ToList();
+
+        public List<Product> GetAllproductsByCategory(string category) => _context.Products.Where(p => p.Category == category).Include(p => p.Stock).ToList();
 
         public Product GetProductById(int productId)
         {
@@ -125,7 +129,7 @@ namespace StorageOffice.classes.database
             {
                 return product;
             }
-            throw new ArgumentException("The given product's id doesn't exist in database!");
+            throw new InvalidOperationException("The given product's id doesn't exist in database!");
         }
 
         // Stocks management methods
@@ -155,14 +159,14 @@ namespace StorageOffice.classes.database
             {
                 return stock;
             }
-            throw new ArgumentException("The given stock's id doesn't exist in database!");
+            throw new InvalidOperationException("The given stock's id doesn't exist in database!");
         }
 
         // Shippers management methods
         public void AddShipper(string? name, string? contactInfo)
         {
             Shipper.Validate(name, contactInfo);
-            if (_context.Shippers.Any(s => s.Name == name))
+            if (_context.Shippers.Any(s => s.Name.ToLower() == name!.ToLower()))
             {
                 throw new InvalidOperationException("A shipper with this name already exists!");
             }
@@ -176,7 +180,7 @@ namespace StorageOffice.classes.database
             Shipper shipper = GetShipperById(shipperId);
             if (!string.IsNullOrEmpty(name))
             {
-                if (_context.Shippers.Any(s => s.Name == name))
+                if (_context.Shippers.Any(s => s.Name.ToLower() == name.ToLower()))
                 {
                     throw new InvalidOperationException("A shipper with this name already exists!");
                 }
@@ -205,7 +209,7 @@ namespace StorageOffice.classes.database
             {
                 return shipper;
             }
-            throw new ArgumentException("The given shipper's id doesn't exist in database!");
+            throw new InvalidOperationException("The given shipper's id doesn't exist in database!");
         }
 
         // Shipments management methods
@@ -240,7 +244,7 @@ namespace StorageOffice.classes.database
                 }
                 else
                 {
-                    throw new ArgumentException("The inbound shipment must have a shipper assigned!");
+                    throw new InvalidOperationException("The inbound shipment must have a shipper assigned!");
                 }
             }
             else
@@ -252,7 +256,7 @@ namespace StorageOffice.classes.database
                 }
                 else
                 {
-                    throw new ArgumentException("The outbound shipment must have a shop assigned!");
+                    throw new InvalidOperationException("The outbound shipment must have a shop assigned!");
                 }
             }
             _context.SaveChanges();
@@ -269,6 +273,23 @@ namespace StorageOffice.classes.database
         public void MarkShipmentAsDone(int shipmentId)
         {
             Shipment shipment = GetShipmentById(shipmentId);
+            if (shipment.ShipmentType == ShipmentType.Inbound)
+            {
+                foreach (ShipmentItem shipmentItem in shipment.ShipmentItems)
+                {
+                    Stock stock = _context.Stocks.Single(s => s.Product == shipmentItem.Product);
+                    UpdateStock(stock.StockId, stock.Quantity + shipmentItem.Quantity);
+                }
+            }
+            else
+            {
+                foreach (ShipmentItem shipmentItem in shipment.ShipmentItems)
+                {
+                    Stock stock = _context.Stocks.Single(s => s.Product == shipmentItem.Product);
+                    Stock.Validate(stock.Quantity - shipmentItem.Quantity);
+                    UpdateStock(stock.StockId, stock.Quantity - shipmentItem.Quantity);
+                }
+            }
             shipment.IsCompleted = true;
             shipment.ShippedDate = DateTime.Now;
             _context.SaveChanges();
@@ -281,7 +302,23 @@ namespace StorageOffice.classes.database
             _context.SaveChanges();
         }
 
-        public List<Shipment> GetAllShipments() => [.. _context.Shipments];
+        public List<Shipment> GetAllInboundShipments() => [.. _context.Shipments.Where(s => s.ShipmentType == ShipmentType.Inbound).Include(s => s.Shipper).Include(s => s.ShipmentItems).ThenInclude(si => si.Product)];
+
+        public List<Shipment> GetAllOutboundShipments() => [.. _context.Shipments.Where(s => s.ShipmentType == ShipmentType.Outbound).Include(s => s.Shop).Include(s => s.ShipmentItems).ThenInclude(si => si.Product)];
+
+        public List<Shipment> GetAllNotCompletedInboundShipments() => [.. _context.Shipments.Where(s => s.ShipmentType == ShipmentType.Inbound && s.IsCompleted == false).Include(s => s.Shipper).Include(s => s.ShipmentItems).ThenInclude(si => si.Product)];
+
+        public List<Shipment> GetAllNotCompletedOutboundShipments() => [.. _context.Shipments.Where(s => s.ShipmentType == ShipmentType.Outbound && s.IsCompleted == false).Include(s => s.Shop).Include(s => s.ShipmentItems).ThenInclude(si => si.Product)];
+
+        public List<Shipment> GetAllShipments() => GetAllInboundShipments().Concat(GetAllOutboundShipments()).ToList();
+
+        public List<Shipment> GetNotCompletedShipmentsAssignedToUser(int userId)
+        {
+            User user = GetUserById(userId);
+            return GetAllShipments().Where(s => s.User == user && s.IsCompleted == false).ToList();
+        }
+
+        public List<Shipment> GetNotCompletedShipments() => GetAllNotCompletedInboundShipments().Concat(GetAllNotCompletedOutboundShipments()).ToList();
 
         public Shipment GetShipmentById(int shipmentId)
         {
@@ -290,7 +327,7 @@ namespace StorageOffice.classes.database
             {
                 return shipment;
             }
-            throw new ArgumentException("The given shipment's id doesn't exist in database!");
+            throw new InvalidOperationException("The given shipment's id doesn't exist in database!");
         }
 
         // ShipmentItems management methods
@@ -299,6 +336,10 @@ namespace StorageOffice.classes.database
             ShipmentItem.Validate(quantity);
             Shipment shipment = GetShipmentById(shipmentId);
             Product product = GetProductById(productId);
+            if(_context.ShipmentItems.Any(s => s.Shipment == shipment && s.Product == product))
+            {
+                throw new InvalidOperationException("The given shipment item is already added to this shipment!");
+            }
 
             ShipmentItem shipmentItem = new ShipmentItem() { Quantity = quantity, Product = product, Shipment = shipment};
             _context.ShipmentItems.Add(shipmentItem);
@@ -329,14 +370,14 @@ namespace StorageOffice.classes.database
             {
                 return shipmentItem;
             }
-            throw new ArgumentException("The given shipment's item id doesn't exist in database!");
+            throw new InvalidOperationException("The given shipment's item id doesn't exist in database!");
         }
 
         // Users management methods
         public void AddUser(string? username, string? role)
         {
             User.Validate(username, role);
-            if (_context.Users.Any(s => s.Username == username))
+            if (_context.Users.Any(s => s.Username.ToLower() == username!.ToLower()))
             {
                 throw new InvalidOperationException("A user with this username already exists!");
             }
@@ -352,7 +393,7 @@ namespace StorageOffice.classes.database
             User user = GetUserById(userId);
             if (!string.IsNullOrEmpty(username))
             {
-                if (_context.Users.Any(s => s.Username == username))
+                if (_context.Users.Any(s => s.Username.ToLower() == username.ToLower()))
                 {
                     throw new InvalidOperationException("A user with this username already exists!");
                 }
@@ -383,7 +424,7 @@ namespace StorageOffice.classes.database
             {
                 return user;
             }
-            throw new ArgumentException("The given user's id doesn't exist in database!");
+            throw new InvalidOperationException("The given user's id doesn't exist in database!");
         }
 
         public void SeedData() => DataSeeder.Seed(_context);
