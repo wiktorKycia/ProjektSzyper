@@ -19,7 +19,7 @@ public class DeleteUser
             { ConsoleKey.UpArrow, select.MoveUp },
             { ConsoleKey.DownArrow, select.MoveDown },
             { ConsoleKey.Enter, select.SelectOption },
-            { ConsoleKey.Delete, Confirm },
+            { ConsoleKey.Delete, () => Confirm(onExit) },
             { ConsoleKey.Escape, onExit.Invoke }
         };
         _displayKeyboardActions = new Dictionary<string, string>(){
@@ -31,7 +31,7 @@ public class DeleteUser
         };
         Run();
     }
-    private void Confirm()
+    private void Confirm(Action exit)
     {
         Console.Clear();
         Console.WriteLine(ConsoleOutput.Header("Confirm Deletion", '-') + "\n");
@@ -41,11 +41,8 @@ public class DeleteUser
         if (key == ConsoleKey.Y)
         {
             _select.InvokeOperation();
+            exit.Invoke();
         }
-        // else
-        // {
-        //     Run();
-        // }
     }
 
     private void Run()
