@@ -6,6 +6,10 @@ using StorageOffice.classes.LogServices;
 using StorageOffice.classes.UsersManagement.Modules;
 using StorageOffice.classes.UsersManagement.Services;
 
+
+using StorageOffice.classes.CLI;
+using StorageOffice.classes.database;
+
 namespace StorageOffice
 {
     internal class Program
@@ -15,6 +19,7 @@ namespace StorageOffice
             User user = new User();
             Console.OutputEncoding = System.Text.Encoding.Unicode;
             MenuHandler.Start(user);
+
 
             #region comment
             // bool loggedIn = true;
@@ -103,12 +108,17 @@ namespace StorageOffice
                 //     }
                 // }
 
-                
+
                 // loggedIn = true;
                 // Console.WriteLine("LoggedIn");
                 // Console.ReadKey();
             // }
             #endregion
+
+            // var db = new StorageDatabase();
+            // db.ClearDatabase();
+            // db.SeedData(); // Add this line to populate the database
+
         }
     }
 }
