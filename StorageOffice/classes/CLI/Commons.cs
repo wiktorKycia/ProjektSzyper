@@ -62,7 +62,7 @@ public static partial class ConsoleOutput
 
         foreach (string line in lines)
         {
-            result += Header(line, ' ') + '\n';
+            result += Header(line, ' ');
         }
         return result;
     }

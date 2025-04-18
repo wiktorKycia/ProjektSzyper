@@ -42,17 +42,15 @@ class Users
         Console.Clear();
         string text = string.Empty;
 
-        if (_users != null)
+        List<string[]> userData = [];
+        foreach (var user in _users)
         {
-            foreach (var user in _users)
-            {
-                text += "\n" + ConsoleOutput.CenteredText(user?.ToString() ?? "", true);
-            }
+            string[] data = [user.Username, user.Role.ToString()];
+            userData.Add(data);
         }
-        else
-        {
-            text = "No users found.";
-        }
+        text += ConsoleOutput.WriteTable(userData, [ "Username", "Role" ]);
+
+        text = string.Join(Environment.NewLine, text.Split(Environment.NewLine).Select(line => ConsoleOutput.CenteredText(line)));
 
         Console.WriteLine(ConsoleOutput.UIFrame(_title, text));
 

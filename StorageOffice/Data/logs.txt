@@ -31,3 +31,7 @@
 [2025-04-18 11:17:08] Info: action was performed on data of a user named mietek - added a new user
 [2025-04-18 11:17:45] Info: action was performed on data of a user named wiesio - added a new user
 [2025-04-18 11:18:13] Info: action was performed on data of a user named grzesio - added a new user
+[2025-04-18 11:23:51] Info: login of user wikrot - successful
+[2025-04-18 11:24:56] Info: login of user wikrot - successful
+[2025-04-18 11:28:03] Info: login of user wikrot - successful
+[2025-04-18 11:29:22] Info: login of user wikrot - successful
