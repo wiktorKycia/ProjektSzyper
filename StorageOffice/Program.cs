@@ -22,6 +22,7 @@ namespace StorageOffice
             var db = new StorageDatabase();
             db.ClearDatabase();
             db.SeedData();
+            MenuHandler.db = db;
 
             // Create an object to store the info about logged-in user
             classes.UsersManagement.Modules.User user = new();

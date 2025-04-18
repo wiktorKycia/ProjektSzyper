@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace StorageOffice.classes.database
 {
-    class StorageDatabase
+    public class StorageDatabase
     {
         private StorageContext _context = new();
         public string Path { get { return _context.DbPath; } }
@@ -425,6 +425,25 @@ namespace StorageOffice.classes.database
                 return user;
             }
             throw new InvalidOperationException("The given user's id doesn't exist in database!");
+        }
+
+        public User GetUserByUsername(string username)
+        {
+            User? user = _context.Users.SingleOrDefault(u => u.Username == username);
+            if (user != null)
+            {
+                return user;
+            }
+            throw new InvalidOperationException("The given user's username doesn't exist in database!");
+        }
+        public int GetUserIdByUsername(string username)
+        {
+            User? user = _context.Users.SingleOrDefault(u => u.Username == username);
+            if (user != null)
+            {
+                return user.UserId;
+            }
+            throw new InvalidOperationException("The given user's username doesn't exist in database!");
         }
 
         public void SeedData() => DataSeeder.Seed(_context);
