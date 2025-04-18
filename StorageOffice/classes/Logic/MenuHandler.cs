@@ -36,10 +36,10 @@ public class MenuHandler
         Dictionary<Permission, RadioOption> options = new Dictionary<Permission, RadioOption>
         {
             {Permission.BrowseWarehouse, new RadioOption("Warehouse", () => {DetailsMenu(user, "Warehouser");})},
-            {Permission.AssignTask, new RadioOption("Assign task", () => {DetailsMenu(user, "Assign task");})},
-            {Permission.DoTasks, new RadioOption("Do tasks", () => {DetailsMenu(user, "Do tasks");})},
-            {Permission.ManageShipments, new RadioOption("Manage shipments", () => {DetailsMenu(user, "Manage shipments");})},
-            {Permission.BrowseShipments, new RadioOption("Browse shipments", () => {DetailsMenu(user, "Browse shipments");})},
+            {Permission.AssignTask, new RadioOption("Tasks", () => {DetailsMenu(user, "Assign task");})},
+            {Permission.DoTasks, new RadioOption("Tasks", () => {DetailsMenu(user, "Do tasks");})},
+            {Permission.ManageShipments, new RadioOption("Shipments", () => {DetailsMenu(user, "Manage shipments");})},
+            {Permission.BrowseShipments, new RadioOption("Shipments", () => {DetailsMenu(user, "Browse shipments");})},
             {Permission.ManageUsers, new RadioOption("Manage users", () => {DetailsMenu(user, "Manage users");})},
             {Permission.ViewLogs, new RadioOption("View logs", () => {DetailsMenu(user, "View logs");})}
         };
