@@ -156,16 +156,19 @@ public class AddUser
             }
         }
     }
+    
     private bool GetConfirm(ref bool running)
     {
-        string answer = ConsoleInput.GetUserString("Is the information correct? (y/n): ");
-        if (answer.ToLower() == "y")
+        Console.WriteLine("Is the username correct? (y/n): ");
+        var key = ConsoleInput.GetConsoleKey();
+        if (key == ConsoleKey.Y) 
         {
             running = false;
             return true;
         }
-        return false;
+        else return false;
     }
+    
 
     private void Display()
     {

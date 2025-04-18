@@ -48,7 +48,7 @@ public class EditUsername
                 {
                     string newUsername = ConsoleInput.GetUserString("Enter new username: ");
                     
-                    if(GetConfirm())
+                    if(GetConfirm(ref running))
                     {
                         int userId = MenuHandler.db?.GetUserIdByUsername(_username) ?? 0;
                         MenuHandler.db?.UpdateUser(userId, newUsername, null);
@@ -72,12 +72,16 @@ public class EditUsername
         }
     }
 
-    private bool GetConfirm()
+    private bool GetConfirm(ref bool running)
     {
         Console.WriteLine("Is the username correct? (y/n): ");
         var key = ConsoleInput.GetConsoleKey();
-        if (key == ConsoleKey.Y) return true;
-        else return false;
+        if (key == ConsoleKey.Y) 
+        {
+            running = false;
+            return true;
+        }
+        else return false;   
     }
 
     private void Display()

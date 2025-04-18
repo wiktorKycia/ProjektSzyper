@@ -49,7 +49,7 @@ public class EditRole
                 {
                     Role newRole = GetRole();
                     
-                    if(GetConfirm())
+                    if(GetConfirm(ref running))
                     {
                         int userId = MenuHandler.db?.GetUserIdByUsername(_username) ?? 0;
                         MenuHandler.db?.UpdateUser(userId, null, newRole.ToString());
@@ -101,12 +101,16 @@ public class EditRole
         }
     }
 
-    private bool GetConfirm()
+    private bool GetConfirm(ref bool running)
     {
         Console.WriteLine("Is the role correct? (y/n): ");
         var key = ConsoleInput.GetConsoleKey();
-        if (key == ConsoleKey.Y) return true;
-        else return false;
+        if (key == ConsoleKey.Y) 
+        {
+            running = false;
+            return true;
+        }
+        else return false;   
     }
 
     private void Display()
