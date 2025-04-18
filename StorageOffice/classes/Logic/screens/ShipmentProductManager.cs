@@ -6,7 +6,7 @@ namespace StorageOffice.classes.Logic;
 
 public class ShipmentProductManager
 {
-    private readonly database.Shipment _shipment;
+    private database.Shipment _shipment;
     private readonly Action _onExit;
     private readonly User _user;
     private readonly string _title;
