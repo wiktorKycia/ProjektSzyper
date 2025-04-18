@@ -1,7 +1,6 @@
 using System;
 using StorageOffice.classes.CLI;
 using StorageOffice.classes.UsersManagement.Modules;
-using StorageOffice.classes.UsersManagement.Services;
 
 namespace StorageOffice.classes.Logic;
 
@@ -11,30 +10,29 @@ public class SelectUserForTaskMenu
     private readonly List<database.Shipment> _shipments;
     private readonly Action _onExit;
     private readonly RadioSelect _select;
-    private readonly List<database.User> _warehousemen;
+    private readonly List<database.User> _users;
     private readonly Dictionary<ConsoleKey, KeyboardAction> _keyboardActions;
     private readonly Dictionary<string, string> _displayKeyboardActions;
 
     public SelectUserForTaskMenu(List<database.Shipment> shipments, Action onExit)
     {
-        _title = "Assign to Warehouseman";
+        _title = "Select User For Task";
         _shipments = shipments;
         _onExit = onExit;
         
         // Get all users with Warehouseman role
-        _warehousemen = MenuHandler.db?.GetAllUsers()
-            .Where(u => u.Role == database.UserRole.Warehouseman)
-            .ToList() ?? new List<database.User>();
+        _users = MenuHandler.db?.GetAllUsers().Where(u => u.Role == database.UserRole.Warehouseman).ToList() 
+            ?? new List<database.User>();
         
-        if (!_warehousemen.Any())
+        if (!_users.Any())
         {
-            var error = new Error("No warehousemen available to assign tasks.", () => onExit.Invoke());
+            var error = new Error("No warehousemen found to assign tasks to.", () => onExit.Invoke());
             return;
         }
         
-        var options = _warehousemen.Select(u => new RadioOption(
-            u.Username,
-            () => AssignTasksToUser(u)
+        var options = _users.Select(u => new RadioOption(
+            $"{u.Username} (Warehouseman)",
+            () => AssignShipmentsToUser(u)
         )).ToList();
         
         _select = new RadioSelect(options);
@@ -51,7 +49,7 @@ public class SelectUserForTaskMenu
         {
             { "\u2191", "move up" },
             { "\u2193", "move down" },
-            { "<Enter>", "select" },
+            { "<Enter>", "select user" },
             { "<Esc>", "back" }
         };
         
@@ -67,16 +65,24 @@ public class SelectUserForTaskMenu
             var key = ConsoleInput.GetConsoleKey();
             if (_keyboardActions.ContainsKey(key))
             {
-                _keyboardActions[key]();
-                if (key == ConsoleKey.Escape || key == ConsoleKey.Enter)
+                if (key == ConsoleKey.Escape)
                 {
                     running = false;
+                }
+                else if (key == ConsoleKey.Enter)
+                {
+                    _keyboardActions[key]();
+                    running = false;
+                }
+                else
+                {
+                    _keyboardActions[key]();
                 }
             }
         }
     }
 
-    private void AssignTasksToUser(database.User user)
+    private void AssignShipmentsToUser(database.User user)
     {
         try
         {
@@ -92,17 +98,19 @@ public class SelectUserForTaskMenu
         }
         catch (Exception ex)
         {
-            var error = new Error($"Error assigning tasks: {ex.Message}", () => {});
+            var error = new Error($"Error assigning shipments: {ex.Message}", () => _onExit.Invoke());
         }
     }
 
     private void Display()
     {
         Console.Clear();
-        string content = "Select a warehouseman to assign the task(s) to:\n\n";
+        string content = $"Select a warehouseman to assign {_shipments.Count} shipment(s):\n\n";
         
-        string[] shipmentHeaders = { "ID", "Type", "Source/Destination" };
-        List<string[]> shipmentRows = new List<string[]>();
+        // Display shipments being assigned
+        content += "Shipments to be assigned:\n";
+        string[] headers = { "ID", "Type", "Source/Destination" };
+        List<string[]> rows = new List<string[]>();
         
         foreach (var shipment in _shipments)
         {
@@ -110,27 +118,28 @@ public class SelectUserForTaskMenu
                 shipment.Shipper?.Name ?? "Unknown" : 
                 shipment.Shop?.ShopName ?? "Unknown";
                 
-            shipmentRows.Add(new string[] { 
+            rows.Add(new string[] { 
                 shipment.ShipmentId.ToString(), 
                 shipment.ShipmentType.ToString(), 
-                sourceOrDest 
+                sourceOrDest
             });
         }
         
-        content += "Selected shipments to assign:\n";
-        content += ConsoleOutput.WriteTable(shipmentRows, shipmentHeaders);
-        content += "\n";
+        content += ConsoleOutput.WriteTable(rows, headers) + "\n";
+        
+        // Display user options
+        content += "Available warehousemen:\n";
         
         if (_select.Options != null)
         {
             foreach (var option in _select.Options)
             {
-                content += ConsoleOutput.CenteredText(option.ToString() + "\n", true);
+                content += "\n" + ConsoleOutput.CenteredText(option?.ToString() + "\n" ?? "[ ] No Text" + "\n", true);
             }
         }
         else
         {
-            content += ConsoleOutput.CenteredText("No warehousemen available", true);
+            content += "\n" + ConsoleOutput.CenteredText("No warehousemen available", true);
         }
         
         Console.WriteLine(ConsoleOutput.UIFrame(_title, content));
