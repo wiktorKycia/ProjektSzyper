@@ -82,7 +82,7 @@ public static class MenuHandler
         var manageUsers = new ManageUsers("Users", "", new RadioSelect(new List<RadioOption>
         {
             new RadioOption("Add user", () => {AddUser(user);}),
-            new RadioOption("Edit user", () => {EditUser(user);}),
+            new RadioOption("Edit user", () => {EditUserMenu(user);}),
             new RadioOption("Delete user", () => {DeleteUser(user);}),
             new RadioOption("View users", () => {ViewUsers(user);})
         }), () => {MainMenu(user);});
@@ -99,9 +99,14 @@ public static class MenuHandler
         var addUser = new AddUser(() => {ManageUsers(user);}, user);
     }
 
-    internal static void EditUser(User user)
+    internal static void EditUserMenu(User user)
     {
-        // var editUser = new EditUser("Edit user", () => {ManageUsers(user);});
+        var users = PasswordManager.GetAllUsers();
+        var radioOptions = users.Select(u => new RadioOption(u.Username, () => {
+            EditConcreteUser(user, u.Username);
+        })).ToList();
+
+        var editUser = new EditUser("Edit user", new RadioSelect(radioOptions), () => {ManageUsers(user);});
     }
 
     internal static void DeleteUser(User user)
@@ -113,6 +118,17 @@ public static class MenuHandler
         })).ToList();
 
         var deleteUser = new DeleteUser(new CheckBoxSelect(checkBoxOptions), () => {ManageUsers(user);});
+    }
+
+    internal static void EditConcreteUser(User user, string username)
+    {
+        var radioOptions = new List<RadioOption>
+        {
+            new RadioOption("Edit Username", () => { PasswordManager.EditUsername(username); }),
+            new RadioOption("Edit Password", () => { PasswordManager.EditPassword(username); }),
+            new RadioOption("Edit Role", () => { PasswordManager.EditRole(username); })
+        };
+        var editConcreteUser = new EditConcreteUser(username, , () => {EditUserMenu(user);});
     }
 
 }
