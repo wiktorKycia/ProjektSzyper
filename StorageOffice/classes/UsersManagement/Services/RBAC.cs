@@ -10,7 +10,7 @@ namespace StorageOffice.classes.UsersManagement.Services
 {
     enum Role
     {
-        Administrator,
+        Administrator = 1,
         Warehouseman,
         Logistician,
         WarehouseManager
