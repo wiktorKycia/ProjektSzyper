@@ -20,8 +20,8 @@ namespace StorageOffice
 
             // Create database and seed data
             var db = new StorageDatabase();
-            db.ClearDatabase();
-            db.SeedData();
+            // db.ClearDatabase();
+            // db.SeedData();
             MenuHandler.db = db;
 
             // Create an object to store the info about logged-in user
