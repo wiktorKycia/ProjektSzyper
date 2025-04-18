@@ -12,11 +12,10 @@ public class AddUser
     private readonly string _heading;
     private readonly Action _backMenu;
     private readonly User _user;
-    private readonly database.StorageDatabase _db;
     private readonly Dictionary<ConsoleKey, KeyboardAction> _keyboardActions;
     private readonly Dictionary<string, string> _displayKeyboardActions;
 
-    internal AddUser(Action backMenu, User user, database.StorageDatabase db)
+    internal AddUser(Action backMenu, User user)
     {
         _title = "Add user";
         _heading = "Add user";
@@ -29,7 +28,6 @@ public class AddUser
         };
         _backMenu = backMenu;
         _user = user;
-        _db = db;
         Run();
     }
 
@@ -53,7 +51,7 @@ public class AddUser
                 if(GetConfirm(ref running))
                 {
                     PasswordManager.SaveNewUser(_user.Username, password, role);
-                    _db.AddUser(_user.Username, role.ToString());
+                    MenuHandler.db?.AddUser(_user.Username, role.ToString());
                     _backMenu.Invoke();
                 }
             }

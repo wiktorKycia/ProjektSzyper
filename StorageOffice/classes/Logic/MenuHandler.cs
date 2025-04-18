@@ -96,7 +96,7 @@ public static class MenuHandler
 
     internal static void AddUser(User user)
     {
-        var addUser = new AddUser(() => {ManageUsers(user);}, user, db!);
+        var addUser = new AddUser(() => {ManageUsers(user);}, user);
     }
 
     internal static void EditUser(User user)

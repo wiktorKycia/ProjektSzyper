@@ -49,7 +49,9 @@ public class FirstUser
 
                 if(GetConfirm(ref running))
                 {
-                    PasswordManager.SaveNewUser(_user.Username, password, Role.Administrator);
+                    PasswordManager.SaveNewUser(_user.Username, password, Role.Administrator);                    
+                    MenuHandler.db?.AddUser(_user.Username, "Administrator");
+                    
                     LogManager.AddNewLog($"Info: login of user {_user.Username} - successful");
                     _nextMenu.Invoke();
                 }
