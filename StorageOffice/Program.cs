@@ -15,6 +15,7 @@ namespace StorageOffice
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Loading...");
             Console.OutputEncoding = System.Text.Encoding.Unicode;
 
             // Create database and seed data

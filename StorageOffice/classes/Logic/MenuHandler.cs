@@ -88,7 +88,7 @@ public class MenuHandler
     }
     internal static void AddUser(User user)
     {
-        
+        var addUser = new AddUser("Add user", "Add user", () => {ManageUsers(user);}, user);
     }
     internal static void EditUser(User user)
     {

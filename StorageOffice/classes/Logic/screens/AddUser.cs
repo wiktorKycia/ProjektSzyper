@@ -10,23 +10,23 @@ public class AddUser
 {
     private readonly string _title;
     private readonly string _heading;
-    private readonly Action _nextMenu;
+    private readonly Action _backMenu;
     private readonly User _user;
     private readonly Dictionary<ConsoleKey, KeyboardAction> _keyboardActions;
     private readonly Dictionary<string, string> _displayKeyboardActions;
 
-    internal AddUser(string title, string heading, Action nextMenu, User user)
+    internal AddUser(string title, string heading, Action backMenu, User user)
     {
         _title = title;
         _heading = heading;
         _keyboardActions = new Dictionary<ConsoleKey, KeyboardAction>(){
-            { ConsoleKey.Escape, () => Environment.Exit(0) }
+            { ConsoleKey.Escape, () => backMenu.Invoke() }
         };
         _displayKeyboardActions = new Dictionary<string, string>(){
             { "<Esc>", "exit" },
             { "Any other key", "enter username and password" }
         };
-        _nextMenu = nextMenu;
+        _backMenu = backMenu;
         _user = user;
         Run();
     }
@@ -51,7 +51,7 @@ public class AddUser
                 if(GetConfirm(ref running))
                 {
                     PasswordManager.SaveNewUser(_user.Username, password, role);
-                    _nextMenu.Invoke();
+                    _backMenu.Invoke();
                 }
             }
         }
