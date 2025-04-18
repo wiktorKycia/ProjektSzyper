@@ -65,8 +65,10 @@ public class MenuHandler
         }
         catch(FileNotFoundException e)
         {
-            // ! error handling
-            var logs = new Logs("the file with logs was removed", () => {MainMenu(user);});
+            var menu = new Error(
+                text: e.Message,
+                onExit: () => {MainMenu(user);}
+            );
         }
     }
 }
