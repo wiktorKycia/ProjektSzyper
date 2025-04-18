@@ -13,4 +13,20 @@ public static partial class ConsoleInput
         }
         return result;
     }
+    public static int GetUserInt(string message)
+    {
+        int result = 0;
+        bool valid = false;
+        while(!valid)
+        {
+            Console.Write(message);
+            string input = Console.ReadLine() ?? "";
+            valid = int.TryParse(input, out result);
+            if (!valid)
+            {
+                Console.WriteLine("Invalid input. Please enter a number.");
+            }
+        }
+        return result;
+    }
 }
