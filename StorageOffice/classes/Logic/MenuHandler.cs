@@ -59,7 +59,40 @@ public static class MenuHandler
 
     internal static void DetailsMenu(User user, string _details)
     {
+        if (_details == "Warehouse")
+        {
+            BrowseWarehouse(user);
+            return;
+        }
+        else if (_details == "Assign task")
+        {
+            AssignTask(user);
+            return; 
+        }
+        else if (_details == "Do tasks")
+        {
+            DoTasks(user);
+            return;
+        }
+        
         var details = new Details(_details, () => {MainMenu(user);});
+    }
+
+    // Task Management Methods
+    internal static void AssignTask(User user)
+    {
+        var assignTaskMenu = new AssignTaskMenu(user, () => MainMenu(user));
+    }
+
+    internal static void DoTasks(User user)
+    {
+        var doTasksMenu = new DoTasksMenu(user, () => MainMenu(user));
+    }
+
+    // Warehouse Browsing Methods
+    internal static void BrowseWarehouse(User user)
+    {
+        var browseWarehouseMenu = new BrowseWarehouseMenu(user, () => MainMenu(user));
     }
 
     internal static void Logs(User user)
