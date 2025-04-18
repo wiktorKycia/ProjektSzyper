@@ -87,10 +87,10 @@ public enum ShipmentType
 }
 public enum UserRole
 {
-    Admin,
-    Manager,
+    Administrator,
     Warehouseman,
-    Guest
+    Logistician,
+    WarehouseManager
 }
 
 // Shop table: holds shop details.
@@ -263,7 +263,7 @@ public class User
         {
             throw new ArgumentNullException(null, "User's username can't be empty");
         }
-        else if (!Regex.IsMatch(username, @"^[a-zA-Z0-9_.¹æê³ñóœŸ¿¥ÆÊ£ÑÓŒ¯]+$"))
+        else if (!Regex.IsMatch(username, @"^[a-zA-Z0-9_.ï¿½ï¿½ï¿½ï¿½óœŸ¿ï¿½ï¿½Ê£ï¿½ÓŒï¿½ï¿½]+$"))
         {
             throw new ArgumentException("The username can only contain letters, numbers, characters '_' and '.'! ");
         }
