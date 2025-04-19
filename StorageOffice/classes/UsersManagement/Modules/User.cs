@@ -8,7 +8,7 @@ using StorageOffice.classes.UsersManagement.Services;
 
 namespace StorageOffice.classes.UsersManagement.Modules
 {
-    internal class User
+    public class User
     {
         private string _username;
         public Role Role { get; set; }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,7 +9,7 @@ namespace StorageOffice.classes.LogServices
 {
     internal class LogManager
     {
-        private const string _logFilePath = "../../../Data/logs.txt";
+        private static string? _logFilePath = Path.Combine(Directory.GetParent(AppContext.BaseDirectory)?.Parent?.Parent?.Parent?.Parent?.FullName, "StorageOffice/Data/logs.txt");
         public static event Action<string> FileErrorFound;
 
         static LogManager()
@@ -23,7 +24,7 @@ namespace StorageOffice.classes.LogServices
 
         public static void AddNewLog(string logText)
         {
-            File.AppendAllText(_logFilePath, $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] {logText}\n");
+            File.AppendAllText(_logFilePath!, $"[{DateTime.Now:yyyy-MM-dd HH:mm:ss}] {logText}\n");
         }
 
         public static string GetLogsFromSpecificDate(DateTime date)
@@ -31,7 +32,7 @@ namespace StorageOffice.classes.LogServices
             try
             {
                 string results = "";
-                List<string> logs = File.ReadAllLines(_logFilePath).ToList();
+                List<string> logs = File.ReadAllLines(_logFilePath!).ToList();
                 foreach (string log in logs)
                 {
                     if (log.Substring(1, 10) == date.ToString("yyyy-MM-dd"))
@@ -53,7 +54,7 @@ namespace StorageOffice.classes.LogServices
         {
             try
             {
-                string logs = File.ReadAllText(_logFilePath);
+                string logs = File.ReadAllText(_logFilePath!);
                 if (logs == "") return "No logs found";
                 return logs;
             }
