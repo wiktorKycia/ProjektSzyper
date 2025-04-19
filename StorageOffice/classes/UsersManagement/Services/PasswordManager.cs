@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Reflection.Metadata.Ecma335;
 using System.Security.Cryptography;
 using System.Text;
@@ -12,19 +13,19 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace StorageOffice.classes.UsersManagement.Services
 {
-    internal class PasswordManager
+    public class PasswordManager
     {
-        private const string _passwordFilePath = "../../../Data/users.txt";
+        public static string PasswordFilePath = "../../../../StorageOffice/Data/users.txt";
         public static event Action<string, bool> PasswordVerified;
         public static event Action<string> FileErrorFound;
         public static event Action<string, string> UserDataChanged;
 
         static PasswordManager()
         {
-            if (!File.Exists(_passwordFilePath))
+            if (!File.Exists(PasswordFilePath))
             {
                 Console.WriteLine("The users file does not exist. The system creates a new one.");
-                File.Create(_passwordFilePath).Dispose();
+                File.Create(PasswordFilePath).Dispose();
             }
 
             PasswordVerified += (username, success) => LogManager.AddNewLog($"Info: login of user {username} - {(success ? "successful" : "unsuccessful")}");
@@ -36,13 +37,13 @@ namespace StorageOffice.classes.UsersManagement.Services
         {
             try
             {
-                if (File.ReadLines(_passwordFilePath).Any(line => line.Split(',')[0] == username))
+                if (File.ReadLines(PasswordFilePath).Any(line => line.Split(',')[0] == username))
                 {
                     throw new InvalidOperationException($"User {username} already exists in the system");
                 }
 
                 string hashedPassword = HashPassword(password);
-                File.AppendAllText(_passwordFilePath, $"{username},{hashedPassword},{role}\n");
+                File.AppendAllText(PasswordFilePath, $"{username},{hashedPassword},{role}\n");
                 Console.WriteLine($"User {username} has been saved");
                 UserDataChanged?.Invoke("added a new user", username);
             }
@@ -57,15 +58,15 @@ namespace StorageOffice.classes.UsersManagement.Services
         {
             try
             {
-                if (!File.ReadLines(_passwordFilePath).Any(line => line.Split(',')[0] == username))
+                if (!File.ReadLines(PasswordFilePath).Any(line => line.Split(',')[0] == username))
                 {
                     throw new InvalidOperationException($"User {username} does not exist in the system");
                 }
 
-                List<string> fileLines = File.ReadAllLines(_passwordFilePath).ToList();
+                List<string> fileLines = File.ReadAllLines(PasswordFilePath).ToList();
                 int userIndex = fileLines.FindIndex(line => line.Split(',')[0] == username);
                 fileLines.RemoveAt(userIndex);
-                File.WriteAllLines(_passwordFilePath, fileLines.ToArray());
+                File.WriteAllLines(PasswordFilePath, fileLines.ToArray());
                 Console.WriteLine($"User {username} has been deleted");
                 UserDataChanged?.Invoke("deleted a user", username);
             }
@@ -80,9 +81,9 @@ namespace StorageOffice.classes.UsersManagement.Services
         {
             try
             {
-                if (File.ReadLines(_passwordFilePath).Any(line => line.Split(',')[0] == username))
+                if (File.ReadLines(PasswordFilePath).Any(line => line.Split(',')[0] == username))
                 {
-                    string[] fileLines = File.ReadAllLines(_passwordFilePath);
+                    string[] fileLines = File.ReadAllLines(PasswordFilePath);
                     int userIndex = Array.FindIndex(fileLines, line => line.Split(',')[0] == username);
                     string userLineInFile = fileLines[userIndex];
                     string[] parts = userLineInFile.Split(',');
@@ -90,7 +91,7 @@ namespace StorageOffice.classes.UsersManagement.Services
                     parts[dataColumnNumber] = newData;
                     fileLines[userIndex] = string.Join(",", parts);
 
-                    File.WriteAllLines(_passwordFilePath, fileLines);
+                    File.WriteAllLines(PasswordFilePath, fileLines);
                 }
                 else
                 {
@@ -135,7 +136,7 @@ namespace StorageOffice.classes.UsersManagement.Services
             try
             {
                 List<User> users = new List<User>();
-                List<string> usersData = File.ReadAllLines(_passwordFilePath).ToList();
+                List<string> usersData = File.ReadAllLines(PasswordFilePath).ToList();
 
                 foreach (string line in usersData)
                 {
@@ -164,7 +165,7 @@ namespace StorageOffice.classes.UsersManagement.Services
         {
             try
             {
-                List<string> lines = File.ReadAllLines(_passwordFilePath).ToList();
+                List<string> lines = File.ReadAllLines(PasswordFilePath).ToList();
                 Console.WriteLine(lines.Count);
                 if (lines.Count > 0)
                 {
@@ -194,7 +195,7 @@ namespace StorageOffice.classes.UsersManagement.Services
             try
             {
                 string hashedPassword = HashPassword(password);
-                foreach (var line in File.ReadLines(_passwordFilePath))
+                foreach (var line in File.ReadLines(PasswordFilePath))
                 {
                     var parts = line.Split(',');
 
