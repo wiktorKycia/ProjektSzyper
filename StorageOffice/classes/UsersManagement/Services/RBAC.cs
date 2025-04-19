@@ -16,7 +16,7 @@ namespace StorageOffice.classes.UsersManagement.Services
         WarehouseManager
     }
 
-    enum Permission
+    public enum Permission
     {
         BrowseWarehouse,
         AssignTask,
@@ -27,7 +27,7 @@ namespace StorageOffice.classes.UsersManagement.Services
         ViewLogs
     }
 
-    internal class RBAC
+    public class RBAC
     {
         private readonly Dictionary<Role, List<Permission>> _rolePermissions;
 
