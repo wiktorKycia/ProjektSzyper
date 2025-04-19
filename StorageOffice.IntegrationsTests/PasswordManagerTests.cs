@@ -9,7 +9,7 @@ using StorageOffice.classes.UsersManagement.Services;
 
 namespace StorageOffice.IntegrationsTests
 {
-    internal class PasswordManagementTests
+    internal class PasswordManagerTests
     {
         [Test, IsolatedFile]
         public void SaveNewUser_AddsCorrectUserToFile()
@@ -31,6 +31,12 @@ namespace StorageOffice.IntegrationsTests
             File.AppendAllText(path!, $"{testUsername},Ngi8oeROpsTSaOttsCJgJpiSwLQrhrvx53pvoWw8koI=,Administrator\n");
 
             Assert.Throws<InvalidOperationException>(() => PasswordManager.SaveNewUser(testUsername, "xyz", Role.Administrator));
+        }
+
+        [Test, UseMissingFilePath]
+        public void SaveNewUser_WhenFileDoesNotExist_ShouldThrowFileNotFoundException()
+        {
+            Assert.Throws<FileNotFoundException>(() => PasswordManager.SaveNewUser("Thomas", "xyz", Role.Logistician));
         }
 
         [Test, IsolatedFile]
@@ -58,14 +64,26 @@ namespace StorageOffice.IntegrationsTests
             Assert.Throws<InvalidOperationException>(() => PasswordManager.DeleteUser("Admin"));
         }
 
+        [Test, UseMissingFilePath]
+        public void DeleteUser_WhenFileDoesNotExist_ShouldThrowFileNotFoundException()
+        {
+            Assert.Throws<FileNotFoundException>(() => PasswordManager.DeleteUser("Thomas"));
+        }
+
         [Test, IsolatedFile]
-        public void OverrideData_WhenIncorrectUser_ShouldThrowInvalidOperationException()
+        public void OverwriteData_WhenIncorrectUser_ShouldThrowInvalidOperationException()
         {
             string? path = TestContext.CurrentContext.Test.Properties.Get("IsolatedFilePath") as string;
             string testUsername = "Admin";
             File.AppendAllText(path!, $"{testUsername},Ngi8oeROpsTSaOttsCJgJpiSwLQrhrvx53pvoWw8koI=,Administrator\n");
 
             Assert.Throws<InvalidOperationException>(() => PasswordManager.OverwriteUserData("George", "Thomas", 0));
+        }
+
+        [Test, UseMissingFilePath]
+        public void OverwriteData_WhenFileDoesNotExist_ShouldThrowFileNotFoundException()
+        {
+            Assert.Throws<FileNotFoundException>(() => PasswordManager.OverwriteUserData("Thomas", "George", 0));
         }
 
         [Test, IsolatedFile]
@@ -137,6 +155,12 @@ namespace StorageOffice.IntegrationsTests
             Assert.Throws<FormatException>(() => PasswordManager.GetAllUsers());
         }
 
+        [Test, UseMissingFilePath]
+        public void GetAllUsers_WhenFileDoesNotExist_ShouldThrowFileNotFoundException()
+        {
+            Assert.Throws<FileNotFoundException>(() => PasswordManager.GetAllUsers());
+        }
+
         [Test, IsolatedFile]
         public void CheckFile_WhenNoUsersCreated_ShouldReturnFalse()
         {
@@ -163,6 +187,12 @@ namespace StorageOffice.IntegrationsTests
             File.AppendAllText(path!, "Admin,Ngi8oeROpsTSaOttsCJgJpiSwLQrhrvx53pvoWw8koI=\n");
 
             Assert.Throws<FormatException>(() => PasswordManager.CheckFile());
+        }
+
+        [Test, UseMissingFilePath]
+        public void CkeckFile_WhenFileDoesNotExist_ShouldThrowFileNotFoundException()
+        {
+            Assert.Throws<FileNotFoundException>(() => PasswordManager.CheckFile());
         }
 
         [Test, IsolatedFile]
@@ -194,6 +224,12 @@ namespace StorageOffice.IntegrationsTests
             File.AppendAllText(path!, "Admin,Ngi8oeROpsTSaOttsCJgJpiSwLQrhrvx53pvoWw8koI=,Mechanic\n"); ;
 
             Assert.Throws<FormatException>(() => PasswordManager.VerifyPasswordAndGetRole("Admin", "xyz"));
+        }
+
+        [Test, UseMissingFilePath]
+        public void VerifyPasswordAndGetRole_WhenFileDoesNotExist_ShouldThrowFileNotFoundException()
+        {
+            Assert.Throws<FileNotFoundException>(() => PasswordManager.VerifyPasswordAndGetRole("Thomas", "xyz"));
         }
     }
 }

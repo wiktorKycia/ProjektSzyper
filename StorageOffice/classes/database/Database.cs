@@ -1,5 +1,6 @@
 ﻿using Bogus.DataSets;
 using Microsoft.EntityFrameworkCore;
+using StorageOffice.classes.LogServices;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,11 +13,13 @@ namespace StorageOffice.classes.database
     {
         private StorageContext _context = new();
         public string Path { get { return _context.DbPath; } }
+        private event Action<string> _storageDataChanged;
 
         public StorageDatabase()
         {
             _context.Database.SetCommandTimeout(5);
             _context.Database.Migrate();
+            _storageDataChanged += (action) => LogManager.AddNewLog($"Info: action was performed on data in database  - {action}");
         }
 
         // Stores management methods
@@ -30,6 +33,7 @@ namespace StorageOffice.classes.database
             Shop shop = new Shop() { ShopName = shopName!, Location = location!};
             _context.Shops.Add(shop);
             _context.SaveChanges();
+            _storageDataChanged?.Invoke($"added shop named '{shopName}'");
         }
 
         public void UpdateShop(int shopId, string? shopName, string? location)
@@ -48,13 +52,16 @@ namespace StorageOffice.classes.database
                 shop.Location = location;
             }
             _context.SaveChanges();
+            _storageDataChanged?.Invoke("modified shop's data");
         }
 
         public void DeleteShop(int shopId)
         {
             Shop shop = GetShopById(shopId);
+            string shopName = shop.ShopName;
             _context.Shops.Remove(shop);
             _context.SaveChanges();
+            _storageDataChanged?.Invoke($"removed shop named {shopName}");
         }
 
         public List<Shop> GetAllShops() => [.. _context.Shops];
@@ -80,6 +87,7 @@ namespace StorageOffice.classes.database
             Product product = new Product() { Name = name!, Category = category!, Unit = unit!, Description = description!, Stock = new Stock() { Quantity = 0, LastUpdated = DateTime.Now } };
             _context.Products.Add(product);
             _context.SaveChanges();
+            _storageDataChanged?.Invoke($"added product '{name}' and it's stock");
         }
 
         // Products management methods
@@ -107,13 +115,16 @@ namespace StorageOffice.classes.database
                 product.Description = description;
             }
             _context.SaveChanges();
+            _storageDataChanged?.Invoke("modified product's data");
         }
 
         public void DeleteProduct(int productId)
         {
             Product product = GetProductById(productId);
+            string productName = product.Name;
             _context.Products.Remove(product);
             _context.SaveChanges();
+            _storageDataChanged?.Invoke($"removed product named {productName}");
         }
 
         public List<Product> GetAllProducts() => [.. _context.Products.Include(p => p.Stock)];
@@ -141,6 +152,7 @@ namespace StorageOffice.classes.database
             stock.Quantity = quantity;
             stock.LastUpdated = newLastUpdated;
             _context.SaveChanges();
+            _storageDataChanged?.Invoke("modified stock's data");
         }
 
         public void DeleteStock(int stockID)
@@ -148,6 +160,7 @@ namespace StorageOffice.classes.database
             Stock stock = GetStockByID(stockID);
             _context.Stocks.Remove(stock);
             _context.SaveChanges();
+            _storageDataChanged?.Invoke("removed product's stock");
         }
 
         public List<Stock> GetAllStocks() => [.. _context.Stocks];
@@ -173,6 +186,7 @@ namespace StorageOffice.classes.database
             Shipper shipper = new Shipper() { Name = name!, ContactInfo = contactInfo!};
             _context.Shippers.Add(shipper);
             _context.SaveChanges();
+            _storageDataChanged?.Invoke($"added shipper named '{name}'");
         }
 
         public void UpdateShipper(int shipperId, string? name, string? contactInfo)
@@ -191,13 +205,16 @@ namespace StorageOffice.classes.database
                 shipper.ContactInfo = contactInfo;
             }
             _context.SaveChanges();
+            _storageDataChanged?.Invoke("modified shippers data");
         }
 
         public void DeleteShipper(int shipperId)
         {
             Shipper shipper = GetShipperById(shipperId);
+            string shipperName = shipper.Name;
             _context.Shippers.Remove(shipper);
             _context.SaveChanges();
+            _storageDataChanged?.Invoke($"removed shipper named '{shipperName}'");
         }
 
         public List<Shipper> GetAllShippers() => [.. _context.Shippers];
@@ -219,6 +236,7 @@ namespace StorageOffice.classes.database
             Shipment shipment = new Shipment() { ShipmentType = ShipmentType.Inbound, Shipper = shipper, IsCompleted = false};
             _context.Shipments.Add(shipment);
             _context.SaveChanges();
+            _storageDataChanged?.Invoke($"added new inbound shipment from {shipper.Name}");
         }
 
         public void AddOutboundShipment(int shopId)
@@ -227,6 +245,7 @@ namespace StorageOffice.classes.database
             Shipment shipment = new Shipment() { ShipmentType = ShipmentType.Outbound, Shop = shop, IsCompleted = false };
             _context.Shipments.Add(shipment);
             _context.SaveChanges();
+            _storageDataChanged?.Invoke($"added new outbound shipment to {shop.ShopName}");
         }
 
         public void UpdateShipmentType(int shipmentId, int? shopId, int? shipperId, string? shipmentType)
@@ -260,6 +279,7 @@ namespace StorageOffice.classes.database
                 }
             }
             _context.SaveChanges();
+            _storageDataChanged?.Invoke($"modified shipment type to {newShipmentType}");
         }
 
         public void UpdateUserAssaignedToShipment(int userId, int shipmentId)
@@ -268,6 +288,7 @@ namespace StorageOffice.classes.database
             Shipment shipment = GetShipmentById(shipmentId);
             shipment.User = user;
             _context.SaveChanges();
+            _storageDataChanged?.Invoke($"modified user assigned to shipment to {user.Username}");
         }
 
         public void MarkShipmentAsDone(int shipmentId)
@@ -293,6 +314,7 @@ namespace StorageOffice.classes.database
             shipment.IsCompleted = true;
             shipment.ShippedDate = DateTime.Now;
             _context.SaveChanges();
+            _storageDataChanged?.Invoke("marked shipment as done");
         }
 
         public void DeleteShipment(int shipmentId)
@@ -300,6 +322,7 @@ namespace StorageOffice.classes.database
             Shipment shipment = GetShipmentById(shipmentId);
             _context.Shipments.Remove(shipment);
             _context.SaveChanges();
+            _storageDataChanged?.Invoke($"removed shipment with id #{shipmentId}");
         }
 
         public List<Shipment> GetAllInboundShipments() => [.. _context.Shipments.Where(s => s.ShipmentType == ShipmentType.Inbound).Include(s => s.Shipper).Include(s => s.ShipmentItems).ThenInclude(si => si.Product)];
@@ -347,6 +370,7 @@ namespace StorageOffice.classes.database
             ShipmentItem shipmentItem = new ShipmentItem() { Quantity = quantity, Product = product, Shipment = shipment};
             _context.ShipmentItems.Add(shipmentItem);
             _context.SaveChanges();
+            _storageDataChanged?.Invoke($"added product '{product.Name}' to shipment with id #{shipmentId}");
         }
 
         public void UpdateShipmentItem(int shipmentItemId, int quantity)
@@ -355,6 +379,7 @@ namespace StorageOffice.classes.database
             ShipmentItem shipmentItem = GetShipmentItemById(shipmentItemId);
             shipmentItem.Quantity = quantity;
             _context.SaveChanges();
+            _storageDataChanged?.Invoke($"modified item's quantity in shipment");
         }
 
         public void DeleteShipmentItem(int shipmentItemId)
@@ -362,6 +387,7 @@ namespace StorageOffice.classes.database
             ShipmentItem shipmentItem = GetShipmentItemById(shipmentItemId);
             _context.ShipmentItems.Remove(shipmentItem);
             _context.SaveChanges();
+            _storageDataChanged?.Invoke($"removed shipment item from shipment");
         }
 
         public List<ShipmentItem> GetAllShipmentItems() => [.. _context.ShipmentItems];
@@ -389,6 +415,7 @@ namespace StorageOffice.classes.database
             User user = new User() { Username = username!, Role = userRole};
             _context.Users.Add(user);
             _context.SaveChanges();
+            _storageDataChanged?.Invoke($"added user named 'username'");
         }
 
         public void UpdateUser(int userId, string? username, string? role)
@@ -409,13 +436,16 @@ namespace StorageOffice.classes.database
                 user.Role = userRole;
             }
             _context.SaveChanges();
+            _storageDataChanged?.Invoke($"modified user's data");
         }
 
         public void DeleteUser(int userID)
         {
             User user = GetUserById(userID);
+            string username = user.Username;
             _context.Users.Remove(user);
             _context.SaveChanges();
+            _storageDataChanged?.Invoke($"removed user named '{username}'");
         }
         
         public List<User> GetAllUsers() => [.. _context.Users];

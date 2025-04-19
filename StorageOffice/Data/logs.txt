@@ -1,113 +1,33 @@
-[2025-04-17 14:54:00] Info: login of user Jan - unsuccessful
-[2025-04-17 14:54:10] Info: login of user wikrot - unsuccessful
-[2025-04-17 20:58:45] Info: login of user Jan - unsuccessful
-[2025-04-17 20:59:01] Info: login of user asdf - unsuccessful
-[2025-04-17 20:59:06] Info: login of user fd - unsuccessful
-[2025-04-17 20:59:48] Error: problem in users.txt file found - an anomaly was detected in number of users' data
-[2025-04-17 21:04:04] Error: problem in users.txt file found - an anomaly was detected in number of users' data
-[2025-04-17 21:04:19] Error: problem in users.txt file found - an anomaly was detected in number of users' data
-[2025-04-17 21:05:13] Error: problem in users.txt file found - an anomaly was detected in number of users' data
-[2025-04-17 21:06:40] Info: action was performed on data of a user named wiktor - added a new user
-[2025-04-17 21:06:40] Info: login of user wiktor - successful
-[2025-04-17 21:12:11] Info: login of user wiktor - successful
-[2025-04-17 21:12:43] Info: action was performed on data of a user named wiktor - added a new user
-[2025-04-17 21:12:43] Info: login of user wiktor - successful
-[2025-04-17 21:12:57] Info: action was performed on data of a user named wikrot - added a new user
-[2025-04-17 21:12:57] Info: login of user wikrot - successful
-[2025-04-17 21:29:02] Info: login of user wikrot - successful
-[2025-04-17 22:26:37] Info: login of user wikrot - successful
-[2025-04-17 22:27:48] Info: login of user wikrot - successful
-[2025-04-18 10:04:47] Info: login of user wikrot - successful
-[2025-04-18 10:09:50] Info: login of user wikrot - unsuccessful
-[2025-04-18 10:09:57] Info: login of user wikrot - successful
-[2025-04-18 10:18:03] Info: login of user wikrot - successful
-[2025-04-18 10:47:39] Info: login of user wikrot - successful
-[2025-04-18 10:48:42] Info: login of user wikrot - successful
-[2025-04-18 10:50:45] Info: login of user wikrot - successful
-[2025-04-18 11:04:12] Info: login of user wikrot - successful
-[2025-04-18 11:09:29] Info: login of user wikrot - successful
-[2025-04-18 11:09:58] Info: action was performed on data of a user named Jan - added a new user
-[2025-04-18 11:16:14] Info: login of user wikrot - successful
-[2025-04-18 11:17:08] Info: action was performed on data of a user named mietek - added a new user
-[2025-04-18 11:17:45] Info: action was performed on data of a user named wiesio - added a new user
-[2025-04-18 11:18:13] Info: action was performed on data of a user named grzesio - added a new user
-[2025-04-18 11:23:51] Info: login of user wikrot - successful
-[2025-04-18 11:24:56] Info: login of user wikrot - successful
-[2025-04-18 11:28:03] Info: login of user wikrot - successful
-[2025-04-18 11:29:22] Info: login of user wikrot - successful
-[2025-04-18 12:08:22] Info: login of user wikrot - successful
-[2025-04-18 12:11:36] Info: login of user wikrot - successful
-[2025-04-18 12:11:54] Info: action was performed on data of a user named grzesio - deleted a user
-[2025-04-18 12:15:20] Info: login of user wikrot - unsuccessful
-[2025-04-18 12:15:26] Info: login of user wikrot - successful
-[2025-04-18 13:34:12] Info: login of user wikrot - successful
-[2025-04-18 13:34:25] Info: action was performed on data of a user named g - added a new user
-[2025-04-18 14:38:47] Info: login of user wikrot - successful
-[2025-04-18 14:39:03] Info: action was performed on data of a user named g - changed user's name to grzesio
-[2025-04-18 14:39:25] Info: action was performed on data of a user named grzesio - changed user's password
-[2025-04-18 14:39:47] Info: action was performed on data of a user named grzesio - changed user's role
-[2025-04-18 14:49:11] Info: login of user wikrot - successful
-[2025-04-18 14:49:20] Info: action was performed on data of a user named wikrot - changed user's name to wiktor
-[2025-04-18 14:49:35] Info: action was performed on data of a user named wiktor - changed user's password
-[2025-04-18 14:49:52] Info: action was performed on data of a user named a - added a new user
-[2025-04-18 14:50:08] Info: action was performed on data of a user named a - deleted a user
-[2025-04-18 15:34:54] Info: login of user wiktor - successful
-[2025-04-18 15:35:26] Info: login of user Jan - successful
-[2025-04-18 16:06:15] Info: login of user Jan - successful
-[2025-04-18 16:29:18] Info: login of user Jan - successful
-[2025-04-18 16:51:19] Info: login of user Jan - successful
-[2025-04-18 16:55:41] Info: login of user Jan - successful
-[2025-04-18 17:03:50] Info: login of user Jan - successful
-[2025-04-18 17:06:11] Info: login of user wiktor - successful
-[2025-04-18 17:06:42] Info: action was performed on data of a user named grzesio - deleted a user
-[2025-04-18 17:08:22] Info: login of user wiktor - unsuccessful
-[2025-04-18 17:08:29] Info: login of user wiktor - successful
-[2025-04-18 17:22:16] Info: login of user Jan - successful
-[2025-04-18 20:28:01] Info: login of user Jan - successful
-[2025-04-18 20:41:32] Info: login of user Jan - successful
-[2025-04-18 21:32:11] Info: login of user wiesio - successful
-[2025-04-18 21:33:28] Info: login of user mietek - successful
-[2025-04-18 21:47:30] Info: login of user mietek - successful
-[2025-04-18 21:53:03] Info: login of user mietek - successful
-[2025-04-18 21:56:29] Info: login of user mietek - successful
-[2025-04-18 22:00:37] Info: login of user Jan - successful
-[2025-04-18 22:01:23] Info: login of user wiesio - successful
-[2025-04-18 22:12:10] Info: login of user Jan - successful
-[2025-04-18 22:13:01] Info: login of user wiesio - successful
-[2025-04-18 22:13:46] Info: login of user mietek - successful
-[2025-04-18 22:16:17] Info: login of user Jan - successful
-[2025-04-18 22:21:31] Info: login of user Jan - successful
-[2025-04-18 22:22:11] Info: login of user wiesio - successful
-[2025-04-18 23:15:18] Info: login of user wiktor - successful
-[2025-04-18 23:15:41] Info: login of user Jan - successful
-[2025-04-18 23:16:32] Info: login of user wiesio - successful
-[2025-04-18 23:17:25] Info: login of user mietek - successful
-[2025-04-19 18:35:48] Info: action was performed on data of a user named Admin - changed user's password
-[2025-04-19 18:35:48] Info: action was performed on data of a user named Admin - changed user's name to Admin1
-[2025-04-19 18:35:48] Info: action was performed on data of a user named Thomas - changed user's role
-[2025-04-19 18:35:48] Error: problem in users.txt file found - an anomaly was detected in number of users' data
-[2025-04-19 18:35:48] Info: action was performed on data of a user named George - deleted a user
-[2025-04-19 18:35:48] Error: problem in users.txt file found - incorrect user's role was found in users.txt file for user Admin
-[2025-04-19 18:35:48] Info: action was performed on data of a user named Admin - added a new user
-[2025-04-19 18:35:48] Info: login of user Admin - successful
-[2025-04-19 18:35:48] Info: login of user Admin - unsuccessful
-[2025-04-19 18:35:48] Info: login of user Admin - successful
-[2025-04-19 18:35:48] Error: problem in users.txt file found - incorrect user's role was found in users.txt file for user Admin
-[2025-04-19 18:38:37] Info: login of user Janek - successful
-[2025-04-19 18:39:10] Info: login of user Janek - successful
-[2025-04-19 18:41:54] Info: action was performed on data of a user named John - added a new user
-[2025-04-19 18:43:05] Info: action was performed on data of a user named John - changed user's password
-[2025-04-19 18:43:39] Info: action was performed on data of a user named John - deleted a user
-[2025-04-19 18:44:45] Info: action was performed on data of a user named John - added a new user
-[2025-04-19 18:44:56] Info: login of user John - successful
-[2025-04-19 18:46:08] Info: login of user John - successful
-[2025-04-19 18:49:26] Info: login of user Janek - successful
-[2025-04-19 18:50:17] Info: action was performed on data of a user named John - changed user's role
-[2025-04-19 18:50:35] Info: login of user John - successful
-[2025-04-19 18:52:16] Info: login of user Jan - unsuccessful
-[2025-04-19 18:52:23] Info: login of user Janek - successful
-[2025-04-19 18:52:35] Info: action was performed on data of a user named John - changed user's role
-[2025-04-19 18:52:47] Info: login of user John - successful
-[2025-04-19 18:54:44] Info: login of user Janek - successful
-[2025-04-19 18:55:01] Info: action was performed on data of a user named John - changed user's role
-[2025-04-19 18:55:09] Info: login of user John - successful
+[2025-04-19 22:44:23] Info: login of user John - successful
+[2025-04-19 22:45:02] Info: action was performed on data in database  - added new inbound shipment from FedEx
+[2025-04-19 22:45:18] Info: action was performed on data in database  - added product 'Jacket' to shipment with id #42
+[2025-04-19 22:45:44] Info: login of user Janek - successful
+[2025-04-19 23:48:11] Info: login of user Janek - successful
+[2025-04-19 23:55:45] Info: action was performed on data of a user named Admin - changed user's password
+[2025-04-19 23:55:45] Info: action was performed on data of a user named Admin - changed user's name to Admin1
+[2025-04-19 23:55:45] Info: action was performed on data of a user named Thomas - changed user's role
+[2025-04-19 23:55:45] Error: problem in users.txt file found - an anomaly was detected in number of users' data
+[2025-04-19 23:55:45] Info: action was performed on data of a user named George - deleted a user
+[2025-04-19 23:55:45] Error: problem in users.txt file found - incorrect user's role was found in users.txt file for user Admin
+[2025-04-19 23:55:45] Info: action was performed on data of a user named Admin - added a new user
+[2025-04-19 23:55:45] Info: login of user Admin - successful
+[2025-04-19 23:55:45] Info: login of user Admin - unsuccessful
+[2025-04-19 23:55:45] Info: login of user Admin - successful
+[2025-04-19 23:55:45] Error: problem in users.txt file found - incorrect user's role was found in users.txt file for user Admin
+[2025-04-20 01:12:56] Info: action was performed on data of a user named Admin - changed user's password
+[2025-04-20 01:12:56] Info: action was performed on data of a user named Admin - changed user's name to Admin1
+[2025-04-20 01:12:56] Info: action was performed on data of a user named Thomas - changed user's role
+[2025-04-20 01:12:56] Error: problem in users.txt file found - an anomaly was detected in number of users' data
+[2025-04-20 01:12:56] Error: problem in users.txt file found - the file was removed while the application was running
+[2025-04-20 01:12:56] Info: action was performed on data of a user named George - deleted a user
+[2025-04-20 01:12:56] Error: problem in users.txt file found - the file was removed while the application was running
+[2025-04-20 01:12:56] Error: problem in users.txt file found - the file was removed while the application was running
+[2025-04-20 01:12:56] Error: problem in users.txt file found - incorrect user's role was found in users.txt file for user Admin
+[2025-04-20 01:12:56] Error: problem in users.txt file found - the file was removed while the application was running
+[2025-04-20 01:12:56] Info: action was performed on data of a user named Admin - added a new user
+[2025-04-20 01:12:56] Error: problem in users.txt file found - the file was removed while the application was running
+[2025-04-20 01:12:56] Info: login of user Admin - successful
+[2025-04-20 01:12:56] Info: login of user Admin - unsuccessful
+[2025-04-20 01:12:56] Error: problem in users.txt file found - the file was removed while the application was running
+[2025-04-20 01:12:56] Info: login of user Admin - successful
+[2025-04-20 01:12:56] Error: problem in users.txt file found - incorrect user's role was found in users.txt file for user Admin
