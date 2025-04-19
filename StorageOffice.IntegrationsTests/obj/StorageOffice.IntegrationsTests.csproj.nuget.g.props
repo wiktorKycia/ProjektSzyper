@@ -14,7 +14,7 @@
     <SourceRoot Include="C:\Program Files (x86)\Microsoft Visual Studio\Shared\NuGetPackages\" />
   </ItemGroup>
   <ImportGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
-    <Import Project="$(NuGetPackageRoot)microsoft.entityframeworkcore\9.0.3\buildTransitive\net8.0\Microsoft.EntityFrameworkCore.props" Condition="Exists('$(NuGetPackageRoot)microsoft.entityframeworkcore\9.0.3\buildTransitive\net8.0\Microsoft.EntityFrameworkCore.props')" />
+    <Import Project="$(NuGetPackageRoot)microsoft.entityframeworkcore\9.0.4\buildTransitive\net8.0\Microsoft.EntityFrameworkCore.props" Condition="Exists('$(NuGetPackageRoot)microsoft.entityframeworkcore\9.0.4\buildTransitive\net8.0\Microsoft.EntityFrameworkCore.props')" />
     <Import Project="$(NuGetPackageRoot)microsoft.testing.platform\1.5.3\buildTransitive\net9.0\Microsoft.Testing.Platform.props" Condition="Exists('$(NuGetPackageRoot)microsoft.testing.platform\1.5.3\buildTransitive\net9.0\Microsoft.Testing.Platform.props')" />
     <Import Project="$(NuGetPackageRoot)microsoft.testing.platform.msbuild\1.5.3\buildTransitive\Microsoft.Testing.Platform.MSBuild.props" Condition="Exists('$(NuGetPackageRoot)microsoft.testing.platform.msbuild\1.5.3\buildTransitive\Microsoft.Testing.Platform.MSBuild.props')" />
     <Import Project="$(NuGetPackageRoot)microsoft.testing.extensions.telemetry\1.5.3\buildTransitive\net9.0\Microsoft.Testing.Extensions.Telemetry.props" Condition="Exists('$(NuGetPackageRoot)microsoft.testing.extensions.telemetry\1.5.3\buildTransitive\net9.0\Microsoft.Testing.Extensions.Telemetry.props')" />

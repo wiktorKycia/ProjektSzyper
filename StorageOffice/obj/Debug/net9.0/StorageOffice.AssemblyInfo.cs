@@ -13,11 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("StorageOffice")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-<<<<<<< HEAD
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d33c67b48b9d207202212655d2291ca43d0bc889")]
-=======
 [assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3b39664cb149925702df1f09ddd7eed5777c75aa")]
->>>>>>> users_management_tests
 [assembly: System.Reflection.AssemblyProductAttribute("StorageOffice")]
 [assembly: System.Reflection.AssemblyTitleAttribute("StorageOffice")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

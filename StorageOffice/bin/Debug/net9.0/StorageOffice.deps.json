@@ -9,6 +9,7 @@
       "StorageOffice/1.0.0": {
         "dependencies": {
           "Bogus": "35.6.2",
+          "Microsoft.CodeAnalysis.Analyzers": "3.3.4",
           "Microsoft.EntityFrameworkCore": "9.0.4",
           "Microsoft.EntityFrameworkCore.Analyzers": "9.0.4",
           "Microsoft.EntityFrameworkCore.Design": "9.0.4",
@@ -770,14 +771,7 @@
         }
       },
       "System.Runtime.CompilerServices.Unsafe/6.0.0": {},
-      "System.Text.Json/9.0.4": {
-        "runtime": {
-          "lib/net9.0/System.Text.Json.dll": {
-            "assemblyVersion": "9.0.0.0",
-            "fileVersion": "9.0.425.16305"
-          }
-        }
-      },
+      "System.Text.Json/9.0.4": {},
       "System.Threading.Channels/7.0.0": {}
     }
   },

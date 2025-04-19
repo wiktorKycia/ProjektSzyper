@@ -82,3 +82,32 @@
 [2025-04-18 23:15:41] Info: login of user Jan - successful
 [2025-04-18 23:16:32] Info: login of user wiesio - successful
 [2025-04-18 23:17:25] Info: login of user mietek - successful
+[2025-04-19 18:35:48] Info: action was performed on data of a user named Admin - changed user's password
+[2025-04-19 18:35:48] Info: action was performed on data of a user named Admin - changed user's name to Admin1
+[2025-04-19 18:35:48] Info: action was performed on data of a user named Thomas - changed user's role
+[2025-04-19 18:35:48] Error: problem in users.txt file found - an anomaly was detected in number of users' data
+[2025-04-19 18:35:48] Info: action was performed on data of a user named George - deleted a user
+[2025-04-19 18:35:48] Error: problem in users.txt file found - incorrect user's role was found in users.txt file for user Admin
+[2025-04-19 18:35:48] Info: action was performed on data of a user named Admin - added a new user
+[2025-04-19 18:35:48] Info: login of user Admin - successful
+[2025-04-19 18:35:48] Info: login of user Admin - unsuccessful
+[2025-04-19 18:35:48] Info: login of user Admin - successful
+[2025-04-19 18:35:48] Error: problem in users.txt file found - incorrect user's role was found in users.txt file for user Admin
+[2025-04-19 18:38:37] Info: login of user Janek - successful
+[2025-04-19 18:39:10] Info: login of user Janek - successful
+[2025-04-19 18:41:54] Info: action was performed on data of a user named John - added a new user
+[2025-04-19 18:43:05] Info: action was performed on data of a user named John - changed user's password
+[2025-04-19 18:43:39] Info: action was performed on data of a user named John - deleted a user
+[2025-04-19 18:44:45] Info: action was performed on data of a user named John - added a new user
+[2025-04-19 18:44:56] Info: login of user John - successful
+[2025-04-19 18:46:08] Info: login of user John - successful
+[2025-04-19 18:49:26] Info: login of user Janek - successful
+[2025-04-19 18:50:17] Info: action was performed on data of a user named John - changed user's role
+[2025-04-19 18:50:35] Info: login of user John - successful
+[2025-04-19 18:52:16] Info: login of user Jan - unsuccessful
+[2025-04-19 18:52:23] Info: login of user Janek - successful
+[2025-04-19 18:52:35] Info: action was performed on data of a user named John - changed user's role
+[2025-04-19 18:52:47] Info: login of user John - successful
+[2025-04-19 18:54:44] Info: login of user Janek - successful
+[2025-04-19 18:55:01] Info: action was performed on data of a user named John - changed user's role
+[2025-04-19 18:55:09] Info: login of user John - successful
