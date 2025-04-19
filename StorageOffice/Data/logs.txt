@@ -2,3 +2,32 @@
 [2025-04-19 22:45:02] Info: action was performed on data in database  - added new inbound shipment from FedEx
 [2025-04-19 22:45:18] Info: action was performed on data in database  - added product 'Jacket' to shipment with id #42
 [2025-04-19 22:45:44] Info: login of user Janek - successful
+[2025-04-19 23:48:11] Info: login of user Janek - successful
+[2025-04-19 23:55:45] Info: action was performed on data of a user named Admin - changed user's password
+[2025-04-19 23:55:45] Info: action was performed on data of a user named Admin - changed user's name to Admin1
+[2025-04-19 23:55:45] Info: action was performed on data of a user named Thomas - changed user's role
+[2025-04-19 23:55:45] Error: problem in users.txt file found - an anomaly was detected in number of users' data
+[2025-04-19 23:55:45] Info: action was performed on data of a user named George - deleted a user
+[2025-04-19 23:55:45] Error: problem in users.txt file found - incorrect user's role was found in users.txt file for user Admin
+[2025-04-19 23:55:45] Info: action was performed on data of a user named Admin - added a new user
+[2025-04-19 23:55:45] Info: login of user Admin - successful
+[2025-04-19 23:55:45] Info: login of user Admin - unsuccessful
+[2025-04-19 23:55:45] Info: login of user Admin - successful
+[2025-04-19 23:55:45] Error: problem in users.txt file found - incorrect user's role was found in users.txt file for user Admin
+[2025-04-20 01:12:56] Info: action was performed on data of a user named Admin - changed user's password
+[2025-04-20 01:12:56] Info: action was performed on data of a user named Admin - changed user's name to Admin1
+[2025-04-20 01:12:56] Info: action was performed on data of a user named Thomas - changed user's role
+[2025-04-20 01:12:56] Error: problem in users.txt file found - an anomaly was detected in number of users' data
+[2025-04-20 01:12:56] Error: problem in users.txt file found - the file was removed while the application was running
+[2025-04-20 01:12:56] Info: action was performed on data of a user named George - deleted a user
+[2025-04-20 01:12:56] Error: problem in users.txt file found - the file was removed while the application was running
+[2025-04-20 01:12:56] Error: problem in users.txt file found - the file was removed while the application was running
+[2025-04-20 01:12:56] Error: problem in users.txt file found - incorrect user's role was found in users.txt file for user Admin
+[2025-04-20 01:12:56] Error: problem in users.txt file found - the file was removed while the application was running
+[2025-04-20 01:12:56] Info: action was performed on data of a user named Admin - added a new user
+[2025-04-20 01:12:56] Error: problem in users.txt file found - the file was removed while the application was running
+[2025-04-20 01:12:56] Info: login of user Admin - successful
+[2025-04-20 01:12:56] Info: login of user Admin - unsuccessful
+[2025-04-20 01:12:56] Error: problem in users.txt file found - the file was removed while the application was running
+[2025-04-20 01:12:56] Info: login of user Admin - successful
+[2025-04-20 01:12:56] Error: problem in users.txt file found - incorrect user's role was found in users.txt file for user Admin

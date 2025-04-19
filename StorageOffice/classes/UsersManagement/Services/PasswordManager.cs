@@ -109,7 +109,7 @@ namespace StorageOffice.classes.UsersManagement.Services
         {
             if (string.IsNullOrEmpty(newUsername))
             {
-                throw new ArgumentNullException(null, "The new username must not be empty! ");
+                throw new ArgumentException(null, "The new username must not be empty! ");
             }
             else if (!Regex.IsMatch(newUsername, @"^[a-zA-Z0-9_.ąćęłńóśźżĄĆĘŁŃÓŚŹŻ]+$"))
             {
