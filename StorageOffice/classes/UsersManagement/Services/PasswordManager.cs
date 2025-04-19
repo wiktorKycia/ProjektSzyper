@@ -15,20 +15,17 @@ namespace StorageOffice.classes.UsersManagement.Services
 {
     public class PasswordManager
     {
-        public static string PasswordFilePath = "../../../Data/users.txt";
+        public static string PasswordFilePath = "../../../../StorageOffice/Data/users.txt";
         public static event Action<string, bool> PasswordVerified;
         public static event Action<string> FileErrorFound;
         public static event Action<string, string> UserDataChanged;
 
         static PasswordManager()
         {
-            if (Assembly.GetCallingAssembly().GetName().Name == "StorageOffice")
+            if (!File.Exists(PasswordFilePath))
             {
-                if (!File.Exists(PasswordFilePath))
-                {
-                    Console.WriteLine("The users file does not exist. The system creates a new one.");
-                    File.Create(PasswordFilePath).Dispose();
-                }
+                Console.WriteLine("The users file does not exist. The system creates a new one.");
+                File.Create(PasswordFilePath).Dispose();
             }
 
             PasswordVerified += (username, success) => LogManager.AddNewLog($"Info: login of user {username} - {(success ? "successful" : "unsuccessful")}");

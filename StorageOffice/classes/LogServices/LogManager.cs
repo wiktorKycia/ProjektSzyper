@@ -9,7 +9,7 @@ namespace StorageOffice.classes.LogServices
 {
     internal class LogManager
     {
-        private static string? _logFilePath = Path.Combine(Directory.GetParent(AppContext.BaseDirectory)?.Parent?.Parent?.Parent?.Parent?.FullName, "StorageOffice/Data/logs.txt");
+        private static string? _logFilePath = "../../../../StorageOffice/Data/logs.txt";
         public static event Action<string> FileErrorFound;
 
         static LogManager()

@@ -11,34 +11,38 @@ namespace StorageOffice.IntegrationsTests
 {
     internal class PasswordManagementTests
     {
-        [Test, IsolatedFileAttribiute]
+        [Test, IsolatedFile]
         public void SaveNewUser_AddsCorrectUserToFile()
         {
             string? path = TestContext.CurrentContext.Test.Properties.Get("IsolatedFilePath") as string;
             string testUsername = "Admin";
-            string originalPasswordFilePath = PasswordManager.PasswordFilePath;
-            PasswordManager.PasswordFilePath = path!;
 
             PasswordManager.SaveNewUser(testUsername, "xyz", Role.Administrator);
 
-            PasswordManager.PasswordFilePath = originalPasswordFilePath;
             List<string> lines = File.ReadAllLines(path!).ToList();
             Assert.That(lines[lines.Count - 1], Is.EqualTo($"{testUsername},Ngi8oeROpsTSaOttsCJgJpiSwLQrhrvx53pvoWw8koI=,Administrator"));
         }
 
-        [Test, IsolatedFileAttribiute]
+        [Test, IsolatedFile]
+        public void SaveNewUser_WhenUserAlreadyExists_ShouldThrowInvalidOperationException()
+        {
+            string? path = TestContext.CurrentContext.Test.Properties.Get("IsolatedFilePath") as string;
+            string testUsername = "Admin";
+            File.AppendAllText(path!, $"{testUsername},Ngi8oeROpsTSaOttsCJgJpiSwLQrhrvx53pvoWw8koI=,Administrator\n");
+
+            Assert.Throws<InvalidOperationException>(() => PasswordManager.SaveNewUser(testUsername, "xyz", Role.Administrator));
+        }
+
+        [Test, IsolatedFile]
         public void DeleteUser_RemovesCorrectUser()
         {
             string? path = TestContext.CurrentContext.Test.Properties.Get("IsolatedFilePath") as string;
-            string originalPasswordFilePath = PasswordManager.PasswordFilePath;
-            PasswordManager.PasswordFilePath = path!;
             File.AppendAllText(path!, "Admin,Ngi8oeROpsTSaOttsCJgJpiSwLQrhrvx53pvoWw8koI=,Administrator\n");
             File.AppendAllText(path!, "George,Ngi8oeROpsTSaOttsCJgJpiSwLQrhrvx53pvoWw8koI=,Logistician\n");
             File.AppendAllText(path!, "Thomas,Ngi8oeROpsTSaOttsCJgJpiSwLQrhrvx53pvoWw8koI=,Warehouseman\n");
 
             PasswordManager.DeleteUser("George");
 
-            PasswordManager.PasswordFilePath = originalPasswordFilePath;
             List<string> lines = File.ReadAllLines(path!).ToList();
             using (Assert.EnterMultipleScope())
             {
@@ -48,57 +52,62 @@ namespace StorageOffice.IntegrationsTests
             };
         }
 
-        [Test, IsolatedFileAttribiute]
+        [Test, IsolatedFile]
+        public void DeleteUser_WhenUserDoesNotExist_ShouldThrowInvalidOperationException()
+        {
+            Assert.Throws<InvalidOperationException>(() => PasswordManager.DeleteUser("Admin"));
+        }
+
+        [Test, IsolatedFile]
+        public void OverrideData_WhenIncorrectUser_ShouldThrowInvalidOperationException()
+        {
+            string? path = TestContext.CurrentContext.Test.Properties.Get("IsolatedFilePath") as string;
+            string testUsername = "Admin";
+            File.AppendAllText(path!, $"{testUsername},Ngi8oeROpsTSaOttsCJgJpiSwLQrhrvx53pvoWw8koI=,Administrator\n");
+
+            Assert.Throws<InvalidOperationException>(() => PasswordManager.OverwriteUserData("George", "Thomas", 0));
+        }
+
+        [Test, IsolatedFile]
         public void ChangeUsername_ModifiesUsernameCorrectly()
         {
             string? path = TestContext.CurrentContext.Test.Properties.Get("IsolatedFilePath") as string;
-            string originalPasswordFilePath = PasswordManager.PasswordFilePath;
-            PasswordManager.PasswordFilePath = path!;
             string testUsername = "Admin";
             File.AppendAllText(path!, $"{testUsername},Ngi8oeROpsTSaOttsCJgJpiSwLQrhrvx53pvoWw8koI=,Administrator\n");
 
             PasswordManager.ChangeUsername(testUsername, "Admin1");
 
-            PasswordManager.PasswordFilePath = originalPasswordFilePath;
             Assert.That(File.ReadAllLines(path!)[0], Is.EqualTo("Admin1,Ngi8oeROpsTSaOttsCJgJpiSwLQrhrvx53pvoWw8koI=,Administrator"));
         }
 
-        [Test, IsolatedFileAttribiute]
+        [Test, IsolatedFile]
         public void ChangePassword_ModifiesPasswordCorrectly()
         {
             string? path = TestContext.CurrentContext.Test.Properties.Get("IsolatedFilePath") as string;
-            string originalPasswordFilePath = PasswordManager.PasswordFilePath;
-            PasswordManager.PasswordFilePath = path!;
             string testUsername = "Admin";
             File.AppendAllText(path!, $"{testUsername},Ngi8oeROpsTSaOttsCJgJpiSwLQrhrvx53pvoWw8koI=,Administrator\n");
 
             PasswordManager.ChangeUserPassword(testUsername, "xyz2");
 
-            PasswordManager.PasswordFilePath = originalPasswordFilePath;
             Assert.That(File.ReadAllLines(path!)[0], Is.EqualTo($"{testUsername},y9MASH6J3z3QKtgfY4r969N5KZfmkwdsoelYcftQCp8=,Administrator"));
         }
 
-        [Test, IsolatedFileAttribiute]
+        [Test, IsolatedFile]
         public void ChangeUserRole_ModifiesRoleCorrectly()
         {
             string? path = TestContext.CurrentContext.Test.Properties.Get("IsolatedFilePath") as string;
-            string originalPasswordFilePath = PasswordManager.PasswordFilePath;
-            PasswordManager.PasswordFilePath = path!;
             string testUsername = "Thomas";
             File.AppendAllText(path!, $"{testUsername},Ngi8oeROpsTSaOttsCJgJpiSwLQrhrvx53pvoWw8koI=,Administrator\n");
 
             PasswordManager.ChangeUserRole(testUsername, Role.Logistician);
 
-            PasswordManager.PasswordFilePath = originalPasswordFilePath;
             Assert.That(File.ReadAllLines(path!)[0], Is.EqualTo($"{testUsername},Ngi8oeROpsTSaOttsCJgJpiSwLQrhrvx53pvoWw8koI=,Logistician"));
         }
 
-        [Test, IsolatedFileAttribiute]
+        [Test, IsolatedFile]
         public void GetAllUsers_ReturnsCorrectUsers()
         {
             string? path = TestContext.CurrentContext.Test.Properties.Get("IsolatedFilePath") as string;
-            string originalPasswordFilePath = PasswordManager.PasswordFilePath;
-            PasswordManager.PasswordFilePath = path!;
             File.AppendAllText(path!, "Admin,Ngi8oeROpsTSaOttsCJgJpiSwLQrhrvx53pvoWw8koI=,Administrator\n");
             File.AppendAllText(path!, "User,Ngi8oeROpsTSaOttsCJgJpiSwLQrhrvx53pvoWw8koI=,Logistician\n");
             File.AppendAllText(path!, "Thomas,Ngi8oeROpsTSaOttsCJgJpiSwLQrhrvx53pvoWw8koI=,Warehouseman\n");
@@ -106,7 +115,6 @@ namespace StorageOffice.IntegrationsTests
 
             List<User> users = PasswordManager.GetAllUsers();
 
-            PasswordManager.PasswordFilePath = originalPasswordFilePath;
             using (Assert.EnterMultipleScope())
             {
                 Assert.That(users[0].Username, Is.EqualTo("Admin"));
@@ -120,59 +128,72 @@ namespace StorageOffice.IntegrationsTests
             }
         }
 
-        [Test, IsolatedFileAttribiute]
-        public void CheckFile_WhenNoUsersCreated_ShouldReturnFalse()
+        [Test, IsolatedFile]
+        public void GetAllUsers_WhenRoleIsIncorrect_ShouldThrowFormatException()
         {
             string? path = TestContext.CurrentContext.Test.Properties.Get("IsolatedFilePath") as string;
-            string originalPasswordFilePath = PasswordManager.PasswordFilePath;
-            PasswordManager.PasswordFilePath = path!;
+            File.AppendAllText(path!, "Admin,Ngi8oeROpsTSaOttsCJgJpiSwLQrhrvx53pvoWw8koI=,Mechanic\n");
 
+            Assert.Throws<FormatException>(() => PasswordManager.GetAllUsers());
+        }
+
+        [Test, IsolatedFile]
+        public void CheckFile_WhenNoUsersCreated_ShouldReturnFalse()
+        {
             bool fileCheckResult = PasswordManager.CheckFile();
 
-            PasswordManager.PasswordFilePath = originalPasswordFilePath;
             Assert.That(fileCheckResult, Is.False);
         }
 
-        [Test, IsolatedFileAttribiute]
+        [Test, IsolatedFile]
         public void CheckFile_WhenMoreThan0UsersCreated_ShouldReturnTrue()
         {
             string? path = TestContext.CurrentContext.Test.Properties.Get("IsolatedFilePath") as string;
-            string originalPasswordFilePath = PasswordManager.PasswordFilePath;
-            PasswordManager.PasswordFilePath = path!;
             File.AppendAllText(path!, "Admin,Ngi8oeROpsTSaOttsCJgJpiSwLQrhrvx53pvoWw8koI=,Administrator\n");
 
             bool fileCheckResult = PasswordManager.CheckFile();
 
-            PasswordManager.PasswordFilePath = originalPasswordFilePath;
             Assert.That(fileCheckResult, Is.True);
         }
 
-        [Test, IsolatedFileAttribiute]
+        [Test, IsolatedFile]
+        public void CheckFile_WhenDataAmountIsIncorrect_ShouldThrowFormatException()
+        {
+            string? path = TestContext.CurrentContext.Test.Properties.Get("IsolatedFilePath") as string;
+            File.AppendAllText(path!, "Admin,Ngi8oeROpsTSaOttsCJgJpiSwLQrhrvx53pvoWw8koI=\n");
+
+            Assert.Throws<FormatException>(() => PasswordManager.CheckFile());
+        }
+
+        [Test, IsolatedFile]
         public void VerifyPasswordAndGetRole_WhenDataIsCorrect_ShouldReturnCorrectRole()
         {
             string? path = TestContext.CurrentContext.Test.Properties.Get("IsolatedFilePath") as string;
-            string originalPasswordFilePath = PasswordManager.PasswordFilePath;
-            PasswordManager.PasswordFilePath = path!;
             File.AppendAllText(path!, "Admin,Ngi8oeROpsTSaOttsCJgJpiSwLQrhrvx53pvoWw8koI=,Administrator\n");
 
             Role? role = PasswordManager.VerifyPasswordAndGetRole("Admin", "xyz");
 
-            PasswordManager.PasswordFilePath = originalPasswordFilePath;
             Assert.That(role, Is.EqualTo(Role.Administrator));
         }
 
-        [Test, IsolatedFileAttribiute]
+        [Test, IsolatedFile]
         public void VerifyPasswordAndGetRole_WhenDataIsIncorrect_ShouldReturnNull()
         {
             string? path = TestContext.CurrentContext.Test.Properties.Get("IsolatedFilePath") as string;
-            string originalPasswordFilePath = PasswordManager.PasswordFilePath;
-            PasswordManager.PasswordFilePath = path!;
             File.AppendAllText(path!, "Admin,Ngi8oeROpsTSaOttsCJgJpiSwLQrhrvx53pvoWw8koI=,Administrator\n");
 
             Role? role = PasswordManager.VerifyPasswordAndGetRole("Admin", "xyz2");
 
-            PasswordManager.PasswordFilePath = originalPasswordFilePath;
             Assert.That(role, Is.Null);
+        }
+
+        [Test, IsolatedFile]
+        public void VerifyPasswordAndGetRole_WhenRoleIsIncorrect_ShouldThrowFormatException()
+        {
+            string? path = TestContext.CurrentContext.Test.Properties.Get("IsolatedFilePath") as string;
+            File.AppendAllText(path!, "Admin,Ngi8oeROpsTSaOttsCJgJpiSwLQrhrvx53pvoWw8koI=,Mechanic\n"); ;
+
+            Assert.Throws<FormatException>(() => PasswordManager.VerifyPasswordAndGetRole("Admin", "xyz"));
         }
     }
 }

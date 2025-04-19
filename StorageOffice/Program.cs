@@ -9,8 +9,6 @@ using StorageOffice.classes.UsersManagement.Services;
 
 using StorageOffice.classes.CLI;
 using StorageOffice.classes.database;
-using StorageOffice.classes.TestsServices.Modules;
-using StorageOffice.classes.Tests.Modules;
 
 namespace StorageOffice
 {
@@ -21,11 +19,6 @@ namespace StorageOffice
             classes.UsersManagement.Modules.User user = new classes.UsersManagement.Modules.User();
             Console.OutputEncoding = System.Text.Encoding.Unicode;
             MenuHandler.Start(user);
-
-            /*PasswordManagerTests passwordManagerTests = new PasswordManagerTests();
-            RBACTests rbacTests = new RBACTests();
-            bool rbacTestsPassed = rbacTests.RunAllTests();
-            bool passwordManagerTestsPassed = passwordManagerTests.RunAllTests();*/
 
             #region comment
             // bool loggedIn = true;
