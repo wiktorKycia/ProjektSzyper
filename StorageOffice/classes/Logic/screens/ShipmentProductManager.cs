@@ -272,9 +272,7 @@ public class ShipmentProductManager
             return existingProduct;
         }
         
-        // If product doesn't exist, collect details to create a new one
-        Console.WriteLine("\nProduct not found. Please provide details to create a new product:");
-        
+        // If product doesn't exist, collect details to create a new one        
         string category = ConsoleInput.GetUserString("Enter product category: ");
         string unit = ConsoleInput.GetUserString("Enter measurement unit (e.g., kg, pcs): ");
         string description = ConsoleInput.GetUserString("Enter product description: ");
