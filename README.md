@@ -85,3 +85,9 @@ Dodanie nowej migracji (konieczne po zmianie struktury bazy):
 dotnet ef migrations add <nazwa_migracji>
 dotnet ef database update
 ```
+
+## Zrzuty ekranu
+
+![Login page](./images/screenshot1.png)
+
+![Admin panel](./images/widok_administratora.png)
