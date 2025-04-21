@@ -155,9 +155,9 @@ public class ShipmentProductManager
         {
             // Get all products
             var products = MenuHandler.db?.GetAllProducts();
-            if (products == null || !products.Any())
+            if (products == null)
             {
-                ConsoleOutput.PrintColorMessage("No products available.\n", ConsoleColor.Yellow);
+                ConsoleOutput.PrintColorMessage("Unable to access product database.\n", ConsoleColor.Red);
                 Console.WriteLine("Press any key to continue...");
                 ConsoleInput.WaitForAnyKey();
                 return;
@@ -181,15 +181,35 @@ public class ShipmentProductManager
             Console.WriteLine("\nAvailable Products:");
             Console.WriteLine(ConsoleOutput.WriteTable(productRows, headers));
 
-            int productId = ConsoleInput.GetUserInt("Select product ID: ");
-            var selectedProduct = products.FirstOrDefault(p => p.ProductId == productId);
-            
-            if (selectedProduct == null)
+            // For inbound shipments, offer the option to manually enter a product
+            bool manualEntry = false;
+            if (_shipment.ShipmentType == database.ShipmentType.Inbound)
             {
-                ConsoleOutput.PrintColorMessage("Invalid product ID.\n", ConsoleColor.Red);
-                Console.WriteLine("Press any key to try again...");
-                ConsoleInput.WaitForAnyKey();
-                return;
+                Console.WriteLine("\n1. Select existing product by ID");
+                Console.WriteLine("2. Manually enter new or existing product details");
+                int choice = ConsoleInput.GetUserInt("Choose an option: ");
+                manualEntry = choice == 2;
+            }
+
+            database.Product selectedProduct;
+            
+            if (manualEntry)
+            {
+                selectedProduct = HandleManualProductEntry();
+            }
+            else
+            {
+                // Standard product selection by ID
+                int productId = ConsoleInput.GetUserInt("Select product ID: ");
+                selectedProduct = products.FirstOrDefault(p => p.ProductId == productId);
+                
+                if (selectedProduct == null)
+                {
+                    ConsoleOutput.PrintColorMessage("Invalid product ID.\n", ConsoleColor.Red);
+                    Console.WriteLine("Press any key to try again...");
+                    ConsoleInput.WaitForAnyKey();
+                    return;
+                }
             }
             
             // Get quantity
@@ -229,6 +249,81 @@ public class ShipmentProductManager
             ConsoleOutput.PrintColorMessage($"Error: {ex.Message}\n", ConsoleColor.Red);
             Console.WriteLine("Press any key to continue...");
             ConsoleInput.WaitForAnyKey();
+        }
+    }
+    
+    private database.Product HandleManualProductEntry()
+    {
+        Console.Clear();
+        Console.WriteLine(ConsoleOutput.Header("Manual Product Entry"));
+        
+        // Get product name
+        string productName = ConsoleInput.GetUserString("Enter product name: ");
+        
+        // Check if the product already exists
+        var existingProduct = MenuHandler.db?.GetAllProducts()
+            .FirstOrDefault(p => p.Name.Equals(productName, StringComparison.OrdinalIgnoreCase));
+        
+        if (existingProduct != null)
+        {
+            ConsoleOutput.PrintColorMessage($"Found existing product: {existingProduct.Name} (ID: {existingProduct.ProductId})\n", ConsoleColor.Green);
+            Console.WriteLine("Press any key to continue with this product...");
+            ConsoleInput.WaitForAnyKey();
+            return existingProduct;
+        }
+        
+        // If product doesn't exist, collect details to create a new one
+        Console.WriteLine("\nProduct not found. Please provide details to create a new product:");
+        
+        string category = ConsoleInput.GetUserString("Enter product category: ");
+        string unit = ConsoleInput.GetUserString("Enter measurement unit (e.g., kg, pcs): ");
+        string description = ConsoleInput.GetUserString("Enter product description: ");
+        
+        // Confirm creation
+        Console.WriteLine("\nProduct details:");
+        Console.WriteLine($"Name: {productName}");
+        Console.WriteLine($"Category: {category}");
+        Console.WriteLine($"Unit: {unit}");
+        Console.WriteLine($"Description: {description}");
+        
+        Console.WriteLine("\nDo you want to create this product? (y/n)");
+        var key = ConsoleInput.GetConsoleKey();
+        
+        if (key != ConsoleKey.Y)
+        {
+            ConsoleOutput.PrintColorMessage("Product creation cancelled.\n", ConsoleColor.Yellow);
+            Console.WriteLine("Press any key to try again...");
+            ConsoleInput.WaitForAnyKey();
+            return HandleManualProductEntry(); // Recursively try again
+        }
+        
+        try
+        {
+            // Create the new product
+            MenuHandler.db?.AddProductAndStock(productName, category, unit, description);
+            
+            // Get the newly created product
+            var newProduct = MenuHandler.db?.GetAllProducts()
+                .FirstOrDefault(p => p.Name.Equals(productName, StringComparison.OrdinalIgnoreCase));
+            
+            if (newProduct != null)
+            {
+                ConsoleOutput.PrintColorMessage($"Product '{productName}' created successfully with ID: {newProduct.ProductId}\n", ConsoleColor.Green);
+                Console.WriteLine("Press any key to continue...");
+                ConsoleInput.WaitForAnyKey();
+                return newProduct;
+            }
+            else
+            {
+                throw new InvalidOperationException("Failed to retrieve the newly created product.");
+            }
+        }
+        catch (Exception ex)
+        {
+            ConsoleOutput.PrintColorMessage($"Error creating product: {ex.Message}\n", ConsoleColor.Red);
+            Console.WriteLine("Press any key to try again...");
+            ConsoleInput.WaitForAnyKey();
+            return HandleManualProductEntry(); // Recursively try again
         }
     }
     
