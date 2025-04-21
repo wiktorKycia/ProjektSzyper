@@ -111,7 +111,7 @@ Dzielą się na 3 części:
 Logi są przechowywane w pliku `logs.txt` i zawierają informacje o tym co się działo podczas działania aplikacji
 
 #### Baza
-Baza danych jest przechowywana w pliku `StorageOffice.db` i zawiera dane o
+Baza danych (oparta na systemie SQLite3) jest przechowywana w pliku `StorageOffice.db` i zawiera dane o
 - produktach
 - magazynie
 - dostawach
@@ -127,6 +127,7 @@ Klasy są podzielone na foldery, które odpowiadają ich funkcjonalności
 wszystkie klasy znajdują się w podfolderze `StorageOffice/classes/`
 
 #### CLI
+
 Folder [`CLI/`](./StorageOffice/classes/CLI/) zawiera klasy, które odpowiadają za wyświetlanie danych na ekranie konsoli
 
 
@@ -143,9 +144,36 @@ Klasy `RadioOption` oraz `CheckboxOption` mają zdarzenie typu `Action`, które 
 
 
 #### Database
-Klasy dotyczące bazy danych znajdują się w folderze [`database/`](./StorageOffice/classes/database/)
-...
 
+Klasy dotyczące bazy danych znajdują się w folderze [`database/`](./StorageOffice/classes/database/)
+
+Klasa [StorageDatabase](./StorageOffice/classes/database/Database.cs) jest odpowiedzialna za komunikację reszty kodu z bazą danych. Zaimplementowany został tutaj wzorzec [Fasada](https://refactoring.guru/pl/design-patterns/facade)
+
+
+Klasa [Model](./StorageOffice/classes/database/Model.cs) zawiera definicje tabel w bazie danych oraz ich relacje.
+Do tworzenia zapytań oraz struktury bazy danych użyty został Entity Framework Core wraz z bazą SQLite.
+
+
+Klasa [DataSeeder](./StorageOffice/classes/database/DataSeeder.cs) jest odpowiedzialna za generowanie danych do bazy danych. Generuje ona mniej-więcej realistyczne dane. Do generacji danych użyty jest moduł Bogus.
+
+
+#### Logic
+
+Folder [`Logic/`](./StorageOffice/classes/Logic/) zawiera klasy, które odpowiadają za logikę aplikacji.
+
+Klasy znajdujące się w tym folderze wyciągają dane z bazy przy pomocy odpowiednich metod oraz wywołują odpowiednie metody w klasach z folderu `CLI/`, tak aby wyświetlić dane na ekranie konsoli w odpowiedni sposób.
+
+Klasa [`MenuHandler`](./StorageOffice/classes/Logic/MenuHandler.cs) jest odpowiedzialna za przełączanie się między poszczególnymi ekranami.
+
+Każdy ekran jest tworzony przez odpowiednią metodę klasy `MenuHandler`. 
+Metody te pobierają dane z bazy, wstępnie je przetwarzają i podają dalej do konkretnych klas ekranów.
+
+Klasy poszczególnych ekranów są odpowiedzialne za interakcję z użytkownikiem oraz wyświetlanie danych na ekranie konsoli.
+
+
+#### LogServices
+
+#### UsersManagement
 
 ## Obłsuga błędów
 
