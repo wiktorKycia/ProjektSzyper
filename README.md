@@ -91,3 +91,115 @@ dotnet ef database update
 ![Login page](./images/screenshot1.png)
 
 ![Admin panel](./images/widok_administratora.png)
+
+## Przykłady użycia
+
+Po uruchomieniu aplikacji wyświetla się ekran logowania
+
+
+## Struktury danych i klasy
+
+### Dane
+
+Dane są przechowywane w folderze [`Data/`](./StorageOffice/Data/)
+Dzielą się na 3 części:
+- logi systemowe
+- baza
+- użytkownicy
+
+#### Logi
+Logi są przechowywane w pliku `logs.txt` i zawierają informacje o tym co się działo podczas działania aplikacji
+
+#### Baza
+Baza danych jest przechowywana w pliku `StorageOffice.db` i zawiera dane o
+- produktach
+- magazynie
+- dostawach
+- dostawcach
+- odbiorcach
+- oraz podstawowe informacje o użytkownikach
+
+#### Użytkownicy
+Użytkownicy są przechowywani w pliku `users.txt` i zawierają nazwy użytkowników, ich zaszyfrowane hasła oraz infromacje o ich rolach
+
+### Klasy
+Klasy są podzielone na foldery, które odpowiadają ich funkcjonalności
+wszystkie klasy znajdują się w podfolderze `StorageOffice/classes/`
+
+#### CLI
+Folder [`CLI/`](./StorageOffice/classes/CLI/) zawiera klasy, które odpowiadają za wyświetlanie danych na ekranie konsoli
+
+
+klasa abstrakcyjna [`Select`](./StorageOffice/CLI/Select.cs) jest klasą bazową dla 2 typów list wyboru:
+- `RadioSelect`, która wyświetla pozwala na wybór jednego elementu
+- `CheckboxSelect`, która wyświetla pozwala na wybór wielu elementów
+
+Zawiera ona listę obiektów klas implementujących interfejs `ISelectable`
+Najważniejszą metodą klasy `Select` jest `InvokeOperation()`, która wywołuje metodę `InvokeOperation()` zaznaczonej opcji
+
+
+Klasy `RadioOption` oraz `CheckboxOption` mają zdarzenie typu `Action`, które jest wywoływane przez metodę 
+`InvokeOperation()`
+
+
+#### Database
+Klasy dotyczące bazy danych znajdują się w folderze [`database/`](./StorageOffice/classes/database/)
+...
+
+
+## Obłsuga błędów
+
+Obłsuga błędów w sekcji `Logic/` jest zrealizowana przez ekran `Error`. 
+Użytkownik wtedy widzi czerwony komunikat o błędzie i może wrócić do poprzedniego ekranu
+
+## Testowanie
+
+Aplikację testowano na różne sposoby
+- testami jednostkowymi
+- testami integracyjnymi
+- uruchamiając i ręcznie sprawdzając, czy wszystko działa i czy wyświetla się jak należy
+
+Testy jednostkowe i integracyjne zawarte są w folderach:
+- `StorageOffice.UnitTests`
+- `StorageOffice.IntegrationsTests`
+
+
+## Problemy i ograniczenia
+
+### Co nie działa idealnie?
+
+Czyszczenie konsoli nie zawsze działa idealnie
+
+jak treść do wyświetlenia nie mieści się na jednym ekranie
+
+to wtedy console clear "ucina" dolną część, a całą resztę zostawia i jest możliwość zobaczenia jej po podscrollowaniu do góry
+
+
+Drugą rzeczą, która nie działa idealnie jest wyświetlanie produktów wg. kategorii
+
+Działają wszystkie kategorie poza elektorniką, która wyrzuca nieobsłużony wyjątek i zatrzymuje cały program
+
+Nie wiem dlaczego to się dzieje
+
+### Co może zostać poprawione?
+
+Wszystkie ekrany konsoli mogą zostać zrobione tak, aby cała zawartość zmieściła się bez konieczności przewijania
+
+Może zostać zaimplementowany try-catch dla kategorii elektronika, który wyświtlałby ekran błędu informujący
+użytkownika, że takiej kategorii nie można wyświetlić, natomiast nie jest to w pełni satysfakcjonujące rozwiązanie
+
+## Plany rozwoju
+
+W przyszłości można dodać ustawienia kolorów, tak aby była lepsza personalizacja pod względem wyglądu aplikacji
+- np. inny kolor tła lub czcionki
+
+
+## Autorzy
+
+Wiktor Kycia 3D
+Jan Topolewski 3D
+
+### Kontakt
+
+wiktor.kycia@uczen.zsk.poznan.pl
+jan.topolewski@uczen.zsk.poznan.pl
