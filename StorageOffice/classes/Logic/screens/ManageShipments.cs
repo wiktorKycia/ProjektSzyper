@@ -55,6 +55,7 @@ public class ManageShipments
     private void Display()
     {
         Console.Clear();
+        Console.WriteLine("\x1b[3J");
         string content = _heading;
         
         if (_select.Options != null)

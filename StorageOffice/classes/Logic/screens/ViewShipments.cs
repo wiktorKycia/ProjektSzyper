@@ -79,6 +79,7 @@ public class ViewShipments
     private void Display()
     {
         Console.Clear();
+        Console.WriteLine("\x1b[3J");
         string content = $"{_title}\n\n";
 
         // Filter shipments based on settings

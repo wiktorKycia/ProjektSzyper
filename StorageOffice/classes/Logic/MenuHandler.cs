@@ -185,8 +185,7 @@ public static class MenuHandler
             new RadioOption("Create Outbound Shipment (Export)", () => AddShipment(user, database.ShipmentType.Outbound)),
             new RadioOption("View All Shipments", () => ViewAllShipments(user)),
             new RadioOption("View Pending Shipments", () => ViewPendingShipments(user)),
-            new RadioOption("View Completed Shipments", () => ViewCompletedShipments(user)),
-            new RadioOption("Manage My Assigned Shipments", () => ManageAssignedShipments(user))
+            new RadioOption("View Completed Shipments", () => ViewCompletedShipments(user))
         }), () => MainMenu(user));
     }
 

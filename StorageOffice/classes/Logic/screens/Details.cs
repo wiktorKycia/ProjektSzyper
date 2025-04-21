@@ -39,6 +39,7 @@ class Details
     public void Display()
     {
         Console.Clear();
+        Console.WriteLine("\x1b[3J");
         Console.WriteLine(ConsoleOutput.UIFrame(Title, Text));
 
         foreach (var action in _displayKeyboardActions)

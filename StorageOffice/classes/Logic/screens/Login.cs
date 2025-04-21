@@ -37,6 +37,7 @@ public class Login
         while(running)
         {
             Display();
+            
             var key = ConsoleInput.GetConsoleKey();
             if (_keyboardActions.ContainsKey(key))
             {
@@ -125,6 +126,7 @@ public class Login
     private void Display()
     {
         Console.Clear();
+        Console.WriteLine("\x1b[3J");
         string content = _heading;
         
         Console.WriteLine(ConsoleOutput.UIFrame(_title, content.RightMargin()));

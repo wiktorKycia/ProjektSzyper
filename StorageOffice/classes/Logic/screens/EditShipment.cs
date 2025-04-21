@@ -62,6 +62,7 @@ public class EditShipment
     private void Display()
     {
         Console.Clear();
+        Console.WriteLine("\x1b[3J");
         string shipmentInfo = $"Shipment ID: {_shipment.ShipmentId}\n" +
                              $"Type: {_shipment.ShipmentType}\n" +
                              $"Status: {(_shipment.IsCompleted ? "Completed" : "Pending")}\n";

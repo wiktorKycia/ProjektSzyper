@@ -66,6 +66,7 @@ public class EditConcreteUser
     private void Display()
     {
         Console.Clear();
+        Console.WriteLine("\x1b[3J");
         string content = $"Editing user: {_username}\n\nSelect an option:";
 
         foreach (var option in _select.Options)

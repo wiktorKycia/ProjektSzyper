@@ -83,6 +83,7 @@ public class EditPassword
     private void Display()
     {
         Console.Clear();
+        Console.WriteLine("\x1b[3J");
         string content = $"Change password for user: {_username}";
         
         Console.WriteLine(ConsoleOutput.UIFrame(_title, content));

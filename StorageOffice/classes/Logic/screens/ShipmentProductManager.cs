@@ -94,6 +94,7 @@ public class ShipmentProductManager
     private void Display()
     {
         Console.Clear();
+        Console.WriteLine("\x1b[3J");
         string content = $"Adding Products to {(_shipment.ShipmentType == database.ShipmentType.Inbound ? "Inbound" : "Outbound")} Shipment #{_shipment.ShipmentId}";
         
         if (_shipment.ShipmentType == database.ShipmentType.Inbound)

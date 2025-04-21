@@ -85,6 +85,7 @@ public class BrowseWarehouseMenu
     private void Display()
     {
         Console.Clear();
+        Console.WriteLine("\x1b[3J");
         string content = "Select an option to browse the warehouse:\n\n";
         
         if (_select.Options != null)

@@ -39,6 +39,7 @@ class Error
     public void Display()
     {
         Console.Clear();
+        Console.WriteLine("\x1b[3J");
         ConsoleOutput.PrintColorMessage(ConsoleOutput.UIFrame(_title, _text), ConsoleColor.Red);
 
         foreach (var action in _displayKeyboardActions)

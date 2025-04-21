@@ -90,6 +90,7 @@ public class SelectCategoryMenu
     private void Display()
     {
         Console.Clear();
+        Console.WriteLine("\x1b[3J");
         string content = "Select a product category to view:\n\n";
         
         if (_select.Options != null)

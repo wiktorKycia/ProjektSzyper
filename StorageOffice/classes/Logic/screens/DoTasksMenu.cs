@@ -63,7 +63,7 @@ public class DoTasksMenu
             { ConsoleKey.LeftArrow, MoveLeft },
             { ConsoleKey.RightArrow, MoveRight },
             { ConsoleKey.Enter, _select.SelectOption },
-            { ConsoleKey.D, CompleteSelectedTasks },
+            { ConsoleKey.C, CompleteSelectedTasks },
             { ConsoleKey.Escape, () => onExit.Invoke() }
         };
         
@@ -71,7 +71,7 @@ public class DoTasksMenu
         {
             { "\u2190\u2191\u2192\u2193", "navigate" },
             { "<Enter>", "select" },
-            { "D", "complete selected" },
+            { "<C>", "complete selected" },
             { "<Esc>", "back" }
         };
         

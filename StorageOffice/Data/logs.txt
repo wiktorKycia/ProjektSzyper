@@ -31,3 +31,18 @@
 [2025-04-20 01:12:56] Error: problem in users.txt file found - the file was removed while the application was running
 [2025-04-20 01:12:56] Info: login of user Admin - successful
 [2025-04-20 01:12:56] Error: problem in users.txt file found - incorrect user's role was found in users.txt file for user Admin
+[2025-04-21 13:17:04] Info: login of user wiktor - successful
+[2025-04-21 13:17:29] Info: login of user Jan - successful
+[2025-04-21 13:18:13] Info: login of user mietek - successful
+[2025-04-21 13:18:57] Info: action was performed on data in database  - modified stock's data
+[2025-04-21 13:18:57] Info: action was performed on data in database  - marked shipment as done
+[2025-04-21 13:18:57] Info: action was performed on data in database  - modified stock's data
+[2025-04-21 13:18:57] Info: action was performed on data in database  - modified stock's data
+[2025-04-21 13:18:57] Info: action was performed on data in database  - modified stock's data
+[2025-04-21 13:18:57] Info: action was performed on data in database  - modified stock's data
+[2025-04-21 13:18:57] Info: action was performed on data in database  - marked shipment as done
+[2025-04-21 13:36:41] Info: login of user Janek - unsuccessful
+[2025-04-21 13:36:47] Info: login of user Janek - unsuccessful
+[2025-04-21 13:36:55] Info: login of user wiktor - successful
+[2025-04-21 13:37:31] Info: action was performed on data of a user named John - deleted a user
+[2025-04-21 13:37:32] Info: action was performed on data in database  - removed user named 'John'
