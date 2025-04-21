@@ -50,3 +50,5 @@
 [2025-04-21 18:29:58] Info: action was performed on data in database  - added new inbound shipment from Amazon Logistics
 [2025-04-21 18:33:29] Info: action was performed on data in database  - added product 'M1 Abrams' and it's stock
 [2025-04-21 18:33:40] Info: action was performed on data in database  - added product 'M1 Abrams' to shipment with id #43
+[2025-04-21 18:49:22] Info: login of user Jan - successful
+[2025-04-21 18:50:43] Info: login of user wiesio - successful
