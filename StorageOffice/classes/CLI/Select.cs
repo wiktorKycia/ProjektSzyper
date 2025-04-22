@@ -44,6 +44,9 @@ public abstract class Select
     public abstract void InvokeOperation();
 }
 
+/// <summary>
+/// Represents a radio-button style option that can be selected exclusively.
+/// </summary>
 public class RadioSelect : Select
 {
     public List<RadioOption> RadioOptions { get; set; }
@@ -93,6 +96,9 @@ public class RadioSelect : Select
     }
 }
 
+/// <summary>
+/// Represents a checkbox style option that can be selected independently.
+/// </summary>
 public class CheckBoxSelect : Select
 {
     public List<CheckBoxOption> CheckBoxOptions { get; set; }
