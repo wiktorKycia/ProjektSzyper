@@ -172,20 +172,32 @@ public static class MenuHandler
         }), () => {MainMenu(user);});
     }
 
-
+    /// <summary>
+    /// Displays the menu for viewing users.
+    /// This menu allows the user to see a list of all users in the system.
+    /// </summary>
+    /// <param name="user">The user object representing the logged-in user</param>
     internal static void ViewUsers(User user)
     {
         var users = PasswordManager.GetAllUsers();
         var viewUsers = new Users(users, () => {ManageUsers(user);});
     }
 
-
+    /// <summary>
+    /// Displays the menu for adding a new user.
+    /// This menu allows the user to enter details for a new user.
+    /// </summary>
+    /// <param name="user">The user object representing the logged-in user</param>
     internal static void AddUser(User user)
     {
         var addUser = new AddUser(() => {ManageUsers(user);}, user);
     }
 
-
+    /// <summary>
+    /// Displays the menu for deleting users.
+    /// This menu allows the user to select users to delete.
+    /// </summary>
+    /// <param name="user">The user object representing the logged-in user</param>
     internal static void DeleteUser(User user)
     {
         var users = PasswordManager.GetAllUsers();
@@ -197,7 +209,11 @@ public static class MenuHandler
         var deleteUser = new DeleteUser(new CheckBoxSelect(checkBoxOptions), () => {ManageUsers(user);});
     }
 
-
+    /// <summary>
+    /// Displays the menu for editing users.
+    /// This menu allows the user to select a user to edit.
+    /// </summary>
+    /// <param name="user">The user object representing the logged-in user</param>
     internal static void EditUserMenu(User user)
     {
         var users = PasswordManager.GetAllUsers();
@@ -208,7 +224,11 @@ public static class MenuHandler
         var editUser = new EditUser("Edit user", new RadioSelect(radioOptions), () => {ManageUsers(user);});
     }
 
-
+    /// <summary>
+    /// Displays the menu for editing a specific user.
+    /// </summary>
+    /// <param name="user">The user object representing the logged-in user</param>
+    /// <param name="username">The username of the user to be edited</param>
     internal static void EditConcreteUser(User user, string username)
     {
         var radioOptions = new List<RadioOption>
@@ -220,20 +240,38 @@ public static class MenuHandler
         var editConcreteUser = new EditConcreteUser(username:username, select:new RadioSelect(radioOptions), onExit:() => {EditUserMenu(user);});
     }
 
-
+    /// <summary>
+    /// Displays the menu for editing a user's username.
+    /// </summary>
+    /// <param name="user">The user object representing the logged-in user</param>
+    /// <param name="username">The username of the user to be edited</param>
     internal static void EditUsername(User user, string username)
     {
         var editUsername = new EditUsername(username, () => {ManageUsers(user);});
     }
+    /// <summary>
+    /// Displays the menu for editing a user's password.
+    /// </summary>
+    /// <param name="user">The user object representing the logged-in user</param>
+    /// <param name="username">The username of the user whose password is to be edited</param>
     internal static void EditPassword(User user, string username)
     {
         var editPassword = new EditPassword(username, () => {ManageUsers(user);});
     }
+    /// <summary>
+    /// Displays the menu for editing a user's role.
+    /// </summary>
+    /// <param name="user">The user object representing the logged-in user</param>
+    /// <param name="username">The username of the user whose role is to be edited</param>
     internal static void EditRole(User user, string username)
     {
         var editRole = new EditRole(username, () => {ManageUsers(user);});
     }
 
+    /// <summary>
+    /// Displays the shipment management menu for the user.
+    /// </summary>
+    /// <param name="user">The user object representing the logged-in user</param>
     internal static void ManageShipmentsMenu(User user)
     {
         var manageShipments = new ManageShipments(new RadioSelect(new List<RadioOption>
@@ -246,6 +284,10 @@ public static class MenuHandler
         }), () => MainMenu(user));
     }
 
+    /// <summary>
+    /// Displays the shipment browsing menu for the user.
+    /// </summary>
+    /// <param name="user">The user object representing the logged-in user</param>
     internal static void BrowseShipmentsMenu(User user)
     {
         var browseShipments = new ManageShipments(new RadioSelect(new List<RadioOption>
@@ -256,23 +298,40 @@ public static class MenuHandler
         }), () => MainMenu(user));
     }
 
+    /// <summary>
+    /// Displays the shipment addition menu for the user.
+    /// </summary>
+    /// <param name="user">The user object representing the logged-in user</param>
+    /// <param name="shipmentType">The type of shipment to be added (Inbound or Outbound)</param>
     internal static void AddShipment(User user, database.ShipmentType shipmentType)
     {
         var addShipment = new AddShipment(() => ManageShipmentsMenu(user), user, shipmentType);
     }
 
+    /// <summary>
+    /// Displays the menu for viewing all shipments.
+    /// </summary>
+    /// <param name="user">The user object representing the logged-in user</param>
     internal static void ViewAllShipments(User user)
     {
         var shipments = db?.GetAllShipments() ?? new List<database.Shipment>();
         var viewShipments = new ViewShipments(shipments, () => ManageShipmentsMenu(user), "All Shipments");
     }
 
+    /// <summary>
+    /// Displays the menu for viewing pending shipments.
+    /// </summary>
+    /// <param name="user">The user object representing the logged-in user</param>
     internal static void ViewPendingShipments(User user)
     {
         var shipments = db?.GetNotCompletedShipments() ?? new List<database.Shipment>();
         var viewShipments = new ViewShipments(shipments, () => ManageShipmentsMenu(user), "Pending Shipments", showPendingOnly:true);
     }
 
+    /// <summary>
+    /// Displays the menu for viewing completed shipments.
+    /// </summary>
+    /// <param name="user">The user object representing the logged-in user</param>
     internal static void ViewCompletedShipments(User user)
     {
         var allShipments = db?.GetAllShipments() ?? new List<database.Shipment>();
@@ -280,36 +339,53 @@ public static class MenuHandler
         var viewShipments = new ViewShipments(completedShipments, () => ManageShipmentsMenu(user), "Completed Shipments", showCompletedOnly:true);
     }
 
+    /// <summary>
+    /// Displays the menu for managing assigned shipments.
+    /// </summary>
+    /// <param name="user">The user object representing the logged-in user</param>
     internal static void ManageAssignedShipments(User user)
     {
-        try {
+        try 
+        {
+            // Retrieve the user ID from the database based on the username.
             int userId = db?.GetUserIdByUsername(user.Username) ?? 0;
             if (userId == 0)
             {
                 throw new InvalidOperationException("User not found in database");
             }
             
+            // Retrieve a list of not completed shipments assigned to the current user.
             var shipments = db?.GetNotCompletedShipmentsAssignedToUser(userId) ?? new List<database.Shipment>();
             
+            // Check if the user has any pending shipments assigned to them.
             if (!shipments.Any())
             {
+                // If there are no pending shipments, display an error message.
                 var error = new Error("You don't have any pending shipments assigned to you.", () => ManageShipmentsMenu(user));
                 return;
             }
             
+            // Create a list of RadioOption for each assigned shipment.
             var shipmentOptions = shipments.Select(s => new RadioOption(
                 $"ID: {s.ShipmentId} - {s.ShipmentType} - {(s.ShipmentType == database.ShipmentType.Inbound ? s.Shipper?.Name : s.Shop?.ShopName)}", 
                 () => EditAssignedShipment(user, s)
             )).ToList();
             
+            // Display a menu to select a shipment to edit.
             var selectShipment = new EditUser("Your Assigned Shipments", new RadioSelect(shipmentOptions), () => ManageShipmentsMenu(user));
         }
         catch (Exception ex)
         {
+            // Handle any exceptions that occur during the process.
             var error = new Error($"Error: {ex.Message}", () => ManageShipmentsMenu(user));
         }
     }
 
+    /// <summary>
+    /// Displays the menu for editing an assigned shipment.
+    /// </summary>
+    /// <param name="user">The user object representing the logged-in user</param>
+    /// <param name="shipment">The shipment object to be edited</param>
     internal static void EditAssignedShipment(User user, database.Shipment shipment)
     {
         var shipmentOptions = new List<RadioOption>
@@ -321,11 +397,21 @@ public static class MenuHandler
         var editShipment = new EditShipment(shipment, new RadioSelect(shipmentOptions), () => ManageAssignedShipments(user), user);
     }
 
+    /// <summary>
+    /// Displays the menu for adding products to a shipment.
+    /// </summary>
+    /// <param name="user">The user object representing the logged-in user</param>
+    /// <param name="shipment">The shipment object to which products will be added</param>
     internal static void AddProductsToShipment(User user, database.Shipment shipment)
     {
         var productManager = new ShipmentProductManager(shipment, () => EditAssignedShipment(user, shipment), user);
     }
 
+    /// <summary>
+    /// Marks a shipment as complete.
+    /// </summary>
+    /// <param name="user">The user object representing the logged-in user</param>
+    /// <param name="shipment">The shipment object to be marked as complete</param>
     internal static void MarkShipmentComplete(User user, database.Shipment shipment)
     {
         var completeManager = new CompleteShipment(shipment, () => ManageShipmentsMenu(user), () => EditAssignedShipment(user, shipment));
