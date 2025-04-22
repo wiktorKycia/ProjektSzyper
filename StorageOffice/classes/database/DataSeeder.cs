@@ -202,6 +202,13 @@ public class DataSeeder
         context.SaveChanges();
     }
 
+
+    /// <summary>
+    /// Returns a descriptive suffix based on the product category.
+    /// </summary>
+    /// <param name="category">The product category for which to generate a suffix.</param>
+    /// <returns>A string containing an appropriate description suffix for the specified category,
+    /// or a generic suffix if the category is not recognized.</returns>
     private static string GetDescriptionSuffix(string category)
     {
         return category switch
