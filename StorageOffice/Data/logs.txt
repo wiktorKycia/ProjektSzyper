@@ -52,3 +52,12 @@
 [2025-04-21 18:33:40] Info: action was performed on data in database  - added product 'M1 Abrams' to shipment with id #43
 [2025-04-21 18:49:22] Info: login of user Jan - successful
 [2025-04-21 18:50:43] Info: login of user wiesio - successful
+[2025-04-22 17:45:27] Info: login of user Jan - unsuccessful
+[2025-04-22 17:45:32] Info: login of user Jan - successful
+[2025-04-22 17:47:04] Info: action was performed on data in database  - added shipper named 'ZSK'
+[2025-04-22 17:47:06] Info: action was performed on data in database  - added new inbound shipment from ZSK
+[2025-04-22 17:48:45] Info: action was performed on data in database  - added product 'Train miniature' and it's stock
+[2025-04-22 17:48:51] Info: action was performed on data in database  - added product 'Train miniature' to shipment with id #44
+[2025-04-22 17:50:27] Info: action was performed on data in database  - added shop named 'ZSK'
+[2025-04-22 17:50:27] Info: action was performed on data in database  - added new outbound shipment to ZSK
+[2025-04-22 17:51:22] Info: action was performed on data in database  - added product 'Bed Frame' to shipment with id #45
