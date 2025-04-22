@@ -9,22 +9,20 @@ using StorageOffice.classes.UsersManagement.Services;
 
 namespace StorageOffice.IntegrationsTests
 {
-    internal abstract class IsolatedFileAttribute : Attribute, ITestAction
+    internal class IsolatedUsersFileAttribute : IsolatedFileAttribute
     {
-        protected string? FilePath;
-        protected string? OriginalFilePath;
-
-        public ActionTargets Targets => ActionTargets.Test;
-
-        public virtual void BeforeTest(ITest test)
+        public override void BeforeTest(ITest test)
         {
             FilePath = Path.Combine(Path.GetTempPath(), Guid.NewGuid() + ".txt");
+            OriginalFilePath = PasswordManager.PasswordFilePath;
+            PasswordManager.PasswordFilePath = FilePath;
             File.WriteAllText(FilePath, "");
             test.Properties.Set("IsolatedFilePath", FilePath);
         }
 
-        public virtual void AfterTest(ITest test)
+        public override void AfterTest(ITest test)
         {
+            PasswordManager.PasswordFilePath = OriginalFilePath!;
             if (File.Exists(FilePath))
             {
                 File.Delete(FilePath);

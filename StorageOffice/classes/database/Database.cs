@@ -19,7 +19,7 @@ namespace StorageOffice.classes.database
         {
             _context.Database.SetCommandTimeout(5);
             _context.Database.Migrate();
-            _storageDataChanged += (action) => LogManager.AddNewLog($"Info: action was performed on data in database  - {action}");
+            _storageDataChanged += (action) => LogManager.AddNewLog($"Info: action was performed on data in database - {action}");
         }
 
         // Stores management methods

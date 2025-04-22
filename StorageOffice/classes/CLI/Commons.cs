@@ -84,11 +84,15 @@ public static partial class ConsoleOutput
     public static string RightMargin(this string text, char Char = ' ')
     {
         int length = UIWidth - text.Length;
+        if (length < 0)
+        {
+            length = UIWidth + length;
+        }
         return text + Repeat(Char, length);
     }
     internal static string Truncate(string text, int finalLength)
     {
-        if (text.Length > finalLength) { return text[..(finalLength - 3)] + "..."; }
+        if (text.Length > finalLength && finalLength >= 3) { return text[..(finalLength - 3)] + "..."; }
         return text;
     }
     private static string[] DivideIntoArray(this string text, int maxElemLength)

@@ -11,7 +11,7 @@ namespace StorageOffice.IntegrationsTests
 {
     internal class PasswordManagerTests
     {
-        [Test, IsolatedFile]
+        [Test, IsolatedUsersFile]
         public void SaveNewUser_AddsCorrectUserToFile()
         {
             string? path = TestContext.CurrentContext.Test.Properties.Get("IsolatedFilePath") as string;
@@ -23,7 +23,7 @@ namespace StorageOffice.IntegrationsTests
             Assert.That(lines[lines.Count - 1], Is.EqualTo($"{testUsername},Ngi8oeROpsTSaOttsCJgJpiSwLQrhrvx53pvoWw8koI=,Administrator"));
         }
 
-        [Test, IsolatedFile]
+        [Test, IsolatedUsersFile]
         public void SaveNewUser_WhenUserAlreadyExists_ShouldThrowInvalidOperationException()
         {
             string? path = TestContext.CurrentContext.Test.Properties.Get("IsolatedFilePath") as string;
@@ -33,13 +33,13 @@ namespace StorageOffice.IntegrationsTests
             Assert.Throws<InvalidOperationException>(() => PasswordManager.SaveNewUser(testUsername, "xyz", Role.Administrator));
         }
 
-        [Test, UseMissingFilePath]
+        [Test, UseMissingUsersFilePath]
         public void SaveNewUser_WhenFileDoesNotExist_ShouldThrowFileNotFoundException()
         {
             Assert.Throws<FileNotFoundException>(() => PasswordManager.SaveNewUser("Thomas", "xyz", Role.Logistician));
         }
 
-        [Test, IsolatedFile]
+        [Test, IsolatedUsersFile]
         public void DeleteUser_RemovesCorrectUser()
         {
             string? path = TestContext.CurrentContext.Test.Properties.Get("IsolatedFilePath") as string;
@@ -58,19 +58,19 @@ namespace StorageOffice.IntegrationsTests
             };
         }
 
-        [Test, IsolatedFile]
+        [Test, IsolatedUsersFile]
         public void DeleteUser_WhenUserDoesNotExist_ShouldThrowInvalidOperationException()
         {
             Assert.Throws<InvalidOperationException>(() => PasswordManager.DeleteUser("Admin"));
         }
 
-        [Test, UseMissingFilePath]
+        [Test, UseMissingUsersFilePath]
         public void DeleteUser_WhenFileDoesNotExist_ShouldThrowFileNotFoundException()
         {
             Assert.Throws<FileNotFoundException>(() => PasswordManager.DeleteUser("Thomas"));
         }
 
-        [Test, IsolatedFile]
+        [Test, IsolatedUsersFile]
         public void OverwriteData_WhenIncorrectUser_ShouldThrowInvalidOperationException()
         {
             string? path = TestContext.CurrentContext.Test.Properties.Get("IsolatedFilePath") as string;
@@ -80,13 +80,13 @@ namespace StorageOffice.IntegrationsTests
             Assert.Throws<InvalidOperationException>(() => PasswordManager.OverwriteUserData("George", "Thomas", 0));
         }
 
-        [Test, UseMissingFilePath]
+        [Test, UseMissingUsersFilePath]
         public void OverwriteData_WhenFileDoesNotExist_ShouldThrowFileNotFoundException()
         {
             Assert.Throws<FileNotFoundException>(() => PasswordManager.OverwriteUserData("Thomas", "George", 0));
         }
 
-        [Test, IsolatedFile]
+        [Test, IsolatedUsersFile]
         public void ChangeUsername_ModifiesUsernameCorrectly()
         {
             string? path = TestContext.CurrentContext.Test.Properties.Get("IsolatedFilePath") as string;
@@ -98,7 +98,7 @@ namespace StorageOffice.IntegrationsTests
             Assert.That(File.ReadAllLines(path!)[0], Is.EqualTo("Admin1,Ngi8oeROpsTSaOttsCJgJpiSwLQrhrvx53pvoWw8koI=,Administrator"));
         }
 
-        [Test, IsolatedFile]
+        [Test, IsolatedUsersFile]
         public void ChangePassword_ModifiesPasswordCorrectly()
         {
             string? path = TestContext.CurrentContext.Test.Properties.Get("IsolatedFilePath") as string;
@@ -110,7 +110,7 @@ namespace StorageOffice.IntegrationsTests
             Assert.That(File.ReadAllLines(path!)[0], Is.EqualTo($"{testUsername},y9MASH6J3z3QKtgfY4r969N5KZfmkwdsoelYcftQCp8=,Administrator"));
         }
 
-        [Test, IsolatedFile]
+        [Test, IsolatedUsersFile]
         public void ChangeUserRole_ModifiesRoleCorrectly()
         {
             string? path = TestContext.CurrentContext.Test.Properties.Get("IsolatedFilePath") as string;
@@ -122,7 +122,7 @@ namespace StorageOffice.IntegrationsTests
             Assert.That(File.ReadAllLines(path!)[0], Is.EqualTo($"{testUsername},Ngi8oeROpsTSaOttsCJgJpiSwLQrhrvx53pvoWw8koI=,Logistician"));
         }
 
-        [Test, IsolatedFile]
+        [Test, IsolatedUsersFile]
         public void GetAllUsers_ReturnsCorrectUsers()
         {
             string? path = TestContext.CurrentContext.Test.Properties.Get("IsolatedFilePath") as string;
@@ -146,7 +146,7 @@ namespace StorageOffice.IntegrationsTests
             }
         }
 
-        [Test, IsolatedFile]
+        [Test, IsolatedUsersFile]
         public void GetAllUsers_WhenRoleIsIncorrect_ShouldThrowFormatException()
         {
             string? path = TestContext.CurrentContext.Test.Properties.Get("IsolatedFilePath") as string;
@@ -155,13 +155,13 @@ namespace StorageOffice.IntegrationsTests
             Assert.Throws<FormatException>(() => PasswordManager.GetAllUsers());
         }
 
-        [Test, UseMissingFilePath]
+        [Test, UseMissingUsersFilePath]
         public void GetAllUsers_WhenFileDoesNotExist_ShouldThrowFileNotFoundException()
         {
             Assert.Throws<FileNotFoundException>(() => PasswordManager.GetAllUsers());
         }
 
-        [Test, IsolatedFile]
+        [Test, IsolatedUsersFile]
         public void CheckFile_WhenNoUsersCreated_ShouldReturnFalse()
         {
             bool fileCheckResult = PasswordManager.CheckFile();
@@ -169,7 +169,7 @@ namespace StorageOffice.IntegrationsTests
             Assert.That(fileCheckResult, Is.False);
         }
 
-        [Test, IsolatedFile]
+        [Test, IsolatedUsersFile]
         public void CheckFile_WhenMoreThan0UsersCreated_ShouldReturnTrue()
         {
             string? path = TestContext.CurrentContext.Test.Properties.Get("IsolatedFilePath") as string;
@@ -180,7 +180,7 @@ namespace StorageOffice.IntegrationsTests
             Assert.That(fileCheckResult, Is.True);
         }
 
-        [Test, IsolatedFile]
+        [Test, IsolatedUsersFile]
         public void CheckFile_WhenDataAmountIsIncorrect_ShouldThrowFormatException()
         {
             string? path = TestContext.CurrentContext.Test.Properties.Get("IsolatedFilePath") as string;
@@ -189,13 +189,13 @@ namespace StorageOffice.IntegrationsTests
             Assert.Throws<FormatException>(() => PasswordManager.CheckFile());
         }
 
-        [Test, UseMissingFilePath]
+        [Test, UseMissingUsersFilePath]
         public void CkeckFile_WhenFileDoesNotExist_ShouldThrowFileNotFoundException()
         {
             Assert.Throws<FileNotFoundException>(() => PasswordManager.CheckFile());
         }
 
-        [Test, IsolatedFile]
+        [Test, IsolatedUsersFile]
         public void VerifyPasswordAndGetRole_WhenDataIsCorrect_ShouldReturnCorrectRole()
         {
             string? path = TestContext.CurrentContext.Test.Properties.Get("IsolatedFilePath") as string;
@@ -206,7 +206,7 @@ namespace StorageOffice.IntegrationsTests
             Assert.That(role, Is.EqualTo(Role.Administrator));
         }
 
-        [Test, IsolatedFile]
+        [Test, IsolatedUsersFile]
         public void VerifyPasswordAndGetRole_WhenDataIsIncorrect_ShouldReturnNull()
         {
             string? path = TestContext.CurrentContext.Test.Properties.Get("IsolatedFilePath") as string;
@@ -217,7 +217,7 @@ namespace StorageOffice.IntegrationsTests
             Assert.That(role, Is.Null);
         }
 
-        [Test, IsolatedFile]
+        [Test, IsolatedUsersFile]
         public void VerifyPasswordAndGetRole_WhenRoleIsIncorrect_ShouldThrowFormatException()
         {
             string? path = TestContext.CurrentContext.Test.Properties.Get("IsolatedFilePath") as string;
@@ -226,7 +226,7 @@ namespace StorageOffice.IntegrationsTests
             Assert.Throws<FormatException>(() => PasswordManager.VerifyPasswordAndGetRole("Admin", "xyz"));
         }
 
-        [Test, UseMissingFilePath]
+        [Test, UseMissingUsersFilePath]
         public void VerifyPasswordAndGetRole_WhenFileDoesNotExist_ShouldThrowFileNotFoundException()
         {
             Assert.Throws<FileNotFoundException>(() => PasswordManager.VerifyPasswordAndGetRole("Thomas", "xyz"));

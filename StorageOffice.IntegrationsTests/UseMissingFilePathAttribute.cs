@@ -9,21 +9,14 @@ using StorageOffice.classes.UsersManagement.Services;
 
 namespace StorageOffice.IntegrationsTests
 {
-    internal class UseMissingFilePathAttribute : Attribute, ITestAction
+    internal abstract class UseMissingFilePathAttribute : Attribute, ITestAction
     {
-        private string? _originalFilePath;
+        protected string? OriginalFilePath;
 
         public ActionTargets Targets => ActionTargets.Test;
 
-        public void BeforeTest(ITest test)
-        {
-            _originalFilePath = PasswordManager.PasswordFilePath;
-            PasswordManager.PasswordFilePath = Path.Combine(Path.GetTempPath(), Guid.NewGuid() + ".txt");
-        }
+        public abstract void BeforeTest(ITest test);
 
-        public void AfterTest(ITest test)
-        {
-            PasswordManager.PasswordFilePath = _originalFilePath!;
-        }
+        public abstract void AfterTest(ITest test);
     }
 }
