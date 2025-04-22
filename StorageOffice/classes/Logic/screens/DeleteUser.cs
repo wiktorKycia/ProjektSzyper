@@ -65,6 +65,7 @@ public class DeleteUser
     private void Display()
     {
         Console.Clear();
+        Console.WriteLine("\x1b[3J");
 
         Console.WriteLine(ConsoleOutput.Header(_title, '=') + "\n");
         Console.WriteLine(_heading.RightMargin() + "\n");

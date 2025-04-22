@@ -81,6 +81,7 @@ public class CompleteShipment
     private void Display()
     {
         Console.Clear();
+        Console.WriteLine("\x1b[3J");
         string content = $"Are you sure you want to mark Shipment #{_shipment.ShipmentId} as complete?\n\n";
         
         content += $"Type: {_shipment.ShipmentType}\n";

@@ -58,6 +58,7 @@ public class EditUser
     private void Display()
     {
         Console.Clear();
+        Console.WriteLine("\x1b[3J");
         string content = "Select a user to edit:";
         
         if (_select.Options != null)

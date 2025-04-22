@@ -3109,6 +3109,7 @@
   "projectFileDependencyGroups": {
     "net9.0": [
       "Bogus >= 35.6.2",
+      "Microsoft.CodeAnalysis.Analyzers >= 3.3.4",
       "Microsoft.EntityFrameworkCore >= 9.0.4",
       "Microsoft.EntityFrameworkCore.Analyzers >= 9.0.4",
       "Microsoft.EntityFrameworkCore.Design >= 9.0.4",
@@ -3168,6 +3169,12 @@
           "Bogus": {
             "target": "Package",
             "version": "[35.6.2, )"
+          },
+          "Microsoft.CodeAnalysis.Analyzers": {
+            "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+            "suppressParent": "All",
+            "target": "Package",
+            "version": "[3.3.4, )"
           },
           "Microsoft.EntityFrameworkCore": {
             "target": "Package",

@@ -51,6 +51,7 @@ public class ShowAllProductsMenu
     private void Display()
     {
         Console.Clear();
+        Console.WriteLine("\x1b[3J");
         string content = "Current inventory of all products:\n\n";
         
         if (_products != null && _products.Any())

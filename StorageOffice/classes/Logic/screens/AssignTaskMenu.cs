@@ -72,6 +72,7 @@ public class AssignTaskMenu
         while(running)
         {
             Display();
+            
             var key = ConsoleInput.GetConsoleKey();
             if (_keyboardActions.ContainsKey(key))
             {
@@ -184,6 +185,7 @@ public class AssignTaskMenu
     private void Display()
     {
         Console.Clear();
+        Console.WriteLine("\x1b[3J");
         Console.WriteLine(ConsoleOutput.Header(_title));
         
         // Display options in a horizontal grid layout

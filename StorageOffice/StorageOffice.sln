@@ -5,6 +5,10 @@ VisualStudioVersion = 17.13.35818.85
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StorageOffice", "StorageOffice.csproj", "{51B1C931-3917-4BDC-B055-A77C0793C7E4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StorageOffice.IntegrationsTests", "..\StorageOffice.IntegrationsTests\StorageOffice.IntegrationsTests.csproj", "{0C3888C5-4D8B-48C0-9871-1139108A3515}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StorageOffice.UnitTests", "..\StorageOffice.UnitTests\StorageOffice.UnitTests.csproj", "{BA298391-0580-4893-836E-0F7AC779EE80}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{51B1C931-3917-4BDC-B055-A77C0793C7E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{51B1C931-3917-4BDC-B055-A77C0793C7E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{51B1C931-3917-4BDC-B055-A77C0793C7E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0C3888C5-4D8B-48C0-9871-1139108A3515}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0C3888C5-4D8B-48C0-9871-1139108A3515}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0C3888C5-4D8B-48C0-9871-1139108A3515}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0C3888C5-4D8B-48C0-9871-1139108A3515}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BA298391-0580-4893-836E-0F7AC779EE80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BA298391-0580-4893-836E-0F7AC779EE80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BA298391-0580-4893-836E-0F7AC779EE80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BA298391-0580-4893-836E-0F7AC779EE80}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

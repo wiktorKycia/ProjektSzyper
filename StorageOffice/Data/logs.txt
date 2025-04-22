@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 [2025-04-17 14:54:00] Info: login of user Jan - unsuccessful
 [2025-04-17 14:54:10] Info: login of user wikrot - unsuccessful
 [2025-04-17 20:58:45] Info: login of user Jan - unsuccessful
@@ -87,3 +88,68 @@
 [2025-04-21 15:17:34] Info: login of user wiesio - successful
 [2025-04-21 15:19:24] Info: login of user wiktor - successful
 [2025-04-21 15:34:07] Info: login of user wiesio - successful
+=======
+[2025-04-19 22:44:23] Info: login of user John - successful
+[2025-04-19 22:45:02] Info: action was performed on data in database  - added new inbound shipment from FedEx
+[2025-04-19 22:45:18] Info: action was performed on data in database  - added product 'Jacket' to shipment with id #42
+[2025-04-19 22:45:44] Info: login of user Janek - successful
+[2025-04-19 23:48:11] Info: login of user Janek - successful
+[2025-04-19 23:55:45] Info: action was performed on data of a user named Admin - changed user's password
+[2025-04-19 23:55:45] Info: action was performed on data of a user named Admin - changed user's name to Admin1
+[2025-04-19 23:55:45] Info: action was performed on data of a user named Thomas - changed user's role
+[2025-04-19 23:55:45] Error: problem in users.txt file found - an anomaly was detected in number of users' data
+[2025-04-19 23:55:45] Info: action was performed on data of a user named George - deleted a user
+[2025-04-19 23:55:45] Error: problem in users.txt file found - incorrect user's role was found in users.txt file for user Admin
+[2025-04-19 23:55:45] Info: action was performed on data of a user named Admin - added a new user
+[2025-04-19 23:55:45] Info: login of user Admin - successful
+[2025-04-19 23:55:45] Info: login of user Admin - unsuccessful
+[2025-04-19 23:55:45] Info: login of user Admin - successful
+[2025-04-19 23:55:45] Error: problem in users.txt file found - incorrect user's role was found in users.txt file for user Admin
+[2025-04-20 01:12:56] Info: action was performed on data of a user named Admin - changed user's password
+[2025-04-20 01:12:56] Info: action was performed on data of a user named Admin - changed user's name to Admin1
+[2025-04-20 01:12:56] Info: action was performed on data of a user named Thomas - changed user's role
+[2025-04-20 01:12:56] Error: problem in users.txt file found - an anomaly was detected in number of users' data
+[2025-04-20 01:12:56] Error: problem in users.txt file found - the file was removed while the application was running
+[2025-04-20 01:12:56] Info: action was performed on data of a user named George - deleted a user
+[2025-04-20 01:12:56] Error: problem in users.txt file found - the file was removed while the application was running
+[2025-04-20 01:12:56] Error: problem in users.txt file found - the file was removed while the application was running
+[2025-04-20 01:12:56] Error: problem in users.txt file found - incorrect user's role was found in users.txt file for user Admin
+[2025-04-20 01:12:56] Error: problem in users.txt file found - the file was removed while the application was running
+[2025-04-20 01:12:56] Info: action was performed on data of a user named Admin - added a new user
+[2025-04-20 01:12:56] Error: problem in users.txt file found - the file was removed while the application was running
+[2025-04-20 01:12:56] Info: login of user Admin - successful
+[2025-04-20 01:12:56] Info: login of user Admin - unsuccessful
+[2025-04-20 01:12:56] Error: problem in users.txt file found - the file was removed while the application was running
+[2025-04-20 01:12:56] Info: login of user Admin - successful
+[2025-04-20 01:12:56] Error: problem in users.txt file found - incorrect user's role was found in users.txt file for user Admin
+[2025-04-21 13:17:04] Info: login of user wiktor - successful
+[2025-04-21 13:17:29] Info: login of user Jan - successful
+[2025-04-21 13:18:13] Info: login of user mietek - successful
+[2025-04-21 13:18:57] Info: action was performed on data in database  - modified stock's data
+[2025-04-21 13:18:57] Info: action was performed on data in database  - marked shipment as done
+[2025-04-21 13:18:57] Info: action was performed on data in database  - modified stock's data
+[2025-04-21 13:18:57] Info: action was performed on data in database  - modified stock's data
+[2025-04-21 13:18:57] Info: action was performed on data in database  - modified stock's data
+[2025-04-21 13:18:57] Info: action was performed on data in database  - modified stock's data
+[2025-04-21 13:18:57] Info: action was performed on data in database  - marked shipment as done
+[2025-04-21 13:36:41] Info: login of user Janek - unsuccessful
+[2025-04-21 13:36:47] Info: login of user Janek - unsuccessful
+[2025-04-21 13:36:55] Info: login of user wiktor - successful
+[2025-04-21 13:37:31] Info: action was performed on data of a user named John - deleted a user
+[2025-04-21 13:37:32] Info: action was performed on data in database  - removed user named 'John'
+[2025-04-21 18:29:45] Info: login of user Jan - successful
+[2025-04-21 18:29:58] Info: action was performed on data in database  - added new inbound shipment from Amazon Logistics
+[2025-04-21 18:33:29] Info: action was performed on data in database  - added product 'M1 Abrams' and it's stock
+[2025-04-21 18:33:40] Info: action was performed on data in database  - added product 'M1 Abrams' to shipment with id #43
+[2025-04-21 18:49:22] Info: login of user Jan - successful
+[2025-04-21 18:50:43] Info: login of user wiesio - successful
+[2025-04-22 17:45:27] Info: login of user Jan - unsuccessful
+[2025-04-22 17:45:32] Info: login of user Jan - successful
+[2025-04-22 17:47:04] Info: action was performed on data in database  - added shipper named 'ZSK'
+[2025-04-22 17:47:06] Info: action was performed on data in database  - added new inbound shipment from ZSK
+[2025-04-22 17:48:45] Info: action was performed on data in database  - added product 'Train miniature' and it's stock
+[2025-04-22 17:48:51] Info: action was performed on data in database  - added product 'Train miniature' to shipment with id #44
+[2025-04-22 17:50:27] Info: action was performed on data in database  - added shop named 'ZSK'
+[2025-04-22 17:50:27] Info: action was performed on data in database  - added new outbound shipment to ZSK
+[2025-04-22 17:51:22] Info: action was performed on data in database  - added product 'Bed Frame' to shipment with id #45
+>>>>>>> main

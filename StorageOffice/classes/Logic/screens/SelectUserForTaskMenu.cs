@@ -105,6 +105,7 @@ public class SelectUserForTaskMenu
     private void Display()
     {
         Console.Clear();
+        Console.WriteLine("\x1b[3J");
         string content = $"Select a warehouseman to assign {_shipments.Count} shipment(s):\n\n";
         
         // Display shipments being assigned

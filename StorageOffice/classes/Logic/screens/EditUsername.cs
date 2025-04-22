@@ -87,6 +87,7 @@ public class EditUsername
     private void Display()
     {
         Console.Clear();
+        Console.WriteLine("\x1b[3J");
         string content = $"Change username for: {_username}";
         
         Console.WriteLine(ConsoleOutput.UIFrame(_title, content));

@@ -261,7 +261,7 @@ public class User
     {
         if (string.IsNullOrEmpty(username))
         {
-            throw new ArgumentNullException(null, "User's username can't be empty");
+            throw new ArgumentException(null, "User's username can't be empty");
         }
         else if (!Regex.IsMatch(username, @"^[a-zA-Z0-9_.����󜟿��ʣ�ӌ��]+$"))
         {
