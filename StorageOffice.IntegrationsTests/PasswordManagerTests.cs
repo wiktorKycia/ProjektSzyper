@@ -10,7 +10,7 @@ using StorageOffice.classes.UsersManagement.Services;
 namespace StorageOffice.IntegrationsTests
 {
     /// <summary>
-    /// Contains integration tests that verify the functioning of methods from the PasswordManager class.
+    /// Contains integration tests that verify the functioning and exceptions throwing of methods from the PasswordManager class.
     /// </summary>
     internal class PasswordManagerTests
     {

@@ -9,7 +9,7 @@ using StorageOffice.classes.LogServices;
 namespace StorageOffice.IntegrationsTests
 {
     /// <summary>
-    /// Contains integration tests that verify the functioning of methods from the LogManager class.
+    /// Contains integration tests that verify the functioning and exceptions throwing of methods from the LogManager class.
     /// </summary>
     internal class LogManagerTests
     {
