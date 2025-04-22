@@ -6,10 +6,26 @@ using StorageOffice.classes.UsersManagement.Services;
 
 namespace StorageOffice.classes.Logic;
 
+/// <summary>
+/// Handles the main menu and submenus for the application.
+/// Provides methods to navigate through different functionalities.
+/// </summary>
+/// <remarks>
+/// This class is responsible for managing the user interface and interactions.
+/// It includes methods for user authentication, task assignment, shipment management,
+/// warehouse browsing, and user management.
+/// </remarks>
 public static class MenuHandler
 {
+    /// <summary>
+    /// Database instance for managing storage data.
+    /// </summary>
     public static database.StorageDatabase? db = null;
 
+    /// <summary>
+    /// Initializes the menu system and starts the application.
+    /// </summary>
+    /// <param name="user">The user object representing the logged-in user.</param>
     internal static void Start(User user)
     {
         if(PasswordManager.CheckFile())
@@ -32,6 +48,11 @@ public static class MenuHandler
         }
     }
 
+    /// <summary>
+    /// Displays the main menu for the application.
+    /// This menu provides options based on the user's permissions.
+    /// </summary>
+    /// <param name="user">The user object representing the logged-in user.</param>
     internal static void MainMenu(User user)
     {
         RBAC rbac = new();
@@ -57,6 +78,10 @@ public static class MenuHandler
         var menu = new MainMenu("Storage System manager", $"Logged in as {user.Username}", new RadioSelect(radioOptions), ()=>Start(user));
     }
 
+    /// <summary>
+    /// Displays the details menu based on the selected option.
+    /// </summary>
+    /// <param name="user">The user object representing the logged-in user.</param>
     internal static void DetailsMenu(User user, string _details)
     {
         if (_details == "Warehouse")
@@ -79,22 +104,43 @@ public static class MenuHandler
     }
 
     // Task Management Methods
+
+    /// <summary>
+    /// Displays the task assignment menu for the user.
+    /// This menu allows the user to assign tasks to other users.
+    /// </summary>
+    /// <param name="user">The user object representing the logged-in user.</param>
     internal static void AssignTask(User user)
     {
         var assignTaskMenu = new AssignTaskMenu(user, () => MainMenu(user));
     }
 
+    /// <summary>
+    /// Displays the task completion menu for the user.
+    /// This menu allows the user to complete tasks assigned to them.
+    /// </summary>
+    /// <param name="user">The user object representing the logged-in user.</param>
     internal static void DoTasks(User user)
     {
         var doTasksMenu = new DoTasksMenu(user, () => MainMenu(user));
     }
 
     // Warehouse Browsing Methods
+
+    /// <summary>
+    /// Displays the warehouse browsing menu for the user.
+    /// </summary>
+    /// <param name="user">The user object representing the logged-in user</param>
     internal static void BrowseWarehouse(User user)
     {
         var browseWarehouseMenu = new BrowseWarehouseMenu(user, () => MainMenu(user));
     }
 
+    /// <summary>
+    /// Displays the logs menu for the user.
+    /// This menu allows the user to view logs of actions performed in the system.
+    /// </summary>
+    /// <param name="user">The user object representing the logged-in user</param>
     internal static void Logs(User user)
     {
         try
@@ -110,6 +156,11 @@ public static class MenuHandler
         }
     }
 
+    /// <summary>
+    /// Displays the user management menu for the user.
+    /// This menu allows the user to manage other users in the system.
+    /// </summary>
+    /// <param name="user">The user object representing the logged-in user</param>
     internal static void ManageUsers(User user)
     {
         var manageUsers = new ManageUsers("Users", "", new RadioSelect(new List<RadioOption>
@@ -121,16 +172,19 @@ public static class MenuHandler
         }), () => {MainMenu(user);});
     }
 
+
     internal static void ViewUsers(User user)
     {
         var users = PasswordManager.GetAllUsers();
         var viewUsers = new Users(users, () => {ManageUsers(user);});
     }
 
+
     internal static void AddUser(User user)
     {
         var addUser = new AddUser(() => {ManageUsers(user);}, user);
     }
+
 
     internal static void DeleteUser(User user)
     {
@@ -143,6 +197,7 @@ public static class MenuHandler
         var deleteUser = new DeleteUser(new CheckBoxSelect(checkBoxOptions), () => {ManageUsers(user);});
     }
 
+
     internal static void EditUserMenu(User user)
     {
         var users = PasswordManager.GetAllUsers();
@@ -152,6 +207,7 @@ public static class MenuHandler
 
         var editUser = new EditUser("Edit user", new RadioSelect(radioOptions), () => {ManageUsers(user);});
     }
+
 
     internal static void EditConcreteUser(User user, string username)
     {
@@ -163,6 +219,7 @@ public static class MenuHandler
         };
         var editConcreteUser = new EditConcreteUser(username:username, select:new RadioSelect(radioOptions), onExit:() => {EditUserMenu(user);});
     }
+
 
     internal static void EditUsername(User user, string username)
     {
