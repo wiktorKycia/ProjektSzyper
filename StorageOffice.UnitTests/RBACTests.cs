@@ -9,8 +9,14 @@ using StorageOffice.classes.UsersManagement.Services;
 
 namespace StorageOffice.UnitTests
 {
+    /// <summary>
+    /// Contains unit tests that verify the functioning of methods from the RBAC class.
+    /// </summary>
     internal class RBACTests
     {
+        /// <summary>
+        /// Checks that the HasPermission method returns true when called for a permissions that are allowed for a user's role.
+        /// </summary>
         [Test]
         public void HasPermission_WhenUserHasPermission_ShouldReturnTrue()
         {
@@ -22,6 +28,9 @@ namespace StorageOffice.UnitTests
             Assert.That(hasPermission, Is.True);
         }
 
+        /// <summary>
+        /// Checks that the HasPermission method returns false when called for a permissions that aren't allowed for a user's role.
+        /// </summary>
         [Test]
         public void HasPermission_WhenUserDoesNotHavePermission_ShouldReturnFalse()
         {

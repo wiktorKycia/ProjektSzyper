@@ -304,7 +304,7 @@ public class User
         {
             throw new ArgumentException(null, "User's username can't be empty");
         }
-        else if (!Regex.IsMatch(username, @"^[a-zA-Z0-9_.����󜟿��ʣ�ӌ��]+$"))
+        else if (!Regex.IsMatch(username, @"^[a-zA-Z0-9_.ąćęłńóśźżĄĆĘŁŃÓŚŹŻ]+$"))
         {
             throw new ArgumentException("The username can only contain letters, numbers, characters '_' and '.'! ");
         }

@@ -9,21 +9,17 @@ using StorageOffice.classes.UsersManagement.Services;
 
 namespace StorageOffice.IntegrationsTests
 {
-    internal class UseMissingFilePathAttribute : Attribute, ITestAction
+    /// <summary>
+    /// This abstract class is made to avoid redundancy of code in all attributes for tests to check the performance of methods in the absence of the expected file.
+    /// </summary>
+    internal abstract class UseMissingFilePathAttribute : Attribute, ITestAction
     {
-        private string? _originalFilePath;
+        protected string? OriginalFilePath; // Path to the production file, which can be saved and then restored to the class after the test to keep it working properly. Used in derived classes
 
         public ActionTargets Targets => ActionTargets.Test;
 
-        public void BeforeTest(ITest test)
-        {
-            _originalFilePath = PasswordManager.PasswordFilePath;
-            PasswordManager.PasswordFilePath = Path.Combine(Path.GetTempPath(), Guid.NewGuid() + ".txt");
-        }
+        public abstract void BeforeTest(ITest test); //Method used to prepare class before test
 
-        public void AfterTest(ITest test)
-        {
-            PasswordManager.PasswordFilePath = _originalFilePath!;
-        }
+        public abstract void AfterTest(ITest test); //Method reestablish paths in class after test
     }
 }
