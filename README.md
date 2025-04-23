@@ -175,8 +175,49 @@ dotnet ef database update
 
 ## Przykłady użycia
 
-Po uruchomieniu aplikacji wyświetla się ekran logowania
+Poniższe przykłady pokazują, jak wykonywać typowe zadania w aplikacji, krok po kroku, dla różnych ról użytkowników.
 
+### Logowanie do systemu
+1. Uruchom aplikację.
+2. Naciśnij dowolny klawisz, aby przejść do ekranu logowania.
+3. Wprowadź nazwę użytkownika i hasło.
+4. Naciśnij Enter, aby zalogować się.
+5. Jeśli dane logowania są poprawne, zostaniesz przekierowany do odpowiedniego panelu użytkownika.
+6. Jeśli dane logowania są niepoprawne, zostaniesz poinformowany o błędzie i będziesz mógł spróbować ponownie.
+
+### Administrator: przeglądanie logów
+1. Zaloguj się jako administrator.
+2. Wybierz opcję "View logs" z menu głównego.
+3. Zobaczysz listę logów systemowych, które zawierają informacje o działaniach w systemie.
+4. Możesz przewijać listę, aby zobaczyć starsze logi.
+5. Naciśnij `Esc`, aby wrócić do menu głównego.
+
+### Administrator: dodawanie użytkownika
+1. Zaloguj się jako administrator.
+2. Wybierz opcję "Manage users" z menu głównego klawiszem `Enter`.
+3. Pojawi się menu akcji z opcjami "Add user", "Edit user", "Delete user" i "View users".
+4. Wybierz opcję "Add user" klawiszem `Enter`.
+5. Wprowadź nazwę użytkownika, hasło i rolę (Administrator, Manager, Warehouseman, Logistics).
+6. Zobaczysz komunikat potwierdzający dodanie użytkownika.
+7. Naciśnij `Y`, aby potwierdzić dodanie użytkownika.
+8. Naciśnij dowolny klawisz, aby wrócić do menu użytkowników.
+
+### Administrator: usuwanie użytkowników
+1. Zaloguj się jako administrator.
+2. Wybierz opcję "Manage users" z menu głównego klawiszem `Enter`.
+3. Pojawi się menu akcji z opcjami "Add user", "Edit user", "Delete user" i "View users".
+4. Wybierz opcję "Delete user" klawiszem `Enter`.
+5. Zobaczysz listę użytkowników.
+6. Wybierz użytkownika (lub użytkowników), którego chcesz usunąć, używając strałek i klawisza `Enter`.
+7. Naciśnij `Del`, aby usunąć użytkownika.
+8. Pojawi się ekran z potwierdzeniem usunięcia.
+9. Naciśnij `Y`, aby potwierdzić usunięcie.
+10. Zobaczysz komunikat potwierdzający usunięcie użytkownika.
+11. Naciśnij `Esc`, aby wrócić do menu głównego.
+
+### Logistyk: dodawanie dostaw
+1. Zaloguj się jako logistyk.
+2. Wybierz opcję "" z menu głównego klawiszem `Enter`.
 
 ## Struktury danych i klasy
 
