@@ -283,6 +283,7 @@ jak treść do wyświetlenia nie mieści się na jednym ekranie
 
 to wtedy console clear "ucina" dolną część, a całą resztę zostawia i jest możliwość zobaczenia jej po podscrollowaniu do góry
 
+---------------------------------------
 
 Drugą rzeczą, która nie działa idealnie jest wyświetlanie produktów wg. kategorii
 
@@ -290,12 +291,25 @@ Działają wszystkie kategorie poza elektorniką, która wyrzuca nieobsłużony 
 
 Nie wiem dlaczego to się dzieje
 
+---------------------------------------
+
+Trzecia rzecz działa poprawnie, ale jest uciążliwa
+
+Jest nią przechodzenie między ekranami.
+Niektóre listy wyboru są robione przez switch-case i wymagają od użytkownika wpisania konkretnej liczby
+a nie po prostu wybrania opcji z listy.
+
+Ta wada wynikła poprzez pośpiech i brak czasu na implementację bardziej rozbudowanego systemu
+
+
 ### Co może zostać poprawione?
 
 Wszystkie ekrany konsoli mogą zostać zrobione tak, aby cała zawartość zmieściła się bez konieczności przewijania
 
 Może zostać zaimplementowany try-catch dla kategorii elektronika, który wyświtlałby ekran błędu informujący
 użytkownika, że takiej kategorii nie można wyświetlić, natomiast nie jest to w pełni satysfakcjonujące rozwiązanie
+
+Wszystkie ekrany mogą zostać zaimplementowane jako klasa oraz wywoływane poprzez odpowiednią metodę w klasie `MenuHandler`
 
 ## Plany rozwoju
 
