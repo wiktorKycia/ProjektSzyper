@@ -75,12 +75,12 @@ public static partial class ConsoleOutput
             
             for (int i = 0; i < columnWidths.Length && excess > 0; i++)
             {
-                if (columnWidths[i] > 3)  // Minimum width with ellipsis
+                int reduction = Math.Min(reducePerColumn, columnWidths[i] - 3);
+                if (columnWidths[i] - reduction > 5)  // Minimum width with ellipsis
                 {
-                    int reduction = Math.Min(reducePerColumn, columnWidths[i] - 3);
                     columnWidths[i] -= reduction;
                     excess -= reduction;
-                    
+
                     if (columnWidths[i] <= 3)
                     {
                         columnsToAdjust--;
