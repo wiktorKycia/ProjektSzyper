@@ -292,3 +292,17 @@
 [2025-04-23 21:51:48] Info: action was performed on data in database - modified user assigned to shipment to basia
 [2025-04-23 21:51:48] Info: action was performed on data in database - modified user assigned to shipment to basia
 [2025-04-23 21:51:48] Info: action was performed on data in database - modified user assigned to shipment to basia
+[2025-04-23 21:57:06] Info: login of user basia - unsuccessful
+[2025-04-23 21:57:12] Info: login of user basia - successful
+[2025-04-23 21:58:45] Info: action was performed on data in database - modified stock's data
+[2025-04-23 21:58:45] Info: action was performed on data in database - marked shipment as done
+[2025-04-23 21:58:55] Info: login of user wiktor - successful
+[2025-04-23 21:59:05] Info: action was performed on data of a user named basia - changed user's password
+[2025-04-23 21:59:23] Info: login of user wiesio - successful
+[2025-04-23 22:00:24] Info: login of user mietek - successful
+[2025-04-23 22:06:21] Info: login of user mietek - successful
+[2025-04-23 22:17:41] Info: login of user mietek - successful
+[2025-04-23 22:20:01] Info: login of user mietek - successful
+[2025-04-23 22:24:06] Info: login of user mietek - successful
+[2025-04-23 22:30:41] Info: login of user mietek - unsuccessful
+[2025-04-23 22:30:47] Info: login of user mietek - successful

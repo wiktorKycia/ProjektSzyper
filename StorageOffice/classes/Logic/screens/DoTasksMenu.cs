@@ -62,7 +62,7 @@ public class DoTasksMenu
         }
         
         var options = _shipments.Select(s => new CheckBoxOption(
-            $"ID: {s.ShipmentId} - {s.ShipmentType.ToString().Substring(0, 3)}",
+            $"ID: {s.ShipmentId,2} - {s.ShipmentType.ToString().Substring(0, 3)}",
             () => {}
         )).ToList();
         
@@ -362,7 +362,7 @@ public class DoTasksMenu
                 
                 foreach (var item in highlightedShipment.ShipmentItems)
                 {
-                    rows.Add(new string[] { item.Product.Name, item.Quantity.ToString(), item.Product.Unit });
+                    rows.Add([item.Product.Name, item.Quantity.ToString(), item.Product.Unit]);
                 }
                 
                 Console.Write(ConsoleOutput.WriteTable(rows, headers));
