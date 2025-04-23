@@ -46,7 +46,7 @@ public class MainMenu
             { "\u2191", "move up" },
             { "\u2193", "move down" },
             { "<Enter>", "select" },
-            { "<Esc>", "exit" }
+            { "<Esc>", "log out" }
         };
         Run();
     }
