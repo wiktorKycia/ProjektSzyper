@@ -3,6 +3,24 @@ using StorageOffice.classes.CLI;
 
 namespace StorageOffice.classes.Logic;
 
+/// <summary>
+/// Represents the logic for completing a shipment.
+/// This class provides an interactive console-based workflow for marking a shipment as complete,
+/// including displaying shipment details and handling user confirmation.
+/// </summary>
+/// <remarks>
+/// The class ensures that only shipments with items can be marked as complete and interacts
+/// with the database to update the shipment's status.
+/// </remarks>
+/// <param name="shipment">
+/// The shipment to be marked as complete.
+/// </param>
+/// <param name="onSuccess">
+/// An action to be invoked when the shipment is successfully marked as complete.
+/// </param>
+/// <param name="onCancel">
+/// An action to be invoked when the user cancels the completion process.
+/// </param>
 public class CompleteShipment
 {
     private readonly database.Shipment _shipment;
@@ -36,6 +54,13 @@ public class CompleteShipment
         Run();
     }
 
+    /// <summary>
+    /// Executes the main workflow for completing a shipment.
+    /// Displays the shipment details and handles user input for confirming or canceling the completion process.
+    /// </summary>
+    /// <remarks>
+    /// This method ensures that the appropriate action is invoked based on the user's input.
+    /// </remarks>
     private void Run()
     {
         Display();
@@ -50,6 +75,18 @@ public class CompleteShipment
         }
     }
 
+    /// <summary>
+    /// Marks the shipment as complete.
+    /// Validates that the shipment contains items before updating its status in the database.
+    /// </summary>
+    /// <remarks>
+    /// If the shipment is successfully marked as complete, the success action is invoked.
+    /// If the shipment has no items or an error occurs, the cancel action is invoked.
+    /// </remarks>
+    /// <exception cref="Exception">
+    /// Catches and handles any exceptions that occur during the completion process,
+    /// displaying an error message to the user.
+    /// </exception>
     private void CompleteTheShipment()
     {
         try
@@ -78,6 +115,15 @@ public class CompleteShipment
         }
     }
 
+    /// <summary>
+    /// Displays the user interface for completing a shipment.
+    /// Shows the shipment details, including its type, associated shipper or shop, and items.
+    /// Provides navigation instructions for confirming or canceling the completion process.
+    /// </summary>
+    /// <remarks>
+    /// The method dynamically builds the content to display shipment details and ensures
+    /// proper formatting for the console output.
+    /// </remarks>
     private void Display()
     {
         Console.Clear();

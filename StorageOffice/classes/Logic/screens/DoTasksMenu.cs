@@ -4,6 +4,21 @@ using StorageOffice.classes.UsersManagement.Modules;
 
 namespace StorageOffice.classes.Logic;
 
+/// <summary>
+/// Represents the menu for performing tasks assigned to a user.
+/// This class provides an interactive console-based workflow for viewing, selecting,
+/// and completing tasks (shipments) assigned to the current user.
+/// </summary>
+/// <remarks>
+/// The menu displays tasks in a grid layout, allows navigation and selection,
+/// and facilitates the completion of selected tasks.
+/// </remarks>
+/// <param name="user">
+/// The user interacting with the menu.
+/// </param>
+/// <param name="onExit">
+/// An action to be invoked when the user exits the menu.
+/// </param>
 public class DoTasksMenu
 {
     private readonly string _title;
@@ -78,6 +93,15 @@ public class DoTasksMenu
         Run();
     }
 
+    /// <summary>
+    /// Executes the main workflow for the task menu.
+    /// Displays the user interface, handles user input for navigation and selection,
+    /// and processes the completion of selected tasks.
+    /// </summary>
+    /// <remarks>
+    /// This method runs in a loop until the user exits the menu. It ensures proper handling
+    /// of keyboard actions and updates the display accordingly.
+    /// </remarks>
     private void Run()
     {
         bool running = true;
@@ -99,7 +123,14 @@ public class DoTasksMenu
         }
     }
 
-    // Calculate optimal number of options per row based on console width
+    /// <summary>
+    /// Calculates the optimal number of options to display per row based on the console width.
+    /// Adjusts the layout dynamically to ensure proper spacing and alignment of options.
+    /// </summary>
+    /// <remarks>
+    /// The calculation considers the minimum and maximum width of options, as well as padding
+    /// between options, to determine the number of options that can fit in a single row.
+    /// </remarks>
     private void CalculateOptionsPerRow()
     {
         int effectiveWidth = ConsoleOutput.UIWidth - 10; // Leave some margin
@@ -109,7 +140,10 @@ public class DoTasksMenu
         _optionsPerRow = Math.Max(1, effectiveWidth / (optionWidth + OPTION_PADDING));
     }
 
-    // Custom navigation methods that account for grid layout
+    /// <summary>
+    /// Moves the selection highlight up by one row in the grid layout.
+    /// Ensures that the selection remains within the bounds of the available options.
+    /// </summary>
     private void MoveUp()
     {
         int currentIndex = GetHighlightedIndex();
@@ -122,7 +156,11 @@ public class DoTasksMenu
             }
         }
     }
-    
+
+    /// <summary>
+    /// Moves the selection highlight down by one row in the grid layout.
+    /// Ensures that the selection remains within the bounds of the available options.
+    /// </summary>
     private void MoveDown()
     {
         int currentIndex = GetHighlightedIndex();
@@ -139,6 +177,10 @@ public class DoTasksMenu
         }
     }
 
+    /// <summary>
+    /// Moves the selection highlight left by one option within the same row.
+    /// Ensures that the selection does not move out of the row's bounds.
+    /// </summary>
     private void MoveLeft()
     {
         int currentIndex = GetHighlightedIndex();
@@ -149,6 +191,10 @@ public class DoTasksMenu
         }
     }
 
+    /// <summary>
+    /// Moves the selection highlight right by one option within the same row.
+    /// Ensures that the selection does not move out of the row's bounds.
+    /// </summary>
     private void MoveRight()
     {
         int currentIndex = GetHighlightedIndex();
@@ -159,6 +205,12 @@ public class DoTasksMenu
         }
     }
 
+    /// <summary>
+    /// Retrieves the index of the currently highlighted option in the grid layout.
+    /// </summary>
+    /// <returns>
+    /// The index of the highlighted option, or 0 if no option is highlighted.
+    /// </returns>
     private int GetHighlightedIndex()
     {
         for (int i = 0; i < _select.CheckBoxOptions.Count; i++)
@@ -171,6 +223,19 @@ public class DoTasksMenu
         return 0;
     }
 
+    /// <summary>
+    /// Marks the selected tasks (shipments) as completed.
+    /// Updates the database to reflect the completion of the selected tasks and displays
+    /// a confirmation message to the user.
+    /// </summary>
+    /// <remarks>
+    /// If no tasks are selected, a warning message is displayed, and the method exits.
+    /// If the user confirms the completion, the selected tasks are marked as completed.
+    /// </remarks>
+    /// <exception cref="Exception">
+    /// Catches and handles any exceptions that occur during the completion process,
+    /// displaying an error message to the user.
+    /// </exception>
     private void CompleteSelectedTasks()
     {
         // Get selected shipments
@@ -215,6 +280,15 @@ public class DoTasksMenu
         }
     }
 
+    /// <summary>
+    /// Displays the user interface for the task menu.
+    /// Shows the available tasks in a grid layout, highlights the selected option,
+    /// and displays details of the highlighted task.
+    /// </summary>
+    /// <remarks>
+    /// The method dynamically adjusts the layout based on the console width and provides
+    /// navigation instructions for the user.
+    /// </remarks>
     private void Display()
     {
         Console.Clear();

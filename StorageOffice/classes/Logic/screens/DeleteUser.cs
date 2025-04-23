@@ -2,6 +2,22 @@ using System;
 using StorageOffice.classes.CLI;
 namespace StorageOffice.classes.Logic;
 
+/// <summary>
+/// Represents the logic for deleting users from the system.
+/// This class provides an interactive console-based workflow for selecting users
+/// and confirming their deletion.
+/// </summary>
+/// <remarks>
+/// The menu allows users to navigate through a list of users, select multiple users
+/// for deletion, and confirm the deletion process.
+/// </remarks>
+/// <param name="select">
+/// A <see cref="CheckBoxSelect"/> instance containing the list of users to be displayed
+/// and selected for deletion.
+/// </param>
+/// <param name="onExit">
+/// An action to be invoked when the user exits the deletion menu.
+/// </param>
 public class DeleteUser
 {
     private readonly string _title;
@@ -31,6 +47,18 @@ public class DeleteUser
         };
         Run();
     }
+    /// <summary>
+    /// Confirms the deletion of the selected users.
+    /// Displays a confirmation prompt to the user and deletes the selected users
+    /// if the user confirms the action.
+    /// </summary>
+    /// <param name="exit">
+    /// An action to be invoked after the deletion process is completed or canceled.
+    /// </param>
+    /// <remarks>
+    /// If the user confirms the deletion, the selected users are deleted, and a success
+    /// message is displayed. If the user cancels, the action is aborted.
+    /// </remarks>
     private void Confirm(Action exit)
     {
         Console.Clear();
@@ -48,6 +76,15 @@ public class DeleteUser
         }
     }
 
+    /// <summary>
+    /// Executes the main workflow for the user deletion menu.
+    /// Displays the user interface, handles user input for navigation and selection,
+    /// and processes the deletion of selected users.
+    /// </summary>
+    /// <remarks>
+    /// This method runs in a loop until the user exits the menu. It ensures proper handling
+    /// of keyboard actions and updates the display accordingly.
+    /// </remarks>
     private void Run()
     {
         bool running = true;
@@ -62,6 +99,15 @@ public class DeleteUser
         }
     }
 
+    /// <summary>
+    /// Displays the user interface for the user deletion menu.
+    /// Shows the list of users available for deletion and provides navigation instructions
+    /// for the user.
+    /// </summary>
+    /// <remarks>
+    /// The method dynamically builds the content to display the list of users and ensures
+    /// proper formatting for the console output.
+    /// </remarks>
     private void Display()
     {
         Console.Clear();
