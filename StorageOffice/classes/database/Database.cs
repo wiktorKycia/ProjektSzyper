@@ -9,12 +9,18 @@ using System.Threading.Tasks;
 
 namespace StorageOffice.classes.database
 {
+    /// <summary>
+    /// This class allows to use the storage database and contains methods that allow to perform all actions on the tables such as editing records, adding new ones or deleting them.
+    /// </summary>
     public class StorageDatabase
     {
         private StorageContext _context = new();
         public string Path { get { return _context.DbPath; } }
         private event Action<string> _storageDataChanged;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="StorageDatabase"/> class. Sets appropriate protection for the correct operation of the database and assigns appropriate logging method to event.
+        /// </summary>
         public StorageDatabase()
         {
             _context.Database.SetCommandTimeout(5);
@@ -23,6 +29,12 @@ namespace StorageOffice.classes.database
         }
 
         // Stores management methods
+        /// <summary>
+        /// Allows to add a new store to the database. This method validates the data, makes sure that there is no such store in the database and adds appropriate log.
+        /// </summary>
+        /// <param name="shopName">String representing the store name.</param>
+        /// <param name="location">String representing the store location.</param>
+        /// <exception cref="InvalidOperationException">This exception is thrown when there is an attempt to add a store with a name that is already taken.</exception>
         public void AddShop(string? shopName, string? location)
         {
             Shop.Validate(shopName, location);
@@ -36,6 +48,13 @@ namespace StorageOffice.classes.database
             _storageDataChanged?.Invoke($"added shop named '{shopName}'");
         }
 
+        /// <summary>
+        /// Updates the data of a store with a specific id in the database. If a parameter is set to null, it means that it is not to be changed in the database. Adds appropriate log about changes.
+        /// </summary>
+        /// <param name="shopId">Integer representing the id of the store whose data is to be changed.</param>
+        /// <param name="shopName">String representing the new store name or null.</param>
+        /// <param name="location">String representing the store new location or null.</param>
+        /// <exception cref="InvalidOperationException">This exception is thrown when there is an attempt to modify a store's name to a name that is already taken.</exception>
         public void UpdateShop(int shopId, string? shopName, string? location)
         {
             Shop shop = GetShopById(shopId);
@@ -55,6 +74,10 @@ namespace StorageOffice.classes.database
             _storageDataChanged?.Invoke("modified shop's data");
         }
 
+        /// <summary>
+        /// Deletes a shop from database. Adds appropriate log about the removal.
+        /// </summary>
+        /// <param name="shopId">Integer representing the id of the store that has to be deleted.</param>
         public void DeleteShop(int shopId)
         {
             Shop shop = GetShopById(shopId);
@@ -64,8 +87,18 @@ namespace StorageOffice.classes.database
             _storageDataChanged?.Invoke($"removed shop named {shopName}");
         }
 
+        /// <summary>
+        /// Allows to get a list of all shops from the database.
+        /// </summary>
+        /// <returns>List of Shop objects from the database.</returns>
         public List<Shop> GetAllShops() => [.. _context.Shops];
 
+        /// <summary>
+        /// Allows to get particular shop from the database by it's id.
+        /// </summary>
+        /// <param name="shopID">Integer representing the id of the shop that has to be returned.</param>
+        /// <returns>Shop object with the given id found in the database.</returns>
+        /// <exception cref="InvalidOperationException">This exception is returned when a store with the given id does not exist in the database.</exception>
         public Shop GetShopById(int shopID)
         {
             Shop? shop = _context.Shops.Find(shopID);
@@ -77,6 +110,14 @@ namespace StorageOffice.classes.database
         }
 
         // Products and Stocks management methods
+        /// <summary>
+        /// Allows to add a new product and it's stock to the database. This method validates the data, makes sure that there is no such product in the database and adds an appropriate log.
+        /// </summary>
+        /// <param name="name">String representing the new product name.</param>
+        /// <param name="category">String representing the new product's category name.</param>
+        /// <param name="unit">String representing the new product's unit.</param>
+        /// <param name="description">String representing the new product's description.</param>
+        /// <exception cref="InvalidOperationException">This exception is thrown when there is an attempt to add a product with a name that is already taken.</exception>
         public void AddProductAndStock(string? name, string? category, string? unit, string? description)
         {
             Product.Validate(name, category, unit, description);
@@ -91,6 +132,15 @@ namespace StorageOffice.classes.database
         }
 
         // Products management methods
+        /// <summary>
+        /// Updates the data of a product with a specific id in the database. If a parameter is set to null, it means that it is not to be changed in the database. Adds appropriate log about changes.
+        /// </summary>
+        /// <param name="productId">Integer representing the id of the product whose data is to be changed.</param>
+        /// <param name="name">String representing the new product's name or null.</param>
+        /// <param name="category">String representing the new product's category name or null.</param>
+        /// <param name="unit">String representing the new product's unit or null.</param>
+        /// <param name="description">String representing the new product's description or null.</param>
+        /// <exception cref="InvalidOperationException">This exception is thrown when there is an attempt to modify a product's name to a name that is already taken.</exception>
         public void UpdateProduct(int productId, string? name, string? category, string? unit, string? description)
         {
             Product product = GetProductById(productId);
@@ -118,6 +168,10 @@ namespace StorageOffice.classes.database
             _storageDataChanged?.Invoke("modified product's data");
         }
 
+        /// <summary>
+        /// Deletes a product from database. Adds appropriate log about the removal.
+        /// </summary>
+        /// <param name="productId">Integer representing the id of the product that has to be deleted.</param>
         public void DeleteProduct(int productId)
         {
             Product product = GetProductById(productId);
@@ -127,12 +181,32 @@ namespace StorageOffice.classes.database
             _storageDataChanged?.Invoke($"removed product named {productName}");
         }
 
+        /// <summary>
+        /// Allows to get a list of all products and their stocks from the database.
+        /// </summary>
+        /// <returns>List of Product and it's Stock objects from the database.</returns>
         public List<Product> GetAllProducts() => [.. _context.Products.Include(p => p.Stock)];
 
+        /// <summary>
+        /// Allows to get a list of all products with specific name and their stocks from the database.
+        /// </summary>
+        /// <param name="name">String representing the name of the products that should be returned.</param>
+        /// <returns>List of appropriate Product and it's Stock objects from the database.</returns>
         public List<Product> GetAllproductsByName(string name) => _context.Products.Where(p => p.Name == name).Include(p => p.Stock).ToList();
 
+        /// <summary>
+        /// Allows to get a list of all products from specific category and their stocks from the database.
+        /// </summary>
+        /// <param name="category">String representing the category of the products that should be returned.</param>
+        /// <returns>List of appropriate Product and it's Stock objects from the database.</returns>
         public List<Product> GetAllproductsByCategory(string category) => _context.Products.Where(p => p.Category == category).Include(p => p.Stock).ToList();
 
+        /// <summary>
+        /// Allows to get particular product from the database by it's id.
+        /// </summary>
+        /// <param name="productId">Integer representing the id of the product that has to be returned.</param>
+        /// <returns>Product object with the given id found in the database.</returns>
+        /// <exception cref="InvalidOperationException">This exception is returned when a product with the given id does not exist in the database.</exception>
         public Product GetProductById(int productId)
         {
             Product? product = _context.Products.Find(productId);
@@ -144,6 +218,11 @@ namespace StorageOffice.classes.database
         }
 
         // Stocks management methods
+        /// <summary>
+        /// Updates the data of a stock with a specific id in the database. If a parameter is set to null, it means that it is not to be changed in the database. Adds appropriate log about changes.
+        /// </summary>
+        /// <param name="stockId">Integer representing the id of the stock whose data is to be changed.</param>
+        /// <param name="quantity">Integer representing the new stock's quantity of a product or null.</param>
         public void UpdateStock(int stockId, int quantity)
         {
             Stock stock = GetStockByID(stockId);
@@ -155,6 +234,10 @@ namespace StorageOffice.classes.database
             _storageDataChanged?.Invoke("modified stock's data");
         }
 
+        /// <summary>
+        /// Deletes a stock from database. Adds appropriate log about the removal.
+        /// </summary>
+        /// <param name="stockID">Integer representing the id of the stock that has to be deleted.</param>
         public void DeleteStock(int stockID)
         {
             Stock stock = GetStockByID(stockID);
@@ -163,8 +246,18 @@ namespace StorageOffice.classes.database
             _storageDataChanged?.Invoke("removed product's stock");
         }
 
+        /// <summary>
+        /// Allows to get a list of all stocks from the database.
+        /// </summary>
+        /// <returns>List of Stock objects from the database.</returns>
         public List<Stock> GetAllStocks() => [.. _context.Stocks];
 
+        /// <summary>
+        /// Allows to get particular stock from the database by it's id.
+        /// </summary>
+        /// <param name="stockId">Integer representing the id of the stock that has to be returned.</param>
+        /// <returns>Stock object with the given id found in the database.</returns>
+        /// <exception cref="InvalidOperationException">This exception is returned when a stock with the given id does not exist in the database.</exception>
         public Stock GetStockByID(int stockId)
         {
             Stock? stock = _context.Stocks.Find(stockId);
@@ -176,6 +269,12 @@ namespace StorageOffice.classes.database
         }
 
         // Shippers management methods
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="name"></param>
+        /// <param name="contactInfo"></param>
+        /// <exception cref="InvalidOperationException"></exception>
         public void AddShipper(string? name, string? contactInfo)
         {
             Shipper.Validate(name, contactInfo);
