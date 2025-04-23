@@ -233,6 +233,48 @@ Poniższe przykłady pokazują, jak wykonywać typowe zadania w aplikacji, krok 
 13. Teraz możesz wybrać 1, aby dodać kolejny produkt do dostawy, lub 2, aby zakończyć dodawanie produktów do dostawy.
 
 ### Pracownik magazynu: wykonywanie zadań
+1. Zaloguj się jako pracownik magazynu.
+2. Wybierz opcję "Tasks" z menu głównego klawiszem `Enter`.
+3. Pojawi się lista zadań do wykonania.
+4. Wybierz zadania, które chcesz wykonać, używając strzałek i klawisza `Enter`. Dodatkowo poniżej wyśtwietlone zostaną szczegóły dotyczące wybranego zadania (dostawy do zatwierdzenia).
+5. Naciśnij `C`, aby zaakceptować wybrane dostawy. 
+6. Pojawi się komunikat potwierdzający zaakceptowanie dostaw.
+7. Naciśnij `Y`, aby potwierdzić zaakceptowanie dostaw.
+8. Zobaczysz komunikat potwierdzający zaakceptowanie dostaw.
+9. Naciśnij dowolny klawisz, aby wrócić do menu głównego.
+
+### Manager: przydzielanie zadań
+1. Zaloguj się jako manager.
+2. Wybierz opcję "Tasks" z menu głównego klawiszem `Enter`.
+3. Pojawi się lista nieprzydzielonych oraz niewykonanych dostaw.
+4. Wybierz dostawy, które chcesz przydzielić, używając strzałek i klawisza `Enter`.
+5. Naciśnij `A`, aby przydzielić wybrane dostawy.
+6. Pojawi się lista pracowników magazynu.
+7. Wybierz pracownika, któremu chcesz przydzielić dostawy, używając strzałek i klawisza `Enter`.
+8. Naciśnij `Y`, aby potwierdzić przydzielenie dostaw do pracownika.
+9. Zobaczysz komunikat potwierdzający przydzielenie dostaw do pracownika.
+10. Naciśnij dowolny klawisz, aby wrócić do menu głównego.
+
+### Manager/Pracownik: przeglądanie stanu magazynu
+1. Zaloguj się jako manager lub pracownik magazynu.
+2. Wybierz opcję "Warehouse" z menu głównego klawiszem `Enter`.
+3. Pojawi się menu pytające, czy chcesz przeglądać stan całego magazynu, czy tylko konkretnej kategorii.
+4. Wybierz 1-szą opcję, aby przeglądać stan całego magazynu, lub 2-gą, aby przeglądać stan konkretnej kategorii.
+5. Jeśli wybierzesz 1-szą opcję, zobaczysz tabelę z produktami w magazynie, ich ilościami i kategoriami.
+6. Możesz przewijać tabelę, aby zobaczyć wszystkie produkty.
+7. Jeśli wybierzesz 2-gą opcję, zobaczysz listę kategorii produktów.
+8. Wybierz kategorię, której chcesz przeglądać stan, używając strzałek i klawisza `Enter`.
+9. Zobaczysz tabelę z produktami w wybranej kategorii, ich ilościami i kategoriami.
+10. Możesz przewijać tabelę, aby zobaczyć wszystkie produkty.
+11. Naciśnij `Esc`, aby wrócić do menu głównego.
+
+### Wylogowanie
+1. Wróć do menu głównego, naciskając `Esc`.
+2. Naciśnij `Esc`, aby wylogować się z aplikacji.
+
+### Wyjście z aplikacji
+1. Wróć do menu logowania.
+2. Naciśnij `Esc`, aby wyjść z aplikacji.
 
 ## Struktury danych i klasy
 

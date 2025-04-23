@@ -40,7 +40,7 @@ public class SelectUserForTaskMenu
 
         var options = _users.Select(u => new RadioOption(
             $"{u.Username} (Warehouseman)",
-            () => AssignShipmentsToUser(u)
+            () => GetConfirmation(u)
         )).ToList();
 
         _select = new RadioSelect(options);
@@ -90,6 +90,20 @@ public class SelectUserForTaskMenu
                     _keyboardActions[key]();
                 }
             }
+        }
+    }
+
+    private void GetConfirmation(database.User u)
+    {
+        Console.WriteLine("Are you sure you want to assign the selected shipments? (Y/N)");
+        var key = ConsoleInput.GetConsoleKey();
+        if (key == ConsoleKey.Y)
+        {
+            AssignShipmentsToUser(u);
+        }
+        else
+        {
+            _onExit.Invoke();
         }
     }
 

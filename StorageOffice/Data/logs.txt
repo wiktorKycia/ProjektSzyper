@@ -270,3 +270,25 @@
 [2025-04-23 20:16:58] Info: action was performed on data in database - added shipper named 'shipper1'
 [2025-04-23 20:16:59] Info: action was performed on data in database - added new inbound shipment from shipper1
 [2025-04-23 20:17:15] Info: action was performed on data in database - added product 'Laptop' to shipment with id #44
+[2025-04-23 21:44:41] Info: login of user mietek - successful
+[2025-04-23 21:46:22] Info: login of user mietek - successful
+[2025-04-23 21:49:17] Info: action was performed on data in database - modified stock's data
+[2025-04-23 21:49:17] Info: action was performed on data in database - modified stock's data
+[2025-04-23 21:49:17] Info: action was performed on data in database - modified stock's data
+[2025-04-23 21:49:17] Info: action was performed on data in database - modified stock's data
+[2025-04-23 21:49:17] Info: action was performed on data in database - marked shipment as done
+[2025-04-23 21:49:17] Info: action was performed on data in database - modified stock's data
+[2025-04-23 21:49:17] Info: action was performed on data in database - modified stock's data
+[2025-04-23 21:49:17] Info: action was performed on data in database - modified stock's data
+[2025-04-23 21:49:17] Info: action was performed on data in database - modified stock's data
+[2025-04-23 21:49:18] Info: action was performed on data in database - modified stock's data
+[2025-04-23 21:49:18] Info: action was performed on data in database - marked shipment as done
+[2025-04-23 21:49:18] Info: action was performed on data in database - modified stock's data
+[2025-04-23 21:49:18] Info: action was performed on data in database - modified stock's data
+[2025-04-23 21:49:18] Info: action was performed on data in database - modified stock's data
+[2025-04-23 21:49:18] Info: action was performed on data in database - marked shipment as done
+[2025-04-23 21:51:22] Info: login of user wiesio - successful
+[2025-04-23 21:51:48] Info: action was performed on data in database - modified user assigned to shipment to basia
+[2025-04-23 21:51:48] Info: action was performed on data in database - modified user assigned to shipment to basia
+[2025-04-23 21:51:48] Info: action was performed on data in database - modified user assigned to shipment to basia
+[2025-04-23 21:51:48] Info: action was performed on data in database - modified user assigned to shipment to basia
