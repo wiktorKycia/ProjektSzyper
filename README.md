@@ -1,6 +1,39 @@
-# Dokumentacja projektu Logistics Warehouse Managment System
-Nazwa aplikacji: Logistics Warehouse Managment System
+# Dokumentacja projektu Logistics Warehouse Managment System (LWMS)
+Nazwa aplikacji: Logistics Warehouse Managment System.
 Jest to aplikacja do zarządzania magazynem do sklepów.
+
+## Spis treści
+1. [Opis projektu](#opis-projektu)
+    - [Cel](#cel)
+    - [Co robi aplikacja](#co-robi-aplikacja)
+    - [Dla kogo jest przeznaczona](#dla-kogo-jest-przeznaczona)
+2. [Technologie](#technologie)
+3. [Struktura katalogów](#struktura-katalogów)
+4. [Instrukcja instalacji i uruchomienia](#instrukcja-instalacji-i-uruchomienia)
+    - [Wymagania systemowe](#wymagania-systemowe)
+    - [Jak uruchomić aplikację?](#jak-uruchomić-aplikację)
+    - [Komendy](#komendy)
+5. [Zrzuty ekranu](#zrzuty-ekranu)
+6. [Przykłady użycia](#przykłady-użycia)
+7. [Struktury danych i klasy](#struktury-danych-i-klasy)
+    - [Dane](#dane)
+        - [Logi](#logi)
+        - [Baza](#baza)
+        - [Użytkownicy](#użytkownicy)
+    - [Klasy](#klasy)
+        - [CLI](#cli)
+        - [Database](#database)
+        - [Logic](#logic)
+        - [LogServices](#logservices)
+        - [UsersManagement](#usersmanagement)
+8. [Obsługa błędów](#obsługa-błędów)
+9. [Testowanie](#testowanie)
+10. [Problemy i ograniczenia](#problemy-i-ograniczenia)
+     - [Co nie działa idealnie?](#co-nie-działa-idealnie)
+     - [Co może zostać poprawione?](#co-może-zostać-poprawione)
+11. [Plany rozwoju](#plany-rozwoju)
+12. [Autorzy](#autorzy)
+     - [Kontakt](#kontakt)
 
 ## Opis projektu
 
@@ -31,16 +64,63 @@ Logistyk - może przyjmować towar do magazynu i planować eksporty
   - Bogus - do generowania danych
 
 ## Struktura katalogów
-- `Program.cs` - plik uruchomieniowy, uruchamia główne metody
-- `Data/` - foler z danymi, zawiera logi, bazę i hasła użytkowników
-- `UsersManagement/` - folder z kodem do zarządzania użytkownikami, hasłami oraz rolami
-- `Tests/` - folder z testami jednostkowymi
-- `LogServices/` - folder, który zawiera klasę do tworzenia logów
-- `database/` - folder, który zawiera schemat bazy (`Model.cs`), metody dostępu do bazy (`Database.cs`) oraz faker danych do tworzenia realistycznych danych (`DataSeeder.cs`)
-- `CLI/` - folder z kodem, który pomaga wyświetlić dane na ekranie konsoli
-- `Logic/`
-  - `Menuhandler.cs` - klasa odpowiedzialna za zarządzanie przełączania się między poszczególnymi menu
-  - `screens/` - folder, który zawiera poszczególne menu
+```
+📁 ProjektSzyper/
+│
+├── 📝 README.md
+├── 📝 MenuStructure.md
+│
+├── 📂 StorageOffice/
+│   ├── 📄 Program.cs                       # Main entry point 
+│   ├── 📄 StorageOffice.sln                # Solution file
+│   ├── 📄 StorageOffice.csproj             # Project file
+│   │
+│   ├── 📂 Data/                            # Data storage
+│   │   ├── 📄 StorageOffice.db             # SQLite database
+│   │   ├── 📄 users.txt                    # User credentials
+│   │   └── 📄 logs.txt                     # Application logs
+│   │
+│   ├── 📂 Migrations/                      # EF Core migrations
+│   │   └── 📄 [migration files]
+│   │
+│   └── 📂 classes/                         # Main code structure
+│       │
+│       ├── 📂 CLI/                         # Console UI components
+│       │   ├── 📄 Commons.cs               # Common UI utilities
+│       │   ├── 📄 Input.cs                 # Input handling
+│       │   ├── 📄 Option.cs                # Menu option implementations
+│       │   ├── 📄 Select.cs                # Selection UI components
+│       │   └── 📄 Table.cs                 # Table rendering
+│       │
+│       ├── 📂 database/                    # Database components
+│       │   ├── 📄 Database.cs              # Database facade
+│       │   ├── 📄 Model.cs                 # EF Core data models
+│       │   └── 📄 DataSeeder.cs            # Test data generator
+│       │
+│       ├── 📂 Logic/                       # Application logic
+│       │   ├── 📄 MenuHandler.cs           # Menu navigation
+│       │   │
+│       │   └── 📂 screens/                 # UI screens
+│       │       └── 📄 [screen files]
+│       │
+│       ├── 📂 LogServices/                 # Logging functionality
+│       │   └── 📄 Logger.cs
+│       │
+│       └── 📂 UsersManagement/             # User management
+│           ├── 📂 Modules/                 # User modules
+│           │   └── 📄 User.cs
+│           │
+│           └── 📂 Services/                # User services
+│               └── 📄 AuthService.cs
+│
+├── 📂 StorageOffice.UnitTests/             # Unit tests
+│   ├── 📄 StorageOffice.UnitTests.csproj
+│   └── 📂 [test folders and files]
+│
+└── 📂 StorageOffice.IntegrationsTests/     # Integration tests
+    ├── 📄 StorageOffice.IntegrationsTests.csproj
+    └── 📂 [test folders and files]
+```
 
 ## Instrukcja instalacji i uruchomienia
 
@@ -66,6 +146,7 @@ Logistyk - może przyjmować towar do magazynu i planować eksporty
    1. utworzyć nowy projekt za pomocą Visual Studio 2022
    2. przekopiować tam cały kod (czyli plik `Program.cs`, foldery `classes/`, `Data/` i `Migrations/`)
    3. zainstalować te same paczki co w punkcie `7.`
+9. Gdyby, przy uruchamianiu pojawiał się błąd związany z błędem przy otwarciu pliku, należy otworzyć Visual Studio jako administrator i spróbować ponownie uruchomić aplikację oraz sprawdzić czy w folderze `Data/` znajdują się pliki `StorageOffice.db`, `users.txt` oraz `logs.txt` i czy pliki tekstowe nie mają pustych linii
 
 Do uruchomienia testów należy zrobić te same kroki analogicznie w folderach `StorageOffice.IntegrationsTests` oraz `StorageOffice.UnitTests`
 
