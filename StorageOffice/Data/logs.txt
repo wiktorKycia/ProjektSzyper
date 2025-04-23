@@ -258,3 +258,15 @@
 [2025-04-23 19:50:56] Info: action was performed on data in database - added new inbound shipment from FedEx
 [2025-04-23 19:55:06] Info: action was performed on data in database - added product 'Cap' to shipment with id #39
 [2025-04-23 20:01:54] Info: action was performed on data in database - added new inbound shipment from FedEx
+[2025-04-23 20:10:35] Info: login of user Jan - successful
+[2025-04-23 20:11:02] Info: action was performed on data in database - added shipper named 'asd'
+[2025-04-23 20:11:03] Info: action was performed on data in database - added new inbound shipment from asd
+[2025-04-23 20:12:00] Info: action was performed on data in database - added product 'blabla' and it's stock
+[2025-04-23 20:12:47] Info: action was performed on data in database - added new inbound shipment from asd
+[2025-04-23 20:12:59] Info: action was performed on data in database - added product 'blabla' to shipment with id #42
+[2025-04-23 20:13:11] Info: action was performed on data in database - added new inbound shipment from FedEx
+[2025-04-23 20:13:16] Info: action was performed on data in database - added product 'Smartphone' to shipment with id #43
+[2025-04-23 20:16:41] Info: login of user Jan - successful
+[2025-04-23 20:16:58] Info: action was performed on data in database - added shipper named 'shipper1'
+[2025-04-23 20:16:59] Info: action was performed on data in database - added new inbound shipment from shipper1
+[2025-04-23 20:17:15] Info: action was performed on data in database - added product 'Laptop' to shipment with id #44

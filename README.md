@@ -230,7 +230,7 @@ Poniższe przykłady pokazują, jak wykonywać typowe zadania w aplikacji, krok 
 12. Naciśnij dowolny klawisz, aby przejść do menu edytowania produktów do dostawy.
 13. Teraz możesz wybrać 1, aby dodać kolejny produkt do dostawy, lub 2, aby zakończyć dodawanie produktów do dostawy.
 
-### Pracownik magazynu: zykonywanie zadań
+### Pracownik magazynu: wykonywanie zadań
 
 ## Struktury danych i klasy
 
