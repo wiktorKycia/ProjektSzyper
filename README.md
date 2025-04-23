@@ -65,59 +65,59 @@ Logistyk - może przyjmować towar do magazynu i planować eksporty
 
 ## Struktura katalogów
 ```
-📁 ProjektSzyper/
+📁 Projekt/
 │
 ├── 📝 README.md
-├── 📝 MenuStructure.md
 │
 ├── 📂 StorageOffice/
-│   ├── 📄 Program.cs                       # Main entry point 
-│   ├── 📄 StorageOffice.sln                # Solution file
-│   ├── 📄 StorageOffice.csproj             # Project file
+│   ├── 📄 Program.cs                       # Plik uruchamiający aplikację
+│   ├── 📄 StorageOffice.sln                
+│   ├── 📄 StorageOffice.csproj             
 │   │
-│   ├── 📂 Data/                            # Data storage
-│   │   ├── 📄 StorageOffice.db             # SQLite database
-│   │   ├── 📄 users.txt                    # User credentials
-│   │   └── 📄 logs.txt                     # Application logs
+│   ├── 📂 Data/                            # Folder z danymi
+│   │   ├── 📄 StorageOffice.db             # baza danych SQLite 
+│   │   ├── 📄 users.txt                    # Dane użytkowników (nazwy, zahashowane hasła, role)
+│   │   └── 📄 logs.txt                     # Logi systemowe aplikacji
 │   │
-│   ├── 📂 Migrations/                      # EF Core migrations
+│   ├── 📂 Migrations/                      # Migracje EF Core - kod wygenerowany automatycznie przez bibliotekę
 │   │   └── 📄 [migration files]
 │   │
-│   └── 📂 classes/                         # Main code structure
+│   └── 📂 classes/                         # Główna struktura kodu
 │       │
-│       ├── 📂 CLI/                         # Console UI components
-│       │   ├── 📄 Commons.cs               # Common UI utilities
-│       │   ├── 📄 Input.cs                 # Input handling
-│       │   ├── 📄 Option.cs                # Menu option implementations
-│       │   ├── 📄 Select.cs                # Selection UI components
-│       │   └── 📄 Table.cs                 # Table rendering
+│       ├── 📂 CLI/                         # Komponenty konsolowego UI
+│       │   ├── 📄 Commons.cs               # Mniejsze, częściej używane komponenty
+│       │   ├── 📄 Input.cs                 # Wczytywanie danych od użytkownika
+│       │   ├── 📄 Option.cs                # Opcje w menu
+│       │   ├── 📄 Select.cs                # Listy wyboru opcji
+│       │   └── 📄 Table.cs                 # Renderowanie tabeli
 │       │
-│       ├── 📂 database/                    # Database components
-│       │   ├── 📄 Database.cs              # Database facade
-│       │   ├── 📄 Model.cs                 # EF Core data models
-│       │   └── 📄 DataSeeder.cs            # Test data generator
+│       ├── 📂 database/                    # Kod związany z bazą danych
+│       │   ├── 📄 Database.cs              # Fasada dostępu do bazy (zapytania jako metody)
+│       │   ├── 📄 Model.cs                 # Model (struktura bazy)
+│       │   └── 📄 DataSeeder.cs            # Generator danych
 │       │
-│       ├── 📂 Logic/                       # Application logic
-│       │   ├── 📄 MenuHandler.cs           # Menu navigation
+│       ├── 📂 Logic/                       # Logika aplikacji
+│       │   ├── 📄 MenuHandler.cs           # przełączanie się między menu (Backend)
 │       │   │
-│       │   └── 📂 screens/                 # UI screens
+│       │   └── 📂 screens/                 # konkretne menu (Frontend)
 │       │       └── 📄 [screen files]
 │       │
-│       ├── 📂 LogServices/                 # Logging functionality
+│       ├── 📂 LogServices/                 # Logger
 │       │   └── 📄 Logger.cs
 │       │
-│       └── 📂 UsersManagement/             # User management
-│           ├── 📂 Modules/                 # User modules
-│           │   └── 📄 User.cs
+│       └── 📂 UsersManagement/             # Zarządzanie użytkownikami
+│           ├── 📂 Modules/                 
+│           │   └── 📄 User.cs              # Klasa User: reprezentuje zalogowanego użytkownika w aplikacji
 │           │
-│           └── 📂 Services/                # User services
-│               └── 📄 AuthService.cs
+│           └── 📂 Services/                
+│               ├── 📄 PasswordManager.cs   # Hasła użytkowników
+│               └── 📄 RBAC.cs              # Role użytkowników
 │
-├── 📂 StorageOffice.UnitTests/             # Unit tests
+├── 📂 StorageOffice.UnitTests/             # Testy jednostkowe
 │   ├── 📄 StorageOffice.UnitTests.csproj
 │   └── 📂 [test folders and files]
 │
-└── 📂 StorageOffice.IntegrationsTests/     # Integration tests
+└── 📂 StorageOffice.IntegrationsTests/     # Testy integracyjne
     ├── 📄 StorageOffice.IntegrationsTests.csproj
     └── 📂 [test folders and files]
 ```
@@ -127,6 +127,7 @@ Logistyk - może przyjmować towar do magazynu i planować eksporty
 ### Wymagania systemowe
 - system operacyjny Windows 10
 - Visual Studio 2022
+- środowisko .NET 9
 
 ### Jak uruchomić aplikację?
 
@@ -146,7 +147,8 @@ Logistyk - może przyjmować towar do magazynu i planować eksporty
    1. utworzyć nowy projekt za pomocą Visual Studio 2022
    2. przekopiować tam cały kod (czyli plik `Program.cs`, foldery `classes/`, `Data/` i `Migrations/`)
    3. zainstalować te same paczki co w punkcie `7.`
-9. Gdyby, przy uruchamianiu pojawiał się błąd związany z błędem przy otwarciu pliku, należy otworzyć Visual Studio jako administrator i spróbować ponownie uruchomić aplikację oraz sprawdzić czy w folderze `Data/` znajdują się pliki `StorageOffice.db`, `users.txt` oraz `logs.txt` i czy pliki tekstowe nie mają pustych linii
+
+==Gdyby, przy uruchamianiu pojawiał się błąd związany z błędem przy otwarciu pliku, należy otworzyć Visual Studio jako  administrator i spróbować ponownie uruchomić aplikację oraz sprawdzić czy w folderze `Data/` znajdują się pliki  `StorageOffice.db`, `users.txt` oraz `logs.txt` i czy pliki tekstowe nie mają pustych linii==
 
 Do uruchomienia testów należy zrobić te same kroki analogicznie w folderach `StorageOffice.IntegrationsTests` oraz `StorageOffice.UnitTests`
 
