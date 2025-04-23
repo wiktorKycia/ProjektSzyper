@@ -254,3 +254,7 @@
 [2025-04-23 19:45:06] Info: action was performed on data of a user named kasia - changed user's name to basia
 [2025-04-23 19:45:15] Info: action was performed on data in database - modified user's data
 [2025-04-23 19:45:15] Info: action was performed on data of a user named basia - changed user's role
+[2025-04-23 19:48:17] Info: login of user Jan - successful
+[2025-04-23 19:50:56] Info: action was performed on data in database - added new inbound shipment from FedEx
+[2025-04-23 19:55:06] Info: action was performed on data in database - added product 'Cap' to shipment with id #39
+[2025-04-23 20:01:54] Info: action was performed on data in database - added new inbound shipment from FedEx

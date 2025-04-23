@@ -215,9 +215,22 @@ Poniższe przykłady pokazują, jak wykonywać typowe zadania w aplikacji, krok 
 10. Zobaczysz komunikat potwierdzający usunięcie użytkownika.
 11. Naciśnij `Esc`, aby wrócić do menu głównego.
 
-### Logistyk: dodawanie dostaw
+### Logistyk: dodawanie dostaw do magazynu
 1. Zaloguj się jako logistyk.
-2. Wybierz opcję "" z menu głównego klawiszem `Enter`.
+2. Wybierz opcję "Create Inbound Shipment (Import)" z menu głównego klawiszem `Enter`.
+3. Wybierz 1, aby wprowadzić ID dostawcy z podanych, lub 2, aby dodać nowego dostawcę ręcznie.
+4. Jeśli wybierzesz 1, zobaczysz listę dostawców. Wybierz dostawcę, wpisując jego numer ID i klikając `Enter`.
+5. Pojawi się komunikat, że stworzno dostawę, ale to jeszcze nie koniec.
+6. Naciśnij dowolny klawisz, aby przejść do następnego kroku.
+7. Wybierz 1, aby dodać produkt do dostawy
+8. Możesz wybrać 1, aby potem wybrać produkt z listy, lub 2, aby dodać produkt ręcznie.
+9. Jeśli wybierzesz 1, zobaczysz listę produktów. Wybierz produkt, wpisując jego numer ID i klikając `Enter`.
+10. Podaj ilość produktu, który chcesz dodać do dostawy.
+11. Jeśli podałeś liczbę poprawnie, zobaczysz komunikat, że produkt został dodany do dostawy.
+12. Naciśnij dowolny klawisz, aby przejść do menu edytowania produktów do dostawy.
+13. Teraz możesz wybrać 1, aby dodać kolejny produkt do dostawy, lub 2, aby zakończyć dodawanie produktów do dostawy.
+
+### Pracownik magazynu: zykonywanie zadań
 
 ## Struktury danych i klasy
 
