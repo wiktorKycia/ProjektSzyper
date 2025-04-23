@@ -8,6 +8,10 @@ using System.Text.RegularExpressions;
 
 namespace StorageOffice.classes.database;
 
+/// <summary>
+/// StorageContext class: represents the database context for the storage office application.
+/// It inherits from DbContext and provides access to the database tables.
+/// </summary>
 public class StorageContext : DbContext
 {
     public DbSet<Shop> Shops { get; set; }
@@ -20,6 +24,11 @@ public class StorageContext : DbContext
 
     public string DbPath { get; }
 
+    /// <summary>
+    /// Constructor for the StorageContext class.
+    /// Initializes the database path based on the solution's directory or a custom path.
+    /// </summary>
+    /// <param name="customDbPath"></param>
     public StorageContext(string? customDbPath = null)
     {
         var solutionDirectory = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "../../../"));
@@ -30,6 +39,11 @@ public class StorageContext : DbContext
 
         this.DbPath = customDbPath ?? Path.Combine(appPath, "StorageOffice.db");
     }
+
+    /// <summary>
+    /// Configures the database context to use SQLite.
+    /// </summary>
+    /// <param name="options"></param>
     protected override void OnConfiguring(DbContextOptionsBuilder options)
     {
         options.UseSqlite($"Data Source={DbPath}", opt =>
@@ -37,6 +51,11 @@ public class StorageContext : DbContext
             opt.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName);
         });
     }
+
+    /// <summary>
+    /// Configures the model relationships and constraints.
+    /// </summary>
+    /// <param name="modelBuilder"></param>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         // One-to-one relationship between Product and Stock.
@@ -79,12 +98,19 @@ public class StorageContext : DbContext
     }
 }
 
-// Enum to denote shipment direction.
+
+/// <summary>
+/// Enum to denote shipment direction.
+/// </summary>
 public enum ShipmentType
 {
     Inbound,
     Outbound
 }
+
+/// <summary>
+/// Enum to denote user roles.
+/// </summary>
 public enum UserRole
 {
     Administrator = 1,
@@ -93,7 +119,9 @@ public enum UserRole
     WarehouseManager
 }
 
-// Shop table: holds shop details.
+/// <summary>
+/// Shop table: holds shop details.
+/// </summary>
 public class Shop
 {
     public int ShopId { get; set; }
@@ -112,7 +140,9 @@ public class Shop
     }
 }
 
-// Product table: holds product details.
+/// <summary>
+/// Product table: holds product details.
+/// </summary>
 public class Product
 {
     public int ProductId { get; set; }
@@ -136,7 +166,9 @@ public class Product
     }
 }
 
-// Stock table: maintains current inventory per product.
+/// <summary>
+/// Stock table: maintains current inventory per product.
+/// </summary>
 public class Stock
 {
     public int StockId { get; set; }
@@ -168,7 +200,9 @@ public class Stock
     }
 }
 
-// Shipper table: represents external shipping companies.
+/// <summary>
+/// Shipper table: represents external shipping companies.
+/// </summary>
 public class Shipper
 {
     public int ShipperId { get; set; }
@@ -187,7 +221,9 @@ public class Shipper
     }
 }
 
-// Shipment table: represents shipments involving the warehouse.
+/// <summary>
+/// Shipment table: represents shipments involving the warehouse.
+/// </summary>
 public class Shipment
 {
     public int ShipmentId { get; set; }
@@ -225,7 +261,9 @@ public class Shipment
     }
 }
 
-// ShipmentItem table: holds details of products in each shipment.
+/// <summary>
+/// ShipmentItem table: holds details of products in each shipment.
+/// </summary>
 public class ShipmentItem
 {
     public int ShipmentItemId { get; set; }
@@ -248,6 +286,9 @@ public class ShipmentItem
     }
 }
 
+/// <summary>
+/// User table: represents users of the system.
+/// </summary>
 public class User
 {
     public int UserId { get; set; }
@@ -261,7 +302,7 @@ public class User
     {
         if (string.IsNullOrEmpty(username))
         {
-            throw new ArgumentNullException(null, "User's username can't be empty");
+            throw new ArgumentException(null, "User's username can't be empty");
         }
         else if (!Regex.IsMatch(username, @"^[a-zA-Z0-9_.����󜟿��ʣ�ӌ��]+$"))
         {

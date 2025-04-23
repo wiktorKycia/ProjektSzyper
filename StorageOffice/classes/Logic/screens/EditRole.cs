@@ -5,6 +5,21 @@ using StorageOffice.classes.UsersManagement.Services;
 
 namespace StorageOffice.classes.Logic;
 
+/// <summary>
+/// Represents the menu for editing a user's role.
+/// This class provides an interactive console-based workflow for changing the role
+/// of a specific user.
+/// </summary>
+/// <remarks>
+/// The menu allows the user to select a new role from a predefined list, confirm the change,
+/// and update the role in the system.
+/// </remarks>
+/// <param name="username">
+/// The username of the user whose role is being changed.
+/// </param>
+/// <param name="onExit">
+/// An action to be invoked when the user exits the role edit menu.
+/// </param>
 public class EditRole
 {
     private readonly string _title;
@@ -31,6 +46,18 @@ public class EditRole
         Run();
     }
 
+    /// <summary>
+    /// Executes the main workflow for the role edit menu.
+    /// Displays the user interface, handles user input for selecting a new role,
+    /// and updates the role upon confirmation.
+    /// </summary>
+    /// <remarks>
+    /// This method runs in a loop until the user exits the menu or successfully changes
+    /// the role. It ensures proper validation of the selected role and handles errors gracefully.
+    /// </remarks>
+    /// <exception cref="ArgumentException">
+    /// Thrown if the selected role is invalid.
+    /// </exception>
     private void Run()
     {
         bool running = true;
@@ -71,6 +98,16 @@ public class EditRole
         }
     }
 
+    /// <summary>
+    /// Prompts the user to select a new role from a predefined list of roles.
+    /// Validates the input and returns the selected role.
+    /// </summary>
+    /// <returns>
+    /// The role selected by the user.
+    /// </returns>
+    /// <exception cref="ArgumentException">
+    /// Thrown if the entered role is invalid (e.g., not within the allowed range).
+    /// </exception>
     private Role GetRole()
     {
         while(true)
@@ -101,6 +138,17 @@ public class EditRole
         }
     }
 
+    /// <summary>
+    /// Prompts the user to confirm the selected role.
+    /// Updates the running flag based on the user's confirmation.
+    /// </summary>
+    /// <param name="running">
+    /// A reference to a boolean flag indicating whether the process should continue running.
+    /// This flag is set to false if the user confirms the role.
+    /// </param>
+    /// <returns>
+    /// True if the user confirms the role, otherwise false.
+    /// </returns>
     private bool GetConfirm(ref bool running)
     {
         Console.WriteLine("Is the role correct? (y/n): ");
@@ -113,9 +161,18 @@ public class EditRole
         else return false;   
     }
 
+    /// <summary>
+    /// Displays the user interface for the role edit menu.
+    /// Shows the username being edited and provides navigation instructions for the user.
+    /// </summary>
+    /// <remarks>
+    /// The method ensures proper formatting of the console output and clears the screen
+    /// before displaying the content.
+    /// </remarks>
     private void Display()
     {
         Console.Clear();
+        Console.WriteLine("\x1b[3J");
         string content = $"Change role for user: {_username}";
         
         Console.WriteLine(ConsoleOutput.UIFrame(_title, content));
