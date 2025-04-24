@@ -185,8 +185,7 @@ public class DataSeeder
         var shipmentFaker = new Faker<Shipment>()
             .RuleFor(s => s.Shop, f => f.Random.Bool() ? f.PickRandom(shops) : null)
             .RuleFor(s => s.Shipper, (f, s) => s.Shop == null ? f.PickRandom(shippers) : null)
-            .RuleFor(s => s.ShipmentType, (f, s) => s.Shop == null ? ShipmentType.Outbound : ShipmentType.Inbound)
-            .RuleFor(s => s.ShippedDate, f => f.Date.Past(1))
+            .RuleFor(s => s.ShipmentType, (f, s) => s.Shop == null ? ShipmentType.Inbound : ShipmentType.Outbound)
             .RuleFor(s => s.User, f => f.PickRandom(userList.Where(u => u.Role == UserRole.Warehouseman)));
 
         var shipments = shipmentFaker.Generate(30);
@@ -225,7 +224,7 @@ public class DataSeeder
     {
         return category switch
         {
-            "Electronics" => "everyday use with the latest technology",
+            "Electronics" => "everyday use",
             "Clothing" => "comfortable everyday wear",
             "Food" => "a delicious and nutritious meal",
             "Sporting Goods" => "sports and outdoor activities",

@@ -241,3 +241,71 @@
 [2025-04-22 03:11:09] Info: action was performed on data in database - removed user named 'Tomasz'
 [2025-04-22 03:11:09] Info: action was performed on data of a user named Grzegoż - deleted a user
 [2025-04-22 03:11:09] Info: action was performed on data in database - removed user named 'Grzegoż'
+[2025-04-23 19:33:07] Info: login of user wiktor - successful
+[2025-04-23 19:38:14] Info: action was performed on data of a user named Janek - deleted a user
+[2025-04-23 19:39:51] Info: login of user wiktor - successful
+[2025-04-23 19:40:32] Info: action was performed on data of a user named kasia - added a new user
+[2025-04-23 19:40:33] Info: action was performed on data in database - added user named 'username'
+[2025-04-23 19:44:10] Info: action was performed on data of a user named kasia - changed user's password
+[2025-04-23 19:44:45] Info: action was performed on data in database - modified user's data
+[2025-04-23 19:44:45] Info: action was performed on data of a user named kasia - changed user's role
+[2025-04-23 19:44:55] Info: action was performed on data of a user named kasia - changed user's password
+[2025-04-23 19:45:06] Info: action was performed on data in database - modified user's data
+[2025-04-23 19:45:06] Info: action was performed on data of a user named kasia - changed user's name to basia
+[2025-04-23 19:45:15] Info: action was performed on data in database - modified user's data
+[2025-04-23 19:45:15] Info: action was performed on data of a user named basia - changed user's role
+[2025-04-23 19:48:17] Info: login of user Jan - successful
+[2025-04-23 19:50:56] Info: action was performed on data in database - added new inbound shipment from FedEx
+[2025-04-23 19:55:06] Info: action was performed on data in database - added product 'Cap' to shipment with id #39
+[2025-04-23 20:01:54] Info: action was performed on data in database - added new inbound shipment from FedEx
+[2025-04-23 20:10:35] Info: login of user Jan - successful
+[2025-04-23 20:11:02] Info: action was performed on data in database - added shipper named 'asd'
+[2025-04-23 20:11:03] Info: action was performed on data in database - added new inbound shipment from asd
+[2025-04-23 20:12:00] Info: action was performed on data in database - added product 'blabla' and it's stock
+[2025-04-23 20:12:47] Info: action was performed on data in database - added new inbound shipment from asd
+[2025-04-23 20:12:59] Info: action was performed on data in database - added product 'blabla' to shipment with id #42
+[2025-04-23 20:13:11] Info: action was performed on data in database - added new inbound shipment from FedEx
+[2025-04-23 20:13:16] Info: action was performed on data in database - added product 'Smartphone' to shipment with id #43
+[2025-04-23 20:16:41] Info: login of user Jan - successful
+[2025-04-23 20:16:58] Info: action was performed on data in database - added shipper named 'shipper1'
+[2025-04-23 20:16:59] Info: action was performed on data in database - added new inbound shipment from shipper1
+[2025-04-23 20:17:15] Info: action was performed on data in database - added product 'Laptop' to shipment with id #44
+[2025-04-23 21:44:41] Info: login of user mietek - successful
+[2025-04-23 21:46:22] Info: login of user mietek - successful
+[2025-04-23 21:49:17] Info: action was performed on data in database - modified stock's data
+[2025-04-23 21:49:17] Info: action was performed on data in database - modified stock's data
+[2025-04-23 21:49:17] Info: action was performed on data in database - modified stock's data
+[2025-04-23 21:49:17] Info: action was performed on data in database - modified stock's data
+[2025-04-23 21:49:17] Info: action was performed on data in database - marked shipment as done
+[2025-04-23 21:49:17] Info: action was performed on data in database - modified stock's data
+[2025-04-23 21:49:17] Info: action was performed on data in database - modified stock's data
+[2025-04-23 21:49:17] Info: action was performed on data in database - modified stock's data
+[2025-04-23 21:49:17] Info: action was performed on data in database - modified stock's data
+[2025-04-23 21:49:18] Info: action was performed on data in database - modified stock's data
+[2025-04-23 21:49:18] Info: action was performed on data in database - marked shipment as done
+[2025-04-23 21:49:18] Info: action was performed on data in database - modified stock's data
+[2025-04-23 21:49:18] Info: action was performed on data in database - modified stock's data
+[2025-04-23 21:49:18] Info: action was performed on data in database - modified stock's data
+[2025-04-23 21:49:18] Info: action was performed on data in database - marked shipment as done
+[2025-04-23 21:51:22] Info: login of user wiesio - successful
+[2025-04-23 21:51:48] Info: action was performed on data in database - modified user assigned to shipment to basia
+[2025-04-23 21:51:48] Info: action was performed on data in database - modified user assigned to shipment to basia
+[2025-04-23 21:51:48] Info: action was performed on data in database - modified user assigned to shipment to basia
+[2025-04-23 21:51:48] Info: action was performed on data in database - modified user assigned to shipment to basia
+[2025-04-23 21:57:06] Info: login of user basia - unsuccessful
+[2025-04-23 21:57:12] Info: login of user basia - successful
+[2025-04-23 21:58:45] Info: action was performed on data in database - modified stock's data
+[2025-04-23 21:58:45] Info: action was performed on data in database - marked shipment as done
+[2025-04-23 21:58:55] Info: login of user wiktor - successful
+[2025-04-23 21:59:05] Info: action was performed on data of a user named basia - changed user's password
+[2025-04-23 21:59:23] Info: login of user wiesio - successful
+[2025-04-23 22:00:24] Info: login of user mietek - successful
+[2025-04-23 22:06:21] Info: login of user mietek - successful
+[2025-04-23 22:17:41] Info: login of user mietek - successful
+[2025-04-23 22:20:01] Info: login of user mietek - successful
+[2025-04-23 22:24:06] Info: login of user mietek - successful
+[2025-04-23 22:30:41] Info: login of user mietek - unsuccessful
+[2025-04-23 22:30:47] Info: login of user mietek - successful
+[2025-04-23 22:39:16] Info: login of user wiktor - successful
+[2025-04-23 22:40:15] Info: login of user Jan - successful
+[2025-04-23 22:40:52] Info: login of user wiesio - successful

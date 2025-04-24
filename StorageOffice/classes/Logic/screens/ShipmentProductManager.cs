@@ -53,53 +53,32 @@ public class ShipmentProductManager
         {
             Display();
             DisplayCurrentShipmentItems();
-
-            Console.WriteLine("\n1. Add product");
-            Console.WriteLine("2. Finish adding products");
+            
             if (_shipment.ShipmentItems != null && _shipment.ShipmentItems.Any())
             {
-                Console.WriteLine("3. Mark shipment as complete");
-            }
+                Console.WriteLine("\n1. Add product");
+                Console.WriteLine("2. Finish adding products");
 
-            int choice = ConsoleInput.GetUserInt("Select an option: ");
-
-            switch (choice)
-            {
-                case 1:
+                int choice = ConsoleInput.GetUserInt("Select an option: ");
+                if (choice == 1)
+                {
                     AddProductToShipment();
-                    break;
-                case 2:
+                }
+                else if (choice == 2 && _shipment.ShipmentItems != null && _shipment.ShipmentItems.Any())
+                {
                     adding = false;
                     _onExit.Invoke();
-                    break;
-                case 3:
-                    if (_shipment.ShipmentItems != null && _shipment.ShipmentItems.Any())
-                    {
-                        if (ConfirmCompletion())
-                        {
-                            try
-                            {
-                                MenuHandler.db?.MarkShipmentAsDone(_shipment.ShipmentId);
-                                ConsoleOutput.PrintColorMessage("Shipment marked as completed successfully!\n", ConsoleColor.Green);
-                                Console.WriteLine("Press any key to continue...");
-                                ConsoleInput.WaitForAnyKey();
-                                adding = false;
-                                _onExit.Invoke();
-                            }
-                            catch (Exception ex)
-                            {
-                                ConsoleOutput.PrintColorMessage($"Error: {ex.Message}\n", ConsoleColor.Red);
-                                Console.WriteLine("Press any key to continue...");
-                                ConsoleInput.WaitForAnyKey();
-                            }
-                        }
-                    }
-                    break;
-                default:
+                }
+                else
+                {
                     ConsoleOutput.PrintColorMessage("Invalid option. Please try again.\n", ConsoleColor.Yellow);
                     Console.WriteLine("Press any key to continue...");
                     ConsoleInput.WaitForAnyKey();
-                    break;
+                }
+            }
+            else
+            {
+                AddProductToShipment();
             }
         }
     }
@@ -349,16 +328,5 @@ public class ShipmentProductManager
             ConsoleInput.WaitForAnyKey();
             return HandleManualProductEntry(); // Recursively try again
         }
-    }
-
-    /// <summary>
-    /// Confirms whether the user wants to mark the shipment as completed.
-    /// </summary>
-    /// <returns>True if the user confirms, otherwise false.</returns>
-    private bool ConfirmCompletion()
-    {
-        Console.WriteLine("\nDo you want to mark this shipment as completed? (y/n): ");
-        var key = ConsoleInput.GetConsoleKey();
-        return key == ConsoleKey.Y;
     }
 }

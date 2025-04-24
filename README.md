@@ -65,59 +65,59 @@ Logistyk - może przyjmować towar do magazynu i planować eksporty
 
 ## Struktura katalogów
 ```
-📁 ProjektSzyper/
+📁 Projekt/
 │
 ├── 📝 README.md
-├── 📝 MenuStructure.md
 │
 ├── 📂 StorageOffice/
-│   ├── 📄 Program.cs                       # Main entry point 
-│   ├── 📄 StorageOffice.sln                # Solution file
-│   ├── 📄 StorageOffice.csproj             # Project file
+│   ├── 📄 Program.cs                       # Plik uruchamiający aplikację
+│   ├── 📄 StorageOffice.sln                
+│   ├── 📄 StorageOffice.csproj             
 │   │
-│   ├── 📂 Data/                            # Data storage
-│   │   ├── 📄 StorageOffice.db             # SQLite database
-│   │   ├── 📄 users.txt                    # User credentials
-│   │   └── 📄 logs.txt                     # Application logs
+│   ├── 📂 Data/                            # Folder z danymi
+│   │   ├── 📄 StorageOffice.db             # baza danych SQLite 
+│   │   ├── 📄 users.txt                    # Dane użytkowników (nazwy, zahashowane hasła, role)
+│   │   └── 📄 logs.txt                     # Logi systemowe aplikacji
 │   │
-│   ├── 📂 Migrations/                      # EF Core migrations
+│   ├── 📂 Migrations/                      # Migracje EF Core - kod wygenerowany automatycznie przez bibliotekę
 │   │   └── 📄 [migration files]
 │   │
-│   └── 📂 classes/                         # Main code structure
+│   └── 📂 classes/                         # Główna struktura kodu
 │       │
-│       ├── 📂 CLI/                         # Console UI components
-│       │   ├── 📄 Commons.cs               # Common UI utilities
-│       │   ├── 📄 Input.cs                 # Input handling
-│       │   ├── 📄 Option.cs                # Menu option implementations
-│       │   ├── 📄 Select.cs                # Selection UI components
-│       │   └── 📄 Table.cs                 # Table rendering
+│       ├── 📂 CLI/                         # Komponenty konsolowego UI
+│       │   ├── 📄 Commons.cs               # Mniejsze, częściej używane komponenty
+│       │   ├── 📄 Input.cs                 # Wczytywanie danych od użytkownika
+│       │   ├── 📄 Option.cs                # Opcje w menu
+│       │   ├── 📄 Select.cs                # Listy wyboru opcji
+│       │   └── 📄 Table.cs                 # Renderowanie tabeli
 │       │
-│       ├── 📂 database/                    # Database components
-│       │   ├── 📄 Database.cs              # Database facade
-│       │   ├── 📄 Model.cs                 # EF Core data models
-│       │   └── 📄 DataSeeder.cs            # Test data generator
+│       ├── 📂 database/                    # Kod związany z bazą danych
+│       │   ├── 📄 Database.cs              # Fasada dostępu do bazy (zapytania jako metody)
+│       │   ├── 📄 Model.cs                 # Model (struktura bazy)
+│       │   └── 📄 DataSeeder.cs            # Generator danych
 │       │
-│       ├── 📂 Logic/                       # Application logic
-│       │   ├── 📄 MenuHandler.cs           # Menu navigation
+│       ├── 📂 Logic/                       # Logika aplikacji
+│       │   ├── 📄 MenuHandler.cs           # przełączanie się między menu (Backend)
 │       │   │
-│       │   └── 📂 screens/                 # UI screens
+│       │   └── 📂 screens/                 # konkretne menu (Frontend)
 │       │       └── 📄 [screen files]
 │       │
-│       ├── 📂 LogServices/                 # Logging functionality
+│       ├── 📂 LogServices/                 # Logger
 │       │   └── 📄 Logger.cs
 │       │
-│       └── 📂 UsersManagement/             # User management
-│           ├── 📂 Modules/                 # User modules
-│           │   └── 📄 User.cs
+│       └── 📂 UsersManagement/             # Zarządzanie użytkownikami
+│           ├── 📂 Modules/                 
+│           │   └── 📄 User.cs              # Klasa User: reprezentuje zalogowanego użytkownika w aplikacji
 │           │
-│           └── 📂 Services/                # User services
-│               └── 📄 AuthService.cs
+│           └── 📂 Services/                
+│               ├── 📄 PasswordManager.cs   # Hasła użytkowników
+│               └── 📄 RBAC.cs              # Role użytkowników
 │
-├── 📂 StorageOffice.UnitTests/             # Unit tests
+├── 📂 StorageOffice.UnitTests/             # Testy jednostkowe
 │   ├── 📄 StorageOffice.UnitTests.csproj
 │   └── 📂 [test folders and files]
 │
-└── 📂 StorageOffice.IntegrationsTests/     # Integration tests
+└── 📂 StorageOffice.IntegrationsTests/     # Testy integracyjne
     ├── 📄 StorageOffice.IntegrationsTests.csproj
     └── 📂 [test folders and files]
 ```
@@ -127,6 +127,7 @@ Logistyk - może przyjmować towar do magazynu i planować eksporty
 ### Wymagania systemowe
 - system operacyjny Windows 10
 - Visual Studio 2022
+- środowisko .NET 9
 
 ### Jak uruchomić aplikację?
 
@@ -146,7 +147,8 @@ Logistyk - może przyjmować towar do magazynu i planować eksporty
    1. utworzyć nowy projekt za pomocą Visual Studio 2022
    2. przekopiować tam cały kod (czyli plik `Program.cs`, foldery `classes/`, `Data/` i `Migrations/`)
    3. zainstalować te same paczki co w punkcie `7.`
-9. Gdyby, przy uruchamianiu pojawiał się błąd związany z błędem przy otwarciu pliku, należy otworzyć Visual Studio jako administrator i spróbować ponownie uruchomić aplikację oraz sprawdzić czy w folderze `Data/` znajdują się pliki `StorageOffice.db`, `users.txt` oraz `logs.txt` i czy pliki tekstowe nie mają pustych linii
+
+**Gdyby, przy uruchamianiu pojawiał się błąd związany z błędem przy otwarciu pliku, należy otworzyć Visual Studio jako  administrator i spróbować ponownie uruchomić aplikację oraz sprawdzić czy w folderze `Data/` znajdują się pliki  `StorageOffice.db`, `users.txt` oraz `logs.txt` i czy pliki tekstowe nie mają pustych linii**
 
 Do uruchomienia testów należy zrobić te same kroki analogicznie w folderach `StorageOffice.IntegrationsTests` oraz `StorageOffice.UnitTests`
 
@@ -175,8 +177,104 @@ dotnet ef database update
 
 ## Przykłady użycia
 
-Po uruchomieniu aplikacji wyświetla się ekran logowania
+Poniższe przykłady pokazują, jak wykonywać typowe zadania w aplikacji, krok po kroku, dla różnych ról użytkowników.
 
+### Logowanie do systemu
+1. Uruchom aplikację.
+2. Naciśnij dowolny klawisz, aby przejść do ekranu logowania.
+3. Wprowadź nazwę użytkownika i hasło.
+4. Naciśnij Enter, aby zalogować się.
+5. Jeśli dane logowania są poprawne, zostaniesz przekierowany do odpowiedniego panelu użytkownika.
+6. Jeśli dane logowania są niepoprawne, zostaniesz poinformowany o błędzie i będziesz mógł spróbować ponownie.
+
+### Administrator: przeglądanie logów
+1. Zaloguj się jako administrator.
+2. Wybierz opcję "View logs" z menu głównego.
+3. Zobaczysz listę logów systemowych, które zawierają informacje o działaniach w systemie.
+4. Możesz przewijać listę, aby zobaczyć starsze logi.
+5. Naciśnij `Esc`, aby wrócić do menu głównego.
+
+### Administrator: dodawanie użytkownika
+1. Zaloguj się jako administrator.
+2. Wybierz opcję "Manage users" z menu głównego klawiszem `Enter`.
+3. Pojawi się menu akcji z opcjami "Add user", "Edit user", "Delete user" i "View users".
+4. Wybierz opcję "Add user" klawiszem `Enter`.
+5. Wprowadź nazwę użytkownika, hasło i rolę (Administrator, Manager, Warehouseman, Logistics).
+6. Zobaczysz komunikat potwierdzający dodanie użytkownika.
+7. Naciśnij `Y`, aby potwierdzić dodanie użytkownika.
+8. Naciśnij dowolny klawisz, aby wrócić do menu użytkowników.
+
+### Administrator: usuwanie użytkowników
+1. Zaloguj się jako administrator.
+2. Wybierz opcję "Manage users" z menu głównego klawiszem `Enter`.
+3. Pojawi się menu akcji z opcjami "Add user", "Edit user", "Delete user" i "View users".
+4. Wybierz opcję "Delete user" klawiszem `Enter`.
+5. Zobaczysz listę użytkowników.
+6. Wybierz użytkownika (lub użytkowników), którego chcesz usunąć, używając strałek i klawisza `Enter`.
+7. Naciśnij `Del`, aby usunąć użytkownika.
+8. Pojawi się ekran z potwierdzeniem usunięcia.
+9. Naciśnij `Y`, aby potwierdzić usunięcie.
+10. Zobaczysz komunikat potwierdzający usunięcie użytkownika.
+11. Naciśnij `Esc`, aby wrócić do menu głównego.
+
+### Logistyk: dodawanie dostaw do magazynu
+1. Zaloguj się jako logistyk.
+2. Wybierz opcję "Create Inbound Shipment (Import)" z menu głównego klawiszem `Enter`.
+3. Wybierz 1, aby wprowadzić ID dostawcy z podanych, lub 2, aby dodać nowego dostawcę ręcznie.
+4. Jeśli wybierzesz 1, zobaczysz listę dostawców. Wybierz dostawcę, wpisując jego numer ID i klikając `Enter`.
+5. Pojawi się komunikat, że stworzno dostawę, ale to jeszcze nie koniec.
+6. Naciśnij dowolny klawisz, aby przejść do następnego kroku.
+7. Wybierz 1, aby dodać produkt do dostawy
+8. Możesz wybrać 1, aby potem wybrać produkt z listy, lub 2, aby dodać produkt ręcznie.
+9. Jeśli wybierzesz 1, zobaczysz listę produktów. Wybierz produkt, wpisując jego numer ID i klikając `Enter`.
+10. Podaj ilość produktu, który chcesz dodać do dostawy.
+11. Jeśli podałeś liczbę poprawnie, zobaczysz komunikat, że produkt został dodany do dostawy.
+12. Naciśnij dowolny klawisz, aby przejść do menu edytowania produktów do dostawy.
+13. Teraz możesz wybrać 1, aby dodać kolejny produkt do dostawy, lub 2, aby zakończyć dodawanie produktów do dostawy.
+
+### Pracownik magazynu: wykonywanie zadań
+1. Zaloguj się jako pracownik magazynu.
+2. Wybierz opcję "Tasks" z menu głównego klawiszem `Enter`.
+3. Pojawi się lista zadań do wykonania.
+4. Wybierz zadania, które chcesz wykonać, używając strzałek i klawisza `Enter`. Dodatkowo poniżej wyśtwietlone zostaną szczegóły dotyczące wybranego zadania (dostawy do zatwierdzenia).
+5. Naciśnij `C`, aby zaakceptować wybrane dostawy. 
+6. Pojawi się komunikat potwierdzający zaakceptowanie dostaw.
+7. Naciśnij `Y`, aby potwierdzić zaakceptowanie dostaw.
+8. Zobaczysz komunikat potwierdzający zaakceptowanie dostaw.
+9. Naciśnij dowolny klawisz, aby wrócić do menu głównego.
+
+### Manager: przydzielanie zadań
+1. Zaloguj się jako manager.
+2. Wybierz opcję "Tasks" z menu głównego klawiszem `Enter`.
+3. Pojawi się lista nieprzydzielonych oraz niewykonanych dostaw.
+4. Wybierz dostawy, które chcesz przydzielić, używając strzałek i klawisza `Enter`.
+5. Naciśnij `A`, aby przydzielić wybrane dostawy.
+6. Pojawi się lista pracowników magazynu.
+7. Wybierz pracownika, któremu chcesz przydzielić dostawy, używając strzałek i klawisza `Enter`.
+8. Naciśnij `Y`, aby potwierdzić przydzielenie dostaw do pracownika.
+9. Zobaczysz komunikat potwierdzający przydzielenie dostaw do pracownika.
+10. Naciśnij dowolny klawisz, aby wrócić do menu głównego.
+
+### Manager/Pracownik: przeglądanie stanu magazynu
+1. Zaloguj się jako manager lub pracownik magazynu.
+2. Wybierz opcję "Warehouse" z menu głównego klawiszem `Enter`.
+3. Pojawi się menu pytające, czy chcesz przeglądać stan całego magazynu, czy tylko konkretnej kategorii.
+4. Wybierz 1-szą opcję, aby przeglądać stan całego magazynu, lub 2-gą, aby przeglądać stan konkretnej kategorii.
+5. Jeśli wybierzesz 1-szą opcję, zobaczysz tabelę z produktami w magazynie, ich ilościami i kategoriami.
+6. Możesz przewijać tabelę, aby zobaczyć wszystkie produkty.
+7. Jeśli wybierzesz 2-gą opcję, zobaczysz listę kategorii produktów.
+8. Wybierz kategorię, której chcesz przeglądać stan, używając strzałek i klawisza `Enter`.
+9. Zobaczysz tabelę z produktami w wybranej kategorii, ich ilościami i kategoriami.
+10. Możesz przewijać tabelę, aby zobaczyć wszystkie produkty.
+11. Naciśnij `Esc`, aby wrócić do menu głównego.
+
+### Wylogowanie
+1. Wróć do menu głównego, naciskając `Esc`.
+2. Naciśnij `Esc`, aby wylogować się z aplikacji.
+
+### Wyjście z aplikacji
+1. Wróć do menu logowania.
+2. Naciśnij `Esc`, aby wyjść z aplikacji.
 
 ## Struktury danych i klasy
 
