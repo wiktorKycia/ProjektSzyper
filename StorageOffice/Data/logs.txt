@@ -343,3 +343,5 @@
 [2025-04-24 21:00:03] Info: login of user mietek - successful
 [2025-04-24 21:00:19] Info: login of user wiesio - successful
 [2025-04-24 21:03:57] Info: login of user wiesio - successful
+[2025-04-24 22:03:05] Info: login of user wiktor - successful
+[2025-04-24 22:07:28] Error: problem in users.txt file found - an anomaly was detected in number of users' data

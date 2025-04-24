@@ -31,8 +31,25 @@ namespace StorageOffice
 
             PasswordManager.currentUser = user;
 
-            // Start the application
-            MenuHandler.Start(user);
+            try
+            {
+                // Start the application
+                MenuHandler.Start(user);
+            }
+            catch(FormatException ex)
+            {
+                Console.WriteLine(ex.Message);
+                Console.WriteLine("Probably there is a redundant empty line in users.txt file or logs.txt file.");
+                Console.WriteLine("Please check the file and try again.");
+                Console.WriteLine("Press any key to exit.");
+                Console.ReadKey();
+            }
+            catch (FileNotFoundException ex)
+            {
+                Console.WriteLine(ex.Message);
+                Console.WriteLine("Please check if the users.txt and logs.txt files exist and try again.");
+                Console.WriteLine("Press any key to exit.");
+            }
         }
     }
 }
