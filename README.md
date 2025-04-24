@@ -49,11 +49,11 @@ Są uwzględione role:
 
 Administrator - może zarządzać użytkownikami
 
-Manager - może przydzielać zadania
+Manager (WarehouseManager) - może przydzielać zadania
 
 Pracownik (Warehouseman) - może wykonywać zadania
 
-Logistyk - może przyjmować towar do magazynu i planować eksporty
+Logistyk (Logistician) - może przyjmować towar do magazynu i planować eksporty
 
 ## Technologie
 - Język programowania: C#
@@ -62,6 +62,7 @@ Logistyk - może przyjmować towar do magazynu i planować eksporty
 - Inne biblioteki/narzędzia
   - Microsoft EntityFramework Core - do bazy danych
   - Bogus - do generowania danych
+  - NUnit, NUnit3TestAdapter, Microsoft.NET.Test.Sdk - do testów integracyjnych i jednostkowych
 
 ## Struktura katalogów
 ```
@@ -70,62 +71,70 @@ Logistyk - może przyjmować towar do magazynu i planować eksporty
 ├── 📝 README.md
 │
 ├── 📂 StorageOffice/
-│   ├── 📄 Program.cs                       # Plik uruchamiający aplikację
+│   ├── 📄 Program.cs                           # Plik uruchamiający aplikację
 │   ├── 📄 StorageOffice.sln                
 │   ├── 📄 StorageOffice.csproj             
 │   │
-│   ├── 📂 Data/                            # Folder z danymi
-│   │   ├── 📄 StorageOffice.db             # baza danych SQLite 
-│   │   ├── 📄 users.txt                    # Dane użytkowników (nazwy, zahashowane hasła, role)
-│   │   └── 📄 logs.txt                     # Logi systemowe aplikacji
+│   ├── 📂 Data/                                # Folder z danymi
+│   │   ├── 📄 StorageOffice.db                 # baza danych SQLite 
+│   │   ├── 📄 users.txt                        # Dane użytkowników (nazwy, zahashowane hasła, role)
+│   │   └── 📄 logs.txt                         # Logi systemowe aplikacji
 │   │
-│   ├── 📂 Migrations/                      # Migracje EF Core - kod wygenerowany automatycznie przez bibliotekę
+│   ├── 📂 Migrations/                          # Migracje EF Core - kod wygenerowany automatycznie przez bibliotekę
 │   │   └── 📄 [migration files]
 │   │
-│   └── 📂 classes/                         # Główna struktura kodu
+│   └── 📂 classes/                             # Główna struktura kodu
 │       │
-│       ├── 📂 CLI/                         # Komponenty konsolowego UI
-│       │   ├── 📄 Commons.cs               # Mniejsze, częściej używane komponenty
-│       │   ├── 📄 Input.cs                 # Wczytywanie danych od użytkownika
-│       │   ├── 📄 Option.cs                # Opcje w menu
-│       │   ├── 📄 Select.cs                # Listy wyboru opcji
-│       │   └── 📄 Table.cs                 # Renderowanie tabeli
+│       ├── 📂 CLI/                             # Komponenty konsolowego UI
+│       │   ├── 📄 Commons.cs                   # Mniejsze, częściej używane komponenty
+│       │   ├── 📄 Input.cs                     # Wczytywanie danych od użytkownika
+│       │   ├── 📄 Option.cs                    # Opcje w menu
+│       │   ├── 📄 Select.cs                    # Listy wyboru opcji
+│       │   └── 📄 Table.cs                     # Renderowanie tabeli
 │       │
-│       ├── 📂 database/                    # Kod związany z bazą danych
-│       │   ├── 📄 Database.cs              # Fasada dostępu do bazy (zapytania jako metody)
-│       │   ├── 📄 Model.cs                 # Model (struktura bazy)
-│       │   └── 📄 DataSeeder.cs            # Generator danych
+│       ├── 📂 database/                        # Kod związany z bazą danych
+│       │   ├── 📄 Database.cs                  # Fasada dostępu do bazy (zapytania jako metody)
+│       │   ├── 📄 Model.cs                     # Model (struktura bazy)
+│       │   └── 📄 DataSeeder.cs                # Generator danych
 │       │
-│       ├── 📂 Logic/                       # Logika aplikacji
-│       │   ├── 📄 MenuHandler.cs           # przełączanie się między menu (Backend)
+│       ├── 📂 Logic/                           # Logika aplikacji
+│       │   ├── 📄 MenuHandler.cs               # przełączanie się między menu (Backend)
 │       │   │
-│       │   └── 📂 screens/                 # konkretne menu (Frontend)
+│       │   └── 📂 screens/                     # konkretne menu (Frontend)
 │       │       └── 📄 [screen files]
 │       │
-│       ├── 📂 LogServices/                 # Logger
+│       ├── 📂 LogServices/                     # Logger
 │       │   └── 📄 Logger.cs
 │       │
-│       └── 📂 UsersManagement/             # Zarządzanie użytkownikami
-│           ├── 📂 Modules/                 
-│           │   └── 📄 User.cs              # Klasa User: reprezentuje zalogowanego użytkownika w aplikacji
+│       └── 📂 UsersManagement/                 # Zarządzanie użytkownikami
+│           ├── 📂 Models/                 
+│           │   └── 📄 User.cs                  # Klasa User: reprezentuje zalogowanego użytkownika w aplikacji
 │           │
 │           └── 📂 Services/                
-│               ├── 📄 PasswordManager.cs   # Hasła użytkowników
-│               └── 📄 RBAC.cs              # Role użytkowników
+│               ├── 📄 PasswordManager.cs       # Zarządzanie danymi użytkowników w pliku users.txt
+│               └── 📄 RBAC.cs                  # System RBAC do ról użytkowników
 │
-├── 📂 StorageOffice.UnitTests/             # Testy jednostkowe
+├── 📂 StorageOffice.UnitTests/                 # Testy jednostkowe
 │   ├── 📄 StorageOffice.UnitTests.csproj
-│   └── 📂 [test folders and files]
+│   ├── 📄 IsolatedFileAttribute.cs             # Klasa umożliwiająca przygotowanie osobnego pliku .txt do testów
+│   ├── 📄 IsolatedLogsFileAttribute.cs         # Klasa/atrybut umożliwiający odpowiednie przygotowanie pliku i klasy LogManager do testów na plikach
+│   ├── 📄 IsolatedUsersFileAttribute.cs        # Klasa/atrybut umożliwiający odpowiednie przygotowanie pliku i klasy PasswordManager do testów na plikach
+│   ├── 📄 LogManagerTests.cs                   # Testy metod klasy LogManager 
+│   ├── 📄 PasswordManagerTests.cs              # Testy metod klasy PasswordManager
+│   ├── 📄 UseMissingFilePathAttribute.cs       # Klasa umożliwiająca przygotowanie fałszywej ścieżki do pliku do testów wyjątków
+│   ├── 📄 UseMissingLogsFilePathAttribute.cs   # Klasa/atrybut umożliwiający odpowiednie przygotowanie klasy LogManager do testów braku pliku
+│   └── 📄 UseMissingUsersFilePathAttribute.cs  # Klasa/atrybut umożliwiający odpowiednie przygotowanie klasy PaswordManager do testów braku pliku
 │
-└── 📂 StorageOffice.IntegrationsTests/     # Testy integracyjne
+└── 📂 StorageOffice.IntegrationsTests/         # Testy integracyjne
     ├── 📄 StorageOffice.IntegrationsTests.csproj
-    └── 📂 [test folders and files]
+    ├── 📄 PasswordManagerTests.cs              # Testy wyjątków w metodach w klasie PasswordManager 
+    └── 📄 RBACTests.cs                         # Testy działania metod klasy RBAC
 ```
 
 ## Instrukcja instalacji i uruchomienia
 
 ### Wymagania systemowe
-- system operacyjny Windows 10
+- system operacyjny Windows 10/11
 - Visual Studio 2022
 - środowisko .NET 9
 
@@ -135,22 +144,22 @@ Logistyk - może przyjmować towar do magazynu i planować eksporty
 2. Wejść do podfolderu `StorageOffice`
 3. Otworzyć plik `StorageOffice.sln` przy pomocy Visual Studio 2022
 4. Kliknąć "Uruchom" lub użyć skrótu klawiszowego `ctrl`+`F5`
-5. Gdyby były problemy z uruchomieniem, należy usunąć foldery `bin/` oraz `obj/` (znajdują się w folderze `StorageOffice`)
+5. Gdyby były problemy z uruchomieniem, należy usunąć foldery `bin/` oraz `obj/` (znajdują się w folderach `StorageOffice`, `StorageOffice.UnitTests`, `StorageOffice.IntegrationsTests`)
    1. przy następnym uruchomieniu, powinny one się utworzyć automatycznie
 6. Spróbować uruchomić tak samo jak w punkcie `4.`
-7. Gdyby jeszcze nastąpiły problemy należy zainstalować następujące paczki (przez manadżer pakietów NuGet, lub przez [PowerShell](#Komendy)):
+7. Gdyby jeszcze nastąpiły problemy należy zainstalować następujące paczki w projekcie `StorageOffice`(przez manadżer pakietów NuGet, lub przez [PowerShell](#Komendy)):
    1. Microsoft.EntityFrameworkCore
    2. Microsoft.EntityFrameworkCore.Sqlite
    3. Microsoft.EntityFrameworkCore.Design
    4. Bogus
 8. W ostateczności, gdyby foldery `bin/` oraz `obj/` się nie utworzyły należy wykonać następujące kroki:
    1. utworzyć nowy projekt za pomocą Visual Studio 2022
-   2. przekopiować tam cały kod (czyli plik `Program.cs`, foldery `classes/`, `Data/` i `Migrations/`)
+   2. przekopiować tam cały kod (czyli plik `Program.cs`, foldery `classes/`, `Data/`, `Migrations/` oraz klasy z projektów z testami)
    3. zainstalować te same paczki co w punkcie `7.`
 
 **Gdyby, przy uruchamianiu pojawiał się błąd związany z błędem przy otwarciu pliku, należy otworzyć Visual Studio jako  administrator i spróbować ponownie uruchomić aplikację oraz sprawdzić czy w folderze `Data/` znajdują się pliki  `StorageOffice.db`, `users.txt` oraz `logs.txt` i czy pliki tekstowe nie mają pustych linii**
 
-Do uruchomienia testów należy zrobić te same kroki analogicznie w folderach `StorageOffice.IntegrationsTests` oraz `StorageOffice.UnitTests`
+Do uruchomienia testów należy zrobić te same kroki analogicznie w folderach `StorageOffice.IntegrationsTests` oraz `StorageOffice.UnitTests`(trzeba jedynie skupić się na instalacji takich pakietów jak NUnit, NUnit3TestAdapter, Microsoft.NET.Test.Sdk w tych projektach a nie tych wymienionych w punkcie 7.)
 
 ### Komendy
 
@@ -352,19 +361,32 @@ Klasy poszczególnych ekranów są odpowiedzialne za interakcję z użytkownikie
 
 #### LogServices
 
+Klasa [LogManager](./StorageOffice/classes/LogServices/LogManager.cs) jest odpowiedzialna za kontakt systemu z plikiem logs.txt. Umożliwia dodawanie i odczyt odpowiednich logów.
+
 #### UsersManagement
+
+Folder [`Models/`](./StorageOffice/classes/UsersManagement/Models/) zawiera klasę [User](./StorageOffice/classes/UsersManagement/Models/User.cs) umożliwiającą przedstawienie użytkownika na potrzeby działania systemu.
+
+Folder [`Services/`](./StorageOffice/classes/UsersManagement/Sevices/) zawiera klasy:
+- [PasswordManager](./StorageOffice/classes/UsersManagement/Services/PasswordManager.cs) umożliwiającą kontakt systemu z plikiem users.txt oraz wykonywanie wszelkich działań na danych użytkowników, takich jak dodanie użytkownika, zmiana jego danych, usunięcię użytkownika czy też sprawdzenie hasła użytkownika
+- [RBAC](./StorageOffice/classes/UsersManagement/Services/RBAC.cs) implementującą system RBAC dzięki czemu użytkownicy o danych rolach mają dostęp wyłącznie do swoich funckjonalności systemu
 
 ## Obłsuga błędów
 
-Obłsuga błędów w sekcji `Logic/` jest zrealizowana przez ekran `Error`. 
+Wszelkie metody w systemi rzucają odpowiednie do sytuacji wyjątki takie jak: FileNotFoundException, FormatException, ArgumentException, InvlaidOpertionException w związku z brakami plików, błędami w plikach, błędami w poprawności przekazywanych danych(np. nazwy użytkowników muszą mieć odpowiedni format), a także próbami wykonania niepoprawnych działań jak dodanie użytkownika o już zajętej nazwie.
+Obłsuga błędów w sekcji `Logic/` jest zrealizowana przez ekran `Error`.
 Użytkownik wtedy widzi czerwony komunikat o błędzie i może wrócić do poprzedniego ekranu
 
 ## Testowanie
 
-Aplikację testowano na różne sposoby
+Aplikację testowano na różne sposoby(z wykorzystaniem pakietów NUnit, NUnit3TestAdapter, Microsoft.NET.Test.Sd):
 - testami jednostkowymi
+    - sprawdzana jest poprawność wyjątków rzucanych przez metody w przypadku niepoprawnych parametrów
+    - sprawdzana jest poprawność wyników działania metod z klasy RBAC
 - testami integracyjnymi
-- uruchamiając i ręcznie sprawdzając, czy wszystko działa i czy wyświetla się jak należy
+    - sprawdzana jest poprawność działania metod z klas PasswordManager oraz LogManager na plikch .txt zarówno w przypadku poprawnego istnienia pliku jak i jego nieistnienia
+- Testy najlepiej uruchomić poprzez dodanie eksploratora testów na karcie widok w Visual Studio 2022 i tam należy uruchomić je przyciskiem 'Uruchom wszystkie testy w widoku'
+- W przypadku problemów z testami warto odinstalować wymienione wcześniej pakiety i zainstalować je ponownie
 
 Testy jednostkowe i integracyjne zawarte są w folderach:
 - `StorageOffice.UnitTests`
@@ -383,14 +405,6 @@ to wtedy console clear "ucina" dolną część, a całą resztę zostawia i jest
 
 ---------------------------------------
 
-Drugą rzeczą, która nie działa idealnie jest wyświetlanie produktów wg. kategorii
-
-Działają wszystkie kategorie poza elektorniką, która wyrzuca nieobsłużony wyjątek i zatrzymuje cały program
-
-Nie wiem dlaczego to się dzieje
-
----------------------------------------
-
 Trzecia rzecz działa poprawnie, ale jest uciążliwa
 
 Jest nią przechodzenie między ekranami.
@@ -404,9 +418,6 @@ Ta wada wynikła poprzez pośpiech i brak czasu na implementację bardziej rozbu
 
 Wszystkie ekrany konsoli mogą zostać zrobione tak, aby cała zawartość zmieściła się bez konieczności przewijania
 
-Może zostać zaimplementowany try-catch dla kategorii elektronika, który wyświtlałby ekran błędu informujący
-użytkownika, że takiej kategorii nie można wyświetlić, natomiast nie jest to w pełni satysfakcjonujące rozwiązanie
-
 Wszystkie ekrany mogą zostać zaimplementowane jako klasa oraz wywoływane poprzez odpowiednią metodę w klasie `MenuHandler`
 
 ## Plany rozwoju
@@ -417,10 +428,10 @@ W przyszłości można dodać ustawienia kolorów, tak aby była lepsza personal
 
 ## Autorzy
 
-Wiktor Kycia 3D
-Jan Topolewski 3D
+- Wiktor Kycia 3D
+- Jan Topolewski 3D
 
 ### Kontakt
 
-wiktor.kycia@uczen.zsk.poznan.pl
-jan.topolewski@uczen.zsk.poznan.pl
+- wiktor.kycia@uczen.zsk.poznan.pl
+- jan.topolewski@uczen.zsk.poznan.pl
