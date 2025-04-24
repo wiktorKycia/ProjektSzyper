@@ -19,29 +19,29 @@ public class AddUser
 {
     private readonly string _title;
     private readonly string _heading;
-    private readonly Action _backMenu;
+    private readonly Action _onExit;
     private readonly User _user;
     private readonly Dictionary<ConsoleKey, KeyboardAction> _keyboardActions;
     private readonly Dictionary<string, string> _displayKeyboardActions;
 
-    /// <param name="backMenu">
+    /// <param name="onExit">
     /// An action to be invoked when the user exits the user creation process.
     /// </param>
     /// <param name="user">
     /// The user object to be populated with the new user's details.
     /// </param>
-    internal AddUser(Action backMenu, User user)
+    internal AddUser(Action onExit, User user)
     {
         _title = "Add user";
         _heading = "Add user";
         _keyboardActions = new Dictionary<ConsoleKey, KeyboardAction>(){
-            { ConsoleKey.Escape, () => backMenu.Invoke() }
+            { ConsoleKey.Escape, () => onExit.Invoke() }
         };
         _displayKeyboardActions = new Dictionary<string, string>(){
             { "<Esc>", "exit" },
             { "Any other key", "enter username and password" }
         };
-        _backMenu = backMenu;
+        _onExit = onExit;
         _user = user;
         Run();
     }
@@ -85,7 +85,7 @@ public class AddUser
                         ConsoleOutput.PrintColorMessage("User successfully created!\n", ConsoleColor.Green);
                         Console.WriteLine("Press any key to continue...");
                         ConsoleInput.WaitForAnyKey();
-                        _backMenu.Invoke();
+                        _onExit.Invoke();
                     }
                     catch(InvalidOperationException e)
                     {
@@ -94,7 +94,7 @@ public class AddUser
                             text: "Failed to add new user, because a user with this username already exists.\n" +
                                   "Please try again with a different username.\n" +
                                   e.Message,
-                            onExit: _backMenu.Invoke
+                            onExit: _onExit.Invoke
                         );
                     }
                     catch(Exception e)
@@ -102,7 +102,7 @@ public class AddUser
                         running = false;
                         var menu = new Error(
                             text: e.Message,
-                            onExit: _backMenu.Invoke
+                            onExit: _onExit.Invoke
                         );
                     }
                 }
