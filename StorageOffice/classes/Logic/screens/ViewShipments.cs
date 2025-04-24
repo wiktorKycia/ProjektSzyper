@@ -4,6 +4,10 @@ using StorageOffice.classes.database;
 
 namespace StorageOffice.classes.Logic;
 
+/// <summary>
+/// Represents the View Shipments screen, which displays a paginated list of shipments
+/// and allows navigation between pages or filtering based on shipment status.
+/// </summary>
 public class ViewShipments
 {
     private readonly string _title;
@@ -16,7 +20,15 @@ public class ViewShipments
     private readonly bool _showCompletedOnly;
     private readonly bool _showPendingOnly;
 
-    internal ViewShipments(List<Shipment> shipments, Action onExit, string title = "View Shipments", 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="ViewShipments"/> class.
+    /// </summary>
+    /// <param name="shipments">The list of shipments to display.</param>
+    /// <param name="onExit">The action to execute when exiting the screen.</param>
+    /// <param name="title">The title of the screen. Defaults to "View Shipments".</param>
+    /// <param name="showCompletedOnly">Whether to show only completed shipments. Defaults to false.</param>
+    /// <param name="showPendingOnly">Whether to show only pending shipments. Defaults to false.</param>
+    internal ViewShipments(List<Shipment> shipments, Action onExit, string title = "View Shipments",
         bool showCompletedOnly = false, bool showPendingOnly = false)
     {
         _title = title;
@@ -25,19 +37,24 @@ public class ViewShipments
         _showCompletedOnly = showCompletedOnly;
         _showPendingOnly = showPendingOnly;
 
-        _keyboardActions = new Dictionary<ConsoleKey, KeyboardAction>(){
-            { ConsoleKey.Escape, () => onExit.Invoke() },
-            { ConsoleKey.LeftArrow, PreviousPage },
-            { ConsoleKey.RightArrow, NextPage }
-        };
-        _displayKeyboardActions = new Dictionary<string, string>(){
-            { "\u2190", "previous page" },
-            { "\u2192", "next page" },
-            { "<Esc>", "back" }
-        };
+        _keyboardActions = new Dictionary<ConsoleKey, KeyboardAction>()
+            {
+                { ConsoleKey.Escape, () => onExit.Invoke() },
+                { ConsoleKey.LeftArrow, PreviousPage },
+                { ConsoleKey.RightArrow, NextPage }
+            };
+        _displayKeyboardActions = new Dictionary<string, string>()
+            {
+                { "\u2190", "previous page" },
+                { "\u2192", "next page" },
+                { "<Esc>", "back" }
+            };
         Run();
     }
 
+    /// <summary>
+    /// Runs the main loop for the View Shipments screen, handling user input and actions.
+    /// </summary>
     private void Run()
     {
         bool running = true;
@@ -59,6 +76,9 @@ public class ViewShipments
         }
     }
 
+    /// <summary>
+    /// Navigates to the previous page of shipments, if available.
+    /// </summary>
     private void PreviousPage()
     {
         if (_currentPage > 0)
@@ -67,6 +87,9 @@ public class ViewShipments
         }
     }
 
+    /// <summary>
+    /// Navigates to the next page of shipments, if available.
+    /// </summary>
     private void NextPage()
     {
         int totalPages = (_shipments.Count - 1) / _itemsPerPage + 1;
@@ -76,6 +99,9 @@ public class ViewShipments
         }
     }
 
+    /// <summary>
+    /// Displays the current page of shipments, including shipment details and items.
+    /// </summary>
     private void Display()
     {
         Console.Clear();
@@ -110,30 +136,30 @@ public class ViewShipments
             // Display shipments in a table format
             string[] headers = { "ID", "Type", "Status", "From/To", "Handler", "Date" };
             List<string[]> shipmentRows = new List<string[]>();
-            
+
             foreach (var shipment in pageShipments)
             {
-                string fromTo = shipment.ShipmentType == ShipmentType.Inbound ? 
-                    shipment.Shipper?.Name ?? "Unknown" : 
+                string fromTo = shipment.ShipmentType == ShipmentType.Inbound ?
+                    shipment.Shipper?.Name ?? "Unknown" :
                     shipment.Shop?.ShopName ?? "Unknown";
-                
-                shipmentRows.Add(new string[] { 
-                    shipment.ShipmentId.ToString(), 
-                    shipment.ShipmentType.ToString(), 
-                    shipment.IsCompleted ? "Completed" : "Pending", 
-                    fromTo,
-                    shipment.User?.Username ?? "Unassigned",
-                    shipment.ShippedDate?.ToShortDateString() ?? "Not shipped"
-                });
+
+                shipmentRows.Add(new string[] {
+                        shipment.ShipmentId.ToString(),
+                        shipment.ShipmentType.ToString(),
+                        shipment.IsCompleted ? "Completed" : "Pending",
+                        fromTo,
+                        shipment.User?.Username ?? "Unassigned",
+                        shipment.ShippedDate?.ToShortDateString() ?? "Not shipped"
+                    });
             }
-            
+
             content += ConsoleOutput.WriteTable(shipmentRows, headers);
 
             // For each shipment, show its items
             foreach (var shipment in pageShipments)
             {
                 content += $"\nShipment #{shipment.ShipmentId} Items:\n";
-                
+
                 if (shipment.ShipmentItems == null || !shipment.ShipmentItems.Any())
                 {
                     content += "  - No items\n";
@@ -142,19 +168,19 @@ public class ViewShipments
                 {
                     string[] itemHeaders = { "Product", "Quantity", "Unit" };
                     List<string[]> itemRows = new List<string[]>();
-                    
+
                     foreach (var item in shipment.ShipmentItems)
                     {
-                        itemRows.Add(new string[] { 
-                            item.Product.Name, 
-                            item.Quantity.ToString(), 
-                            item.Product.Unit 
-                        });
+                        itemRows.Add(new string[] {
+                                item.Product.Name,
+                                item.Quantity.ToString(),
+                                item.Product.Unit
+                            });
                     }
-                    
+
                     content += ConsoleOutput.WriteTable(itemRows, itemHeaders);
                 }
-                
+
                 content += "\n" + ConsoleOutput.HorizontalLine('-') + "\n";
             }
         }

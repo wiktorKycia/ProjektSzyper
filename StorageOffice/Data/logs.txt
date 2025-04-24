@@ -1,3 +1,92 @@
+[2025-04-17 14:54:00] Info: login of user Jan - unsuccessful
+[2025-04-17 14:54:10] Info: login of user wikrot - unsuccessful
+[2025-04-17 20:58:45] Info: login of user Jan - unsuccessful
+[2025-04-17 20:59:01] Info: login of user asdf - unsuccessful
+[2025-04-17 20:59:06] Info: login of user fd - unsuccessful
+[2025-04-17 20:59:48] Error: problem in users.txt file found - an anomaly was detected in number of users' data
+[2025-04-17 21:04:04] Error: problem in users.txt file found - an anomaly was detected in number of users' data
+[2025-04-17 21:04:19] Error: problem in users.txt file found - an anomaly was detected in number of users' data
+[2025-04-17 21:05:13] Error: problem in users.txt file found - an anomaly was detected in number of users' data
+[2025-04-17 21:06:40] Info: action was performed on data of a user named wiktor - added a new user
+[2025-04-17 21:06:40] Info: login of user wiktor - successful
+[2025-04-17 21:12:11] Info: login of user wiktor - successful
+[2025-04-17 21:12:43] Info: action was performed on data of a user named wiktor - added a new user
+[2025-04-17 21:12:43] Info: login of user wiktor - successful
+[2025-04-17 21:12:57] Info: action was performed on data of a user named wikrot - added a new user
+[2025-04-17 21:12:57] Info: login of user wikrot - successful
+[2025-04-17 21:29:02] Info: login of user wikrot - successful
+[2025-04-17 22:26:37] Info: login of user wikrot - successful
+[2025-04-17 22:27:48] Info: login of user wikrot - successful
+[2025-04-18 10:04:47] Info: login of user wikrot - successful
+[2025-04-18 10:09:50] Info: login of user wikrot - unsuccessful
+[2025-04-18 10:09:57] Info: login of user wikrot - successful
+[2025-04-18 10:18:03] Info: login of user wikrot - successful
+[2025-04-18 10:47:39] Info: login of user wikrot - successful
+[2025-04-18 10:48:42] Info: login of user wikrot - successful
+[2025-04-18 10:50:45] Info: login of user wikrot - successful
+[2025-04-18 11:04:12] Info: login of user wikrot - successful
+[2025-04-18 11:09:29] Info: login of user wikrot - successful
+[2025-04-18 11:09:58] Info: action was performed on data of a user named Jan - added a new user
+[2025-04-18 11:16:14] Info: login of user wikrot - successful
+[2025-04-18 11:17:08] Info: action was performed on data of a user named mietek - added a new user
+[2025-04-18 11:17:45] Info: action was performed on data of a user named wiesio - added a new user
+[2025-04-18 11:18:13] Info: action was performed on data of a user named grzesio - added a new user
+[2025-04-18 11:23:51] Info: login of user wikrot - successful
+[2025-04-18 11:24:56] Info: login of user wikrot - successful
+[2025-04-18 11:28:03] Info: login of user wikrot - successful
+[2025-04-18 11:29:22] Info: login of user wikrot - successful
+[2025-04-18 12:08:22] Info: login of user wikrot - successful
+[2025-04-18 12:11:36] Info: login of user wikrot - successful
+[2025-04-18 12:11:54] Info: action was performed on data of a user named grzesio - deleted a user
+[2025-04-18 12:15:20] Info: login of user wikrot - unsuccessful
+[2025-04-18 12:15:26] Info: login of user wikrot - successful
+[2025-04-18 13:34:12] Info: login of user wikrot - successful
+[2025-04-18 13:34:25] Info: action was performed on data of a user named g - added a new user
+[2025-04-18 14:38:47] Info: login of user wikrot - successful
+[2025-04-18 14:39:03] Info: action was performed on data of a user named g - changed user's name to grzesio
+[2025-04-18 14:39:25] Info: action was performed on data of a user named grzesio - changed user's password
+[2025-04-18 14:39:47] Info: action was performed on data of a user named grzesio - changed user's role
+[2025-04-18 14:49:11] Info: login of user wikrot - successful
+[2025-04-18 14:49:20] Info: action was performed on data of a user named wikrot - changed user's name to wiktor
+[2025-04-18 14:49:35] Info: action was performed on data of a user named wiktor - changed user's password
+[2025-04-18 14:49:52] Info: action was performed on data of a user named a - added a new user
+[2025-04-18 14:50:08] Info: action was performed on data of a user named a - deleted a user
+[2025-04-18 15:34:54] Info: login of user wiktor - successful
+[2025-04-18 15:35:26] Info: login of user Jan - successful
+[2025-04-18 16:06:15] Info: login of user Jan - successful
+[2025-04-18 16:29:18] Info: login of user Jan - successful
+[2025-04-18 16:51:19] Info: login of user Jan - successful
+[2025-04-18 16:55:41] Info: login of user Jan - successful
+[2025-04-18 17:03:50] Info: login of user Jan - successful
+[2025-04-18 17:06:11] Info: login of user wiktor - successful
+[2025-04-18 17:06:42] Info: action was performed on data of a user named grzesio - deleted a user
+[2025-04-18 17:08:22] Info: login of user wiktor - unsuccessful
+[2025-04-18 17:08:29] Info: login of user wiktor - successful
+[2025-04-18 17:22:16] Info: login of user Jan - successful
+[2025-04-18 20:28:01] Info: login of user Jan - successful
+[2025-04-18 20:41:32] Info: login of user Jan - successful
+[2025-04-18 21:32:11] Info: login of user wiesio - successful
+[2025-04-18 21:33:28] Info: login of user mietek - successful
+[2025-04-18 21:47:30] Info: login of user mietek - successful
+[2025-04-18 21:53:03] Info: login of user mietek - successful
+[2025-04-18 21:56:29] Info: login of user mietek - successful
+[2025-04-18 22:00:37] Info: login of user Jan - successful
+[2025-04-18 22:01:23] Info: login of user wiesio - successful
+[2025-04-18 22:12:10] Info: login of user Jan - successful
+[2025-04-18 22:13:01] Info: login of user wiesio - successful
+[2025-04-18 22:13:46] Info: login of user mietek - successful
+[2025-04-18 22:16:17] Info: login of user Jan - successful
+[2025-04-18 22:21:31] Info: login of user Jan - successful
+[2025-04-18 22:22:11] Info: login of user wiesio - successful
+[2025-04-18 23:15:18] Info: login of user wiktor - successful
+[2025-04-18 23:15:41] Info: login of user Jan - successful
+[2025-04-18 23:16:32] Info: login of user wiesio - successful
+[2025-04-18 23:17:25] Info: login of user mietek - successful
+[2025-04-21 15:04:03] Info: login of user wiktor - successful
+[2025-04-21 15:05:25] Info: login of user wiesio - successful
+[2025-04-21 15:17:34] Info: login of user wiesio - successful
+[2025-04-21 15:19:24] Info: login of user wiktor - successful
+[2025-04-21 15:34:07] Info: login of user wiesio - successful
 [2025-04-19 22:44:23] Info: login of user John - successful
 [2025-04-19 22:45:02] Info: action was performed on data in database - added new inbound shipment from FedEx
 [2025-04-19 22:45:18] Info: action was performed on data in database - added product 'Jacket' to shipment with id #42
@@ -152,3 +241,108 @@
 [2025-04-22 03:11:09] Info: action was performed on data in database - removed user named 'Tomasz'
 [2025-04-22 03:11:09] Info: action was performed on data of a user named Grzegoż - deleted a user
 [2025-04-22 03:11:09] Info: action was performed on data in database - removed user named 'Grzegoż'
+[2025-04-23 19:33:07] Info: login of user wiktor - successful
+[2025-04-23 19:38:14] Info: action was performed on data of a user named Janek - deleted a user
+[2025-04-23 19:39:51] Info: login of user wiktor - successful
+[2025-04-23 19:40:32] Info: action was performed on data of a user named kasia - added a new user
+[2025-04-23 19:40:33] Info: action was performed on data in database - added user named 'username'
+[2025-04-23 19:44:10] Info: action was performed on data of a user named kasia - changed user's password
+[2025-04-23 19:44:45] Info: action was performed on data in database - modified user's data
+[2025-04-23 19:44:45] Info: action was performed on data of a user named kasia - changed user's role
+[2025-04-23 19:44:55] Info: action was performed on data of a user named kasia - changed user's password
+[2025-04-23 19:45:06] Info: action was performed on data in database - modified user's data
+[2025-04-23 19:45:06] Info: action was performed on data of a user named kasia - changed user's name to basia
+[2025-04-23 19:45:15] Info: action was performed on data in database - modified user's data
+[2025-04-23 19:45:15] Info: action was performed on data of a user named basia - changed user's role
+[2025-04-23 19:48:17] Info: login of user Jan - successful
+[2025-04-23 19:50:56] Info: action was performed on data in database - added new inbound shipment from FedEx
+[2025-04-23 19:55:06] Info: action was performed on data in database - added product 'Cap' to shipment with id #39
+[2025-04-23 20:01:54] Info: action was performed on data in database - added new inbound shipment from FedEx
+[2025-04-23 20:10:35] Info: login of user Jan - successful
+[2025-04-23 20:11:02] Info: action was performed on data in database - added shipper named 'asd'
+[2025-04-23 20:11:03] Info: action was performed on data in database - added new inbound shipment from asd
+[2025-04-23 20:12:00] Info: action was performed on data in database - added product 'blabla' and it's stock
+[2025-04-23 20:12:47] Info: action was performed on data in database - added new inbound shipment from asd
+[2025-04-23 20:12:59] Info: action was performed on data in database - added product 'blabla' to shipment with id #42
+[2025-04-23 20:13:11] Info: action was performed on data in database - added new inbound shipment from FedEx
+[2025-04-23 20:13:16] Info: action was performed on data in database - added product 'Smartphone' to shipment with id #43
+[2025-04-23 20:16:41] Info: login of user Jan - successful
+[2025-04-23 20:16:58] Info: action was performed on data in database - added shipper named 'shipper1'
+[2025-04-23 20:16:59] Info: action was performed on data in database - added new inbound shipment from shipper1
+[2025-04-23 20:17:15] Info: action was performed on data in database - added product 'Laptop' to shipment with id #44
+[2025-04-23 21:44:41] Info: login of user mietek - successful
+[2025-04-23 21:46:22] Info: login of user mietek - successful
+[2025-04-23 21:49:17] Info: action was performed on data in database - modified stock's data
+[2025-04-23 21:49:17] Info: action was performed on data in database - modified stock's data
+[2025-04-23 21:49:17] Info: action was performed on data in database - modified stock's data
+[2025-04-23 21:49:17] Info: action was performed on data in database - modified stock's data
+[2025-04-23 21:49:17] Info: action was performed on data in database - marked shipment as done
+[2025-04-23 21:49:17] Info: action was performed on data in database - modified stock's data
+[2025-04-23 21:49:17] Info: action was performed on data in database - modified stock's data
+[2025-04-23 21:49:17] Info: action was performed on data in database - modified stock's data
+[2025-04-23 21:49:17] Info: action was performed on data in database - modified stock's data
+[2025-04-23 21:49:18] Info: action was performed on data in database - modified stock's data
+[2025-04-23 21:49:18] Info: action was performed on data in database - marked shipment as done
+[2025-04-23 21:49:18] Info: action was performed on data in database - modified stock's data
+[2025-04-23 21:49:18] Info: action was performed on data in database - modified stock's data
+[2025-04-23 21:49:18] Info: action was performed on data in database - modified stock's data
+[2025-04-23 21:49:18] Info: action was performed on data in database - marked shipment as done
+[2025-04-23 21:51:22] Info: login of user wiesio - successful
+[2025-04-23 21:51:48] Info: action was performed on data in database - modified user assigned to shipment to basia
+[2025-04-23 21:51:48] Info: action was performed on data in database - modified user assigned to shipment to basia
+[2025-04-23 21:51:48] Info: action was performed on data in database - modified user assigned to shipment to basia
+[2025-04-23 21:51:48] Info: action was performed on data in database - modified user assigned to shipment to basia
+[2025-04-23 21:57:06] Info: login of user basia - unsuccessful
+[2025-04-23 21:57:12] Info: login of user basia - successful
+[2025-04-23 21:58:45] Info: action was performed on data in database - modified stock's data
+[2025-04-23 21:58:45] Info: action was performed on data in database - marked shipment as done
+[2025-04-23 21:58:55] Info: login of user wiktor - successful
+[2025-04-23 21:59:05] Info: action was performed on data of a user named basia - changed user's password
+[2025-04-23 21:59:23] Info: login of user wiesio - successful
+[2025-04-23 22:00:24] Info: login of user mietek - successful
+[2025-04-23 22:06:21] Info: login of user mietek - successful
+[2025-04-23 22:17:41] Info: login of user mietek - successful
+[2025-04-23 22:20:01] Info: login of user mietek - successful
+[2025-04-23 22:24:06] Info: login of user mietek - successful
+[2025-04-23 22:30:41] Info: login of user mietek - unsuccessful
+[2025-04-23 22:30:47] Info: login of user mietek - successful
+[2025-04-23 22:39:16] Info: login of user wiktor - successful
+[2025-04-23 22:40:15] Info: login of user Jan - successful
+[2025-04-23 22:40:52] Info: login of user wiesio - successful
+[2025-04-24 19:32:35] Info: login of user wiktor - successful
+[2025-04-24 19:39:54] Info: login of user wiktor - successful
+[2025-04-24 19:43:01] Info: login of user wiktor - successful
+[2025-04-24 19:43:49] Info: action was performed on data of a user named darek - added a new user
+[2025-04-24 19:43:50] Info: action was performed on data in database - added user named 'username'
+[2025-04-24 19:44:19] Info: login of user darek - successful
+[2025-04-24 19:44:33] Info: action was performed on data in database - modified user's data
+[2025-04-24 19:44:33] Info: action was performed on data of a user named darek - changed user's name to darek1
+[2025-04-24 19:56:15] Info: login of user darek1 - successful
+[2025-04-24 19:56:45] Info: action was performed on data of a user named asdf - added a new user
+[2025-04-24 19:56:46] Info: action was performed on data in database - added user named 'username'
+[2025-04-24 20:21:58] Info: login of user wiktor - successful
+[2025-04-24 20:22:17] Info: action was performed on data of a user named darek1 - deleted a user
+[2025-04-24 20:22:17] Info: action was performed on data in database - removed user named 'darek1'
+[2025-04-24 20:22:17] Info: action was performed on data of a user named asdf - deleted a user
+[2025-04-24 20:22:17] Info: action was performed on data in database - removed user named 'asdf'
+[2025-04-24 20:48:50] Info: login of user wiktor - successful
+[2025-04-24 20:49:00] Info: action was performed on data of a user named darek - added a new user
+[2025-04-24 20:49:01] Info: action was performed on data in database - added user named 'username'
+[2025-04-24 20:49:09] Info: login of user darek - successful
+[2025-04-24 20:49:25] Info: action was performed on data in database - modified user's data
+[2025-04-24 20:49:25] Info: action was performed on data of a user named darek - changed user's name to darek1
+[2025-04-24 20:52:44] Info: login of user darek1 - successful
+[2025-04-24 20:52:59] Info: action was performed on data in database - modified user's data
+[2025-04-24 20:52:59] Info: action was performed on data of a user named darek1 - changed user's role
+[2025-04-24 20:58:09] Info: login of user wiktor - successful
+[2025-04-24 20:58:18] Info: action was performed on data of a user named basia - deleted a user
+[2025-04-24 20:58:18] Info: action was performed on data in database - removed user named 'basia'
+[2025-04-24 20:58:18] Info: action was performed on data of a user named darek1 - deleted a user
+[2025-04-24 20:58:18] Info: action was performed on data in database - removed user named 'darek1'
+[2025-04-24 20:58:38] Info: login of user Jan - successful
+[2025-04-24 21:00:03] Info: login of user mietek - successful
+[2025-04-24 21:00:19] Info: login of user wiesio - successful
+[2025-04-24 21:03:57] Info: login of user wiesio - successful
+[2025-04-24 22:03:05] Info: login of user wiktor - successful
+[2025-04-24 22:07:28] Error: problem in users.txt file found - an anomaly was detected in number of users' data
+[2025-04-24 22:16:04] Error: problem in users.txt file found - an anomaly was detected in number of users' data

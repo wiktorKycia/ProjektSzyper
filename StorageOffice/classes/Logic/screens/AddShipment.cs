@@ -4,6 +4,25 @@ using StorageOffice.classes.UsersManagement.Modules;
 
 namespace StorageOffice.classes.Logic;
 
+/// <summary>
+/// Represents the logic for adding shipments to the system.
+/// This class handles both inbound and outbound shipments, allowing the user
+/// to select or create shippers/shops, create shipments, and add products to them.
+/// </summary>
+/// <remarks>
+/// The class is designed to be used in a console application, providing an interactive
+/// user interface for managing shipments. It supports both inbound (import) and
+/// outbound (export) shipment workflows.
+/// </remarks>
+/// <param name="onExit">
+/// An action to be invoked when the user exits the shipment creation process.
+/// </param>
+/// <param name="user">
+/// The user performing the shipment operation. Used for tracking and authorization purposes.
+/// </param>
+/// <param name="shipmentType">
+/// The type of shipment being created (inbound or outbound).
+/// </param>
 public class AddShipment
 {
     private readonly string _title;
@@ -15,6 +34,15 @@ public class AddShipment
     private readonly Dictionary<ConsoleKey, KeyboardAction> _keyboardActions;
     private readonly Dictionary<string, string> _displayKeyboardActions;
 
+    /// <param name="onExit">
+    /// An action to be invoked when the user exits the shipment creation process.
+    /// </param>
+    /// <param name="user">
+    /// The user performing the shipment operation. Used for tracking and authorization purposes.
+    /// </param>
+    /// <param name="shipmentType">
+    /// The type of shipment being created (inbound or outbound).
+    /// </param>
     internal AddShipment(Action onExit, User user, database.ShipmentType shipmentType)
     {
         _title = shipmentType == database.ShipmentType.Inbound ? "Add Inbound Shipment" : "Add Outbound Shipment";
@@ -35,6 +63,20 @@ public class AddShipment
         Run();
     }
 
+    /// <summary>
+    /// Executes the main workflow for adding a shipment.
+    /// Displays the user interface, handles user input, and manages the creation
+    /// of inbound or outbound shipments based on the selected shipment type.
+    /// </summary>
+    /// <remarks>
+    /// This method runs in a loop until the shipment creation process is completed
+    /// or canceled. It interacts with the database to create shipments and manages
+    /// the addition of products to the shipment.
+    /// </remarks>
+    /// <exception cref="Exception">
+    /// Catches and handles any exceptions that occur during the shipment creation process,
+    /// ensuring the application remains stable.
+    /// </exception>
     private void Run()
     {
         bool running = true;
@@ -75,6 +117,27 @@ public class AddShipment
             }
         }
     }
+
+    /// <summary>
+    /// Handles the creation of an inbound shipment.
+    /// Prompts the user to select an existing shipper or add a new one, then creates
+    /// an inbound shipment associated with the selected shipper.
+    /// If the shipment is successfully created, the user is prompted to add products
+    /// to the shipment. Otherwise, an error message is displayed.
+    /// </summary>
+    /// <param name="running">
+    /// A reference to a boolean flag indicating whether the process should continue running.
+    /// This flag is set to false if the operation is canceled or fails.
+    /// </param>
+    /// <remarks>
+    /// This method interacts with the database to retrieve shippers, create shipments,
+    /// and manage user input for selecting or adding shippers. It also handles error
+    /// scenarios, such as invalid shipper IDs or database access issues.
+    /// </remarks>
+    /// <exception cref="Exception">
+    /// Catches and handles any exceptions that occur during the process, displaying
+    /// an error message to the user.
+    /// </exception>
 
     private void CreateInboundShipment(ref bool running)
     {
@@ -162,18 +225,30 @@ public class AddShipment
         }
     }
     
+    /// <summary>
+    /// Handles the manual entry of a new shipper.
+    /// Prompts the user to input shipper details, checks if the shipper already exists,
+    /// and either uses the existing shipper or creates a new one.
+    /// If the shipper creation is canceled, the method recursively retries.
+    /// </summary>
+    /// <returns>
+    /// The selected or newly created <see cref="database.Shipper"/> object.
+    /// </returns>
+    /// <exception cref="InvalidOperationException">
+    /// Thrown if the newly created shipper cannot be retrieved from the database.
+    /// </exception>
     private database.Shipper HandleManualShipperEntry()
     {
         Console.Clear();
         Console.WriteLine(ConsoleOutput.Header("Add New Shipper"));
-        
+
         // Get shipper name
         string shipperName = ConsoleInput.GetUserString("Enter shipper name: ");
-        
+
         // Check if the shipper already exists
         var existingShipper = MenuHandler.db?.GetAllShippers()
             .FirstOrDefault(s => s.Name.Equals(shipperName, StringComparison.OrdinalIgnoreCase));
-        
+
         if (existingShipper != null)
         {
             ConsoleOutput.PrintColorMessage($"Found existing shipper: {existingShipper.Name} (ID: {existingShipper.ShipperId})\n", ConsoleColor.Green);
@@ -181,18 +256,18 @@ public class AddShipment
             ConsoleInput.WaitForAnyKey();
             return existingShipper;
         }
-        
+
         // If shipper doesn't exist, collect details to create a new one
         string contactInfo = ConsoleInput.GetUserString("Enter contact information: ");
-        
+
         // Confirm creation
         Console.WriteLine("\nShipper details:");
         Console.WriteLine($"Name: {shipperName}");
         Console.WriteLine($"Contact Info: {contactInfo}");
-        
+
         Console.WriteLine("\nDo you want to create this shipper? (y/n)");
         var key = ConsoleInput.GetConsoleKey();
-        
+
         if (key != ConsoleKey.Y)
         {
             ConsoleOutput.PrintColorMessage("Shipper creation cancelled.\n", ConsoleColor.Yellow);
@@ -200,16 +275,16 @@ public class AddShipment
             ConsoleInput.WaitForAnyKey();
             return HandleManualShipperEntry(); // Recursively try again
         }
-        
+
         try
         {
             // Create the new shipper
             MenuHandler.db?.AddShipper(shipperName, contactInfo);
-            
+
             // Get the newly created shipper
             var newShipper = MenuHandler.db?.GetAllShippers()
                 .FirstOrDefault(s => s.Name.Equals(shipperName, StringComparison.OrdinalIgnoreCase));
-            
+
             if (newShipper != null)
             {
                 ConsoleOutput.PrintColorMessage($"Shipper '{shipperName}' created successfully with ID: {newShipper.ShipperId}\n", ConsoleColor.Green);
@@ -229,8 +304,23 @@ public class AddShipment
             ConsoleInput.WaitForAnyKey();
             return HandleManualShipperEntry(); // Recursively try again
         }
-    }
+    }
 
+    /// <summary>
+    /// Handles the creation of an outbound shipment.
+    /// Prompts the user to select an existing shop or add a new one, then creates
+    /// an outbound shipment associated with the selected shop.
+    /// If the shipment is successfully created, the user is prompted to add products
+    /// to the shipment. Otherwise, an error message is displayed.
+    /// </summary>
+    /// <param name="running">
+    /// A reference to a boolean flag indicating whether the process should continue running.
+    /// This flag is set to false if the operation is canceled or fails.
+    /// </param>
+    /// <exception cref="Exception">
+    /// Catches and handles any exceptions that occur during the process, displaying
+    /// an error message to the user.
+    /// </exception>
     private void CreateOutboundShipment(ref bool running)
     {
         try
@@ -316,19 +406,31 @@ public class AddShipment
             ConsoleInput.WaitForAnyKey();
         }
     }
-    
+
+    /// <summary>
+    /// Handles the manual entry of a new shop.
+    /// Prompts the user to input shop details, checks if the shop already exists,
+    /// and either uses the existing shop or creates a new one.
+    /// If the shop creation is canceled, the method recursively retries.
+    /// </summary>
+    /// <returns>
+    /// The selected or newly created <see cref="database.Shop"/> object.
+    /// </returns>
+    /// <exception cref="InvalidOperationException">
+    /// Thrown if the newly created shop cannot be retrieved from the database.
+    /// </exception>
     private database.Shop HandleManualShopEntry()
     {
         Console.Clear();
         Console.WriteLine(ConsoleOutput.Header("Add New Shop"));
-        
+
         // Get shop name
         string shopName = ConsoleInput.GetUserString("Enter shop name: ");
-        
+
         // Check if the shop already exists
         var existingShop = MenuHandler.db?.GetAllShops()
             .FirstOrDefault(s => s.ShopName.Equals(shopName, StringComparison.OrdinalIgnoreCase));
-        
+
         if (existingShop != null)
         {
             ConsoleOutput.PrintColorMessage($"Found existing shop: {existingShop.ShopName} (ID: {existingShop.ShopId})\n", ConsoleColor.Green);
@@ -336,18 +438,18 @@ public class AddShipment
             ConsoleInput.WaitForAnyKey();
             return existingShop;
         }
-        
+
         // If shop doesn't exist, collect details to create a new one
         string location = ConsoleInput.GetUserString("Enter shop location: ");
-        
+
         // Confirm creation
         Console.WriteLine("\nShop details:");
         Console.WriteLine($"Name: {shopName}");
         Console.WriteLine($"Location: {location}");
-        
+
         Console.WriteLine("\nDo you want to create this shop? (y/n)");
         var key = ConsoleInput.GetConsoleKey();
-        
+
         if (key != ConsoleKey.Y)
         {
             ConsoleOutput.PrintColorMessage("Shop creation cancelled.\n", ConsoleColor.Yellow);
@@ -355,16 +457,16 @@ public class AddShipment
             ConsoleInput.WaitForAnyKey();
             return HandleManualShopEntry(); // Recursively try again
         }
-        
+
         try
         {
             // Create the new shop
             MenuHandler.db?.AddShop(shopName, location);
-            
+
             // Get the newly created shop
             var newShop = MenuHandler.db?.GetAllShops()
                 .FirstOrDefault(s => s.ShopName.Equals(shopName, StringComparison.OrdinalIgnoreCase));
-            
+
             if (newShop != null)
             {
                 ConsoleOutput.PrintColorMessage($"Shop '{shopName}' created successfully with ID: {newShop.ShopId}\n", ConsoleColor.Green);
@@ -386,12 +488,17 @@ public class AddShipment
         }
     }
 
+    /// <summary>
+    /// Displays the UI for the AddShipment screen.
+    /// Clears the console, sets up the heading and title, and displays
+    /// available keyboard actions for the user.
+    /// </summary>
     private void Display()
     {
         Console.Clear();
         Console.WriteLine("\x1b[3J");
         string content = _heading;
-        
+
         Console.WriteLine(ConsoleOutput.UIFrame(_title, content));
 
         foreach (var action in _displayKeyboardActions)

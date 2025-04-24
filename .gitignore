@@ -17,18 +17,25 @@
 mono_crash.*
 
 # Build results
-# [Dd]ebug/
-# [Dd]ebugPublic/
-# [Rr]elease/
-# [Rr]eleases/
-# x64/
-# x86/
-# [Ww][Ii][Nn]32/
-# [Aa][Rr][Mm]/
-# [Aa][Rr][Mm]64/
-# bld/
-# [Bb]in/
-# [Oo]bj/
+
+StorageOffice/bin/
+StorageOffice/obj/
+StorageOffice.IntegrationsTests/obj/
+StorageOffice.IntegrationsTests/bin/
+StorageOffice.UnitTests/obj/
+StorageOffice.UnitTests/bin/
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+x64/
+x86/
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+bld/
+[Bb]in/
+[Oo]bj/
 # [Ll]og/
 # [Ll]ogs/
 

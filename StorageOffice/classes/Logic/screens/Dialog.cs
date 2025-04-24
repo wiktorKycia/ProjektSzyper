@@ -2,6 +2,24 @@ using System;
 using StorageOffice.classes.CLI;
 namespace StorageOffice.classes.Logic;
 
+/// <summary>
+/// Represents a dialog screen for user interaction.
+/// This class provides a simple console-based interface to display a message
+/// and allows the user to either accept or cancel the dialog.
+/// </summary>
+/// <remarks>
+/// The dialog is designed to be used in a console application and supports
+/// customizable actions for both acceptance and cancellation.
+/// </remarks>
+/// <param name="text">
+/// The text content to be displayed in the dialog.
+/// </param>
+/// <param name="onExit">
+/// An action to be invoked when the user cancels or exits the dialog.
+/// </param>
+/// <param name="onAccept">
+/// An action to be invoked when the user accepts the dialog.
+/// </param>
 class Dialog
 {
     private readonly string Title;
@@ -24,6 +42,13 @@ class Dialog
         Run();
     }
 
+    /// <summary>
+    /// Executes the main workflow for the dialog screen.
+    /// Displays the dialog content and handles user input for accepting or canceling the dialog.
+    /// </summary>
+    /// <remarks>
+    /// This method runs in a loop until the user provides input to either accept or cancel the dialog.
+    /// </remarks>
     private void Run()
     {
         bool running = true;
@@ -38,6 +63,14 @@ class Dialog
         }
     }
 
+    /// <summary>
+    /// Displays the user interface for the dialog screen.
+    /// Shows the title and text content, along with navigation instructions for the user.
+    /// </summary>
+    /// <remarks>
+    /// The method ensures proper formatting of the console output and clears the screen
+    /// before displaying the content.
+    /// </remarks>
     public void Display()
     {
         Console.Clear();

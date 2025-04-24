@@ -2,6 +2,21 @@ using System;
 using StorageOffice.classes.CLI;
 namespace StorageOffice.classes.Logic;
 
+/// <summary>
+/// Represents an error screen for displaying error messages.
+/// This class provides a simple console-based interface to display an error message
+/// and allows the user to exit the screen.
+/// </summary>
+/// <remarks>
+/// The error screen is designed to be used in a console application and ensures
+/// proper formatting of the error message.
+/// </remarks>
+/// <param name="text">
+/// The error message to be displayed.
+/// </param>
+/// <param name="onExit">
+/// An action to be invoked when the user exits the error screen.
+/// </param>
 class Error
 {
     private readonly string _title;
@@ -22,6 +37,13 @@ class Error
         Run();
     }
 
+    /// <summary>
+    /// Executes the main workflow for the error screen.
+    /// Displays the error message and handles user input for exiting the screen.
+    /// </summary>
+    /// <remarks>
+    /// This method runs in a loop until the user exits the screen by pressing the appropriate key.
+    /// </remarks>
     private void Run()
     {
         bool running = true;
@@ -36,6 +58,14 @@ class Error
         }
     }
 
+    /// <summary>
+    /// Displays the user interface for the error screen.
+    /// Shows the error message and provides navigation instructions for the user.
+    /// </summary>
+    /// <remarks>
+    /// The method ensures proper formatting of the console output and clears the screen
+    /// before displaying the content.
+    /// </remarks>
     public void Display()
     {
         Console.Clear();
