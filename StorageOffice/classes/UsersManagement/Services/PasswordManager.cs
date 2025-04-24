@@ -121,27 +121,6 @@ namespace StorageOffice.classes.UsersManagement.Services
                             throw new FormatException($"Error: Incorrect user's role was found in users.txt file for user {username}");
                         }
                     }
-
-                    // Change the user's info in database
-                    if (db != null)
-                    {
-                        if (dataColumnNumber == 0)
-                        {
-                            db.UpdateUser(db.GetUserIdByUsername(username), newData, null);
-                        }
-                        else if (dataColumnNumber == 2)
-                        {
-                            if (Enum.TryParse(newData, true, out Role newRole))
-                            {
-                                db.UpdateUser(db.GetUserIdByUsername(username), null, newRole.ToString());
-                            }
-                            else
-                            {
-                                _fileErrorFound?.Invoke($"incorrect user's role was found in users.txt file for user {username}");
-                                throw new FormatException($"Error: Incorrect user's role was found in users.txt file for user {username}");
-                            }
-                        }
-                    }
                 }
                 else
                 {
