@@ -4,6 +4,21 @@ using StorageOffice.classes.UsersManagement.Services;
 
 namespace StorageOffice.classes.Logic;
 
+/// <summary>
+/// Represents the menu for editing a user's username.
+/// This class provides an interactive console-based workflow for changing the username
+/// of a specific user.
+/// </summary>
+/// <remarks>
+/// The menu allows the user to input a new username, confirm the change, and update
+/// the username in the system.
+/// </remarks>
+/// <param name="username">
+/// The current username of the user whose username is being changed.
+/// </param>
+/// <param name="onExit">
+/// An action to be invoked when the user exits the username edit menu.
+/// </param>
 public class EditUsername
 {
     private readonly string _title;
@@ -30,6 +45,18 @@ public class EditUsername
         Run();
     }
 
+    /// <summary>
+    /// Executes the main workflow for the username edit menu.
+    /// Displays the user interface, handles user input for entering a new username,
+    /// and updates the username upon confirmation.
+    /// </summary>
+    /// <remarks>
+    /// This method runs in a loop until the user exits the menu or successfully changes
+    /// the username. It ensures proper validation of the new username and handles errors gracefully.
+    /// </remarks>
+    /// <exception cref="ArgumentException">
+    /// Thrown if the entered username does not meet the required criteria.
+    /// </exception>
     private void Run()
     {
         bool running = true;
@@ -53,7 +80,18 @@ public class EditUsername
                         int userId = MenuHandler.db?.GetUserIdByUsername(_username) ?? 0;
                         MenuHandler.db?.UpdateUser(userId, newUsername, null);
 
-                        PasswordManager.ChangeUsername(_username, newUsername);
+                        try
+                        {
+                            PasswordManager.ChangeUsername(_username, newUsername);
+                        }
+                        catch(Exception e)
+                        {
+                            running = false;
+                            var menu = new Error(
+                                text: e.Message,
+                                onExit: _onExit.Invoke
+                            );
+                        }
 
                         ConsoleOutput.PrintColorMessage($"Username successfully changed to {newUsername}\n", ConsoleColor.Green);
                         Console.WriteLine("Press any key to continue...");
@@ -72,6 +110,17 @@ public class EditUsername
         }
     }
 
+    /// <summary>
+    /// Prompts the user to confirm the entered username.
+    /// Updates the running flag based on the user's confirmation.
+    /// </summary>
+    /// <param name="running">
+    /// A reference to a boolean flag indicating whether the process should continue running.
+    /// This flag is set to false if the user confirms the username.
+    /// </param>
+    /// <returns>
+    /// True if the user confirms the username, otherwise false.
+    /// </returns>
     private bool GetConfirm(ref bool running)
     {
         Console.WriteLine("Is the username correct? (y/n): ");
@@ -84,6 +133,14 @@ public class EditUsername
         else return false;   
     }
 
+    /// <summary>
+    /// Displays the user interface for the username edit menu.
+    /// Shows the current username being edited and provides navigation instructions for the user.
+    /// </summary>
+    /// <remarks>
+    /// The method ensures proper formatting of the console output and clears the screen
+    /// before displaying the content.
+    /// </remarks>
     private void Display()
     {
         Console.Clear();

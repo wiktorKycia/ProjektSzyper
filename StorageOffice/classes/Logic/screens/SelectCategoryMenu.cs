@@ -4,6 +4,22 @@ using StorageOffice.classes.UsersManagement.Modules;
 
 namespace StorageOffice.classes.Logic;
 
+
+/// <summary>
+/// Represents the menu for selecting a product category.
+/// This class provides an interactive console-based workflow for viewing and selecting
+/// product categories.
+/// </summary>
+/// <remarks>
+/// The menu allows navigation through a list of product categories and invokes the appropriate
+/// operation based on the user's selection.
+/// </remarks>
+/// <param name="user">
+/// The user interacting with the menu.
+/// </param>
+/// <param name="onExit">
+/// An action to be invoked when the user exits the menu.
+/// </param>
 public class SelectCategoryMenu
 {
     private readonly string _title;
@@ -56,6 +72,15 @@ public class SelectCategoryMenu
         Run();
     }
 
+    /// <summary>
+    /// Executes the main workflow for the category selection menu.
+    /// Displays the user interface, handles user input for navigation and selection,
+    /// and invokes the appropriate operation based on the selected category.
+    /// </summary>
+    /// <remarks>
+    /// This method runs in a loop until the user exits the menu. It ensures proper handling
+    /// of keyboard actions and updates the display accordingly.
+    /// </remarks>
     private void Run()
     {
         bool running = true;
@@ -82,11 +107,28 @@ public class SelectCategoryMenu
         }
     }
 
+    /// <summary>
+    /// Opens the menu to display products in the selected category.
+    /// </summary>
+    /// <param name="category">
+    /// The name of the category whose products are to be displayed.
+    /// </param>
+    /// <remarks>
+    /// This method initializes the `ShowCategoryProductsMenu` and passes control to it.
+    /// </remarks>
     private void ShowProductsInCategory(string category)
     {
         var categoryProductsMenu = new ShowCategoryProductsMenu(_user, category, () => _onExit.Invoke());
     }
 
+    /// <summary>
+    /// Displays the user interface for the category selection menu.
+    /// Shows the list of product categories and provides navigation instructions for the user.
+    /// </summary>
+    /// <remarks>
+    /// The method dynamically builds the content to display the menu options and ensures
+    /// proper formatting for the console output.
+    /// </remarks>
     private void Display()
     {
         Console.Clear();

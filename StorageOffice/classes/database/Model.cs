@@ -8,6 +8,10 @@ using System.Text.RegularExpressions;
 
 namespace StorageOffice.classes.database;
 
+/// <summary>
+/// StorageContext class: represents the database context for the storage office application.
+/// It inherits from DbContext and provides access to the database tables.
+/// </summary>
 public class StorageContext : DbContext
 {
     public DbSet<Shop> Shops { get; set; }
@@ -20,6 +24,11 @@ public class StorageContext : DbContext
 
     public string DbPath { get; }
 
+    /// <summary>
+    /// Constructor for the StorageContext class.
+    /// Initializes the database path based on the solution's directory or a custom path.
+    /// </summary>
+    /// <param name="customDbPath"></param>
     public StorageContext(string? customDbPath = null)
     {
         var solutionDirectory = Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "../../../"));
@@ -30,6 +39,11 @@ public class StorageContext : DbContext
 
         this.DbPath = customDbPath ?? Path.Combine(appPath, "StorageOffice.db");
     }
+
+    /// <summary>
+    /// Configures the database context to use SQLite.
+    /// </summary>
+    /// <param name="options"></param>
     protected override void OnConfiguring(DbContextOptionsBuilder options)
     {
         options.UseSqlite($"Data Source={DbPath}", opt =>
@@ -37,6 +51,11 @@ public class StorageContext : DbContext
             opt.MigrationsAssembly(Assembly.GetExecutingAssembly().FullName);
         });
     }
+
+    /// <summary>
+    /// Configures the model relationships and constraints.
+    /// </summary>
+    /// <param name="modelBuilder"></param>
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         // One-to-one relationship between Product and Stock.
@@ -79,12 +98,19 @@ public class StorageContext : DbContext
     }
 }
 
-// Enum to denote shipment direction.
+
+/// <summary>
+/// Enum to denote shipment direction.
+/// </summary>
 public enum ShipmentType
 {
     Inbound,
     Outbound
 }
+
+/// <summary>
+/// Enum to denote user roles.
+/// </summary>
 public enum UserRole
 {
     Administrator = 1,
@@ -93,7 +119,9 @@ public enum UserRole
     WarehouseManager
 }
 
-// Shop table: holds shop details.
+/// <summary>
+/// Shop table: holds shop details.
+/// </summary>
 public class Shop
 {
     public int ShopId { get; set; }
@@ -103,16 +131,24 @@ public class Shop
     // Navigation property: One shop can have many shipments.
     public List<Shipment> Shipments { get; set; }
 
+    /// <summary>
+    /// Validates the correctness of the shop's data. Both shop's name and shop's location can't be empty or null.
+    /// </summary>
+    /// <param name="shopName">String representing shop's name that has to be checked.</param>
+    /// <param name="location">String representing shop's location that has to be checked.</param>
+    /// <exception cref="ArgumentException">This exception is thrown when shop's name or location is equal to null or is empty.</exception>
     public static void Validate(string? shopName, string? location)
     {
         if (string.IsNullOrEmpty(shopName) || string.IsNullOrEmpty(location))
         {
-            throw new ArgumentNullException(null, "Shop's name and location can't be empty!");
+            throw new ArgumentException(null, "Shop's name and location can't be empty!");
         }
     }
 }
 
-// Product table: holds product details.
+/// <summary>
+/// Product table: holds product details.
+/// </summary>
 public class Product
 {
     public int ProductId { get; set; }
@@ -127,16 +163,26 @@ public class Product
     // Navigation: One product can appear in many shipment items.
     public List<ShipmentItem> ShipmentItems { get; set; }
 
+    /// <summary>
+    /// Validates the correctness of the product's data. Products's name, category, unit and description can't be empty or null.
+    /// </summary>
+    /// <param name="name">String representing products's name that has to be checked.</param>
+    /// <param name="category">String representing products's category that has to be checked.</param>
+    /// <param name="unit">String representing products's unit that has to be checked.</param>
+    /// <param name="description">String representing products's description that has to be checked.</param>
+    /// <exception cref="ArgumentException">This exception is thrown when product's name, category, unit or description is equal to null or is empty.</exception>
     public static void Validate(string? name, string? category, string? unit, string? description)
     {
         if(string.IsNullOrEmpty(name) || string.IsNullOrEmpty(category) || string.IsNullOrEmpty(unit) || string.IsNullOrEmpty(description))
         { 
-            throw new ArgumentNullException(null, "Product's name, category, unit, description can't be empty!"); 
+            throw new ArgumentException(null, "Product's name, category, unit, description can't be empty!"); 
         }    
     }
 }
 
-// Stock table: maintains current inventory per product.
+/// <summary>
+/// Stock table: maintains current inventory per product.
+/// </summary>
 public class Stock
 {
     public int StockId { get; set; }
@@ -147,6 +193,11 @@ public class Stock
     // Navigation: Reference back to the product.
     public Product Product { get; set; }
 
+    /// <summary>
+    /// Validates the correctness of the stock's data. Stock's quantity can't be smaller than 0.
+    /// </summary>
+    /// <param name="quantity">Integer representing stock's quantity that has to be checked.</param>
+    /// <exception cref="ArgumentException">This exception is thrown when stock's quantity is smaller than 0.</exception>
     public static void Validate(int quantity)
     {
         if (quantity < 0)
@@ -155,6 +206,12 @@ public class Stock
         }
     }
 
+    /// <summary>
+    /// Validates the correctness of the stock's data. Stock's quantity can't be smaller than 0 and stock's update date can't be from the future.
+    /// </summary>
+    /// <param name="quantity">Integer representing stock's quantity that has to be checked.</param>
+    /// <param name="date">DateTime object representing stock's update date that has to be checked.</param>
+    /// <exception cref="ArgumentException">This exception is thrown when stock's quantity is smaller than 0 or stock's update date is from the future.</exception>
     public static void Validate(int quantity, DateTime date)
     {
         if(quantity < 0)
@@ -168,7 +225,9 @@ public class Stock
     }
 }
 
-// Shipper table: represents external shipping companies.
+/// <summary>
+/// Shipper table: represents external shipping companies.
+/// </summary>
 public class Shipper
 {
     public int ShipperId { get; set; }
@@ -178,16 +237,24 @@ public class Shipper
     // Navigation: One shipper can be associated with many shipments.
     public List<Shipment> Shipments { get; set; }
 
+    /// <summary>
+    /// Validates the correctness of the shippers's data. Shippers's name and contact info can't be null or empty.
+    /// </summary>
+    /// <param name="name">String representing shippers's name that has to be checked.</param>
+    /// <param name="contactInfo">String representing shipper's contact info that has to be checked.</param>
+    /// <exception cref="ArgumentException">This exception is thrown when shipper's name or contact info is equal to null or is empty.</exception>
     public static void Validate(string? name, string? contactInfo)
     {
         if(string.IsNullOrEmpty(name) || string.IsNullOrEmpty(contactInfo))
         {
-            throw new ArgumentNullException(null, "Shipper's name and contact info can't be empty!");
+            throw new ArgumentException(null, "Shipper's name and contact info can't be empty!");
         }
     }
 }
 
-// Shipment table: represents shipments involving the warehouse.
+/// <summary>
+/// Shipment table: represents shipments involving the warehouse.
+/// </summary>
 public class Shipment
 {
     public int ShipmentId { get; set; }
@@ -216,6 +283,11 @@ public class Shipment
     // Navigation: One shipment contains multiple shipment items.
     public List<ShipmentItem> ShipmentItems { get; set; }
 
+    /// <summary>
+    /// Validates the correctness of the shipment's data. Shipment's type must be Inbound or Outbound.
+    /// </summary>
+    /// <param name="shipmentType">String representing shipment's type that has to be checked.</param>
+    /// <exception cref="ArgumentException">This exception is thrown when shipment's type is not equal to Inbound or Outbound.</exception>
     public static void Validate(string? shipmentType)
     {
         if(!Enum.TryParse(shipmentType, out ShipmentType result))
@@ -225,7 +297,9 @@ public class Shipment
     }
 }
 
-// ShipmentItem table: holds details of products in each shipment.
+/// <summary>
+/// ShipmentItem table: holds details of products in each shipment.
+/// </summary>
 public class ShipmentItem
 {
     public int ShipmentItemId { get; set; }
@@ -239,6 +313,11 @@ public class ShipmentItem
     // Navigation: Each shipment item refers to one product.
     public Product Product { get; set; }
 
+    /// <summary>
+    /// Validates the correctness of the shipment item's data. Item's quantity can't be smaller than 0.
+    /// </summary>
+    /// <param name="quantity">Integer representing item's quantity that has to be checked.</param>
+    /// <exception cref="ArgumentException">This exception is thrown when item's quantity is smaller than 0.</exception>
     public static void Validate(int quantity)
     {
         if(quantity < 0)
@@ -248,6 +327,9 @@ public class ShipmentItem
     }
 }
 
+/// <summary>
+/// User table: represents users of the system.
+/// </summary>
 public class User
 {
     public int UserId { get; set; }
@@ -255,8 +337,14 @@ public class User
     public UserRole Role { get; set; } 
 
     // Navigation property: One user can have many shipments.
-    public List<Shipment> Shipments { get; set; } 
+    public List<Shipment> Shipments { get; set; }
 
+    /// <summary>
+    /// Validates the correctness of the user's data. User's name and role must not be empty or null and must fit into correct values or regex.
+    /// </summary>
+    /// <param name="username">String representing user's name that has to be checked.</param>
+    /// <param name="role">String representing user's role that has to be checked.</param>
+    /// <exception cref="ArgumentException">This exception is thrown when user's name is empty, null or doesn't fit into correct regex or user's role is not a correct role.</exception>
     public static void Validate(string? username, string? role)
     {
         if (string.IsNullOrEmpty(username))

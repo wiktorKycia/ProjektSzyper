@@ -9,15 +9,24 @@ namespace StorageOffice.classes.database;
 
 public class DataSeeder
 {
+    /// <summary>
+    /// Seeds the database with initial data.
+    /// This includes creating shops, products, stocks, shippers, shipments, and users.
+    /// </summary>
+    /// <param name="context">The database context to use for seeding.</param>
+    /// <remarks>
+    /// This method checks if the database already contains data to avoid duplicate seeding.
+    /// It generates random data for shops, products, stocks, shippers, and shipments.
+    /// </remarks>
     public static void Seed(StorageContext context)
     {
-        // Check if data already exists
+        // Check if database already contains data to avoid duplicate seeding
         if (context.Shops.Any() || context.Products.Any() || context.Users.Any())
             return;
 
         var random = new Random();
 
-        // Set the starting value for each table's primary key to 1
+        // Reset database sequence counters to ensure IDs start at 1
         context.Database.ExecuteSqlRaw("DELETE FROM sqlite_sequence WHERE name = 'Shops';");
         context.Database.ExecuteSqlRaw("DELETE FROM sqlite_sequence WHERE name = 'Products';");
         context.Database.ExecuteSqlRaw("DELETE FROM sqlite_sequence WHERE name = 'Stocks';");
@@ -26,6 +35,7 @@ public class DataSeeder
         context.Database.ExecuteSqlRaw("DELETE FROM sqlite_sequence WHERE name = 'ShipmentItems';");
         context.Database.ExecuteSqlRaw("DELETE FROM sqlite_sequence WHERE name = 'Users';");
 
+        // Add users from configuration with appropriate roles
         var users = PasswordManager.GetAllUsers();
         List<User> userList = new List<User>();
         foreach (var user in users)
@@ -39,7 +49,7 @@ public class DataSeeder
         context.Users.AddRange(userList);
         context.SaveChanges();
 
-        // Generate fake Shops
+        // Generate 10 fictional shops with fake company names and locations
         var shopFaker = new Faker<Shop>()
             .RuleFor(s => s.ShopName, f => f.Company.CompanyName())
             .RuleFor(s => s.Location, f => f.Address.City());
@@ -48,7 +58,7 @@ public class DataSeeder
         context.Shops.AddRange(shops);
         context.SaveChanges();
 
-        // Create realistic product categories with appropriate products
+        // Define product categories with realistic items in each category
         var productCategories = new Dictionary<string, List<string>>
         {
             ["Electronics"] = new List<string> 
@@ -83,22 +93,24 @@ public class DataSeeder
             }
         };
 
+        // Define appropriate measurement units for each product category
         var units = new Dictionary<string, string>
         {
-            ["Electronics"] = "pcs",
-            ["Clothing"] = "pcs",
-            ["Food"] = "pkg",
-            ["Sporting Goods"] = "pcs",
-            ["Home Goods"] = "pcs"
+            ["Electronics"] = "pcs", // pieces
+            ["Clothing"] = "pcs",    // pieces
+            ["Food"] = "pkg",        // packages
+            ["Sporting Goods"] = "pcs", // pieces
+            ["Home Goods"] = "pcs"   // pieces
         };
 
         var products = new List<Product>();
 
-        // Generate products from each category
-        int totalProducts = 20; // Limit to 20 products total
+        // Create a balanced set of 20 products across all categories (4 per category)
+        int totalProducts = 20;
         int categoriesCount = productCategories.Count;
         int productsPerCategory = totalProducts / categoriesCount;
 
+        // Select random products from each category
         foreach (var category in productCategories)
         {
             var selectedProducts = category.Value.OrderBy(x => Guid.NewGuid()).Take(productsPerCategory).ToList();
@@ -116,7 +128,7 @@ public class DataSeeder
             }
         }
 
-        // If there are fewer than totalProducts, fill the remaining slots randomly
+        // If we didn't reach our target count, add more products randomly
         while (products.Count < totalProducts)
         {
             var randomCategory = productCategories.ElementAt(random.Next(categoriesCount));
@@ -138,7 +150,7 @@ public class DataSeeder
         context.Products.AddRange(products);
         context.SaveChanges();
 
-        // Generate fake Stock for each product
+        // Create initial stock levels for each product (between 10-99 units)
         foreach (var product in products)
         {
             var stock = new Stock
@@ -151,7 +163,7 @@ public class DataSeeder
         }
         context.SaveChanges();
 
-        // Generate fake Shippers
+        // Add common shipping carriers as Shipper entities
         var shipperNames = new List<string> { "FedEx", "UPS", "DHL", "USPS", "Amazon Logistics" };
         var shippers = new List<Shipper>();
         
@@ -169,19 +181,18 @@ public class DataSeeder
         context.Shippers.AddRange(shippers);
         context.SaveChanges();
 
-        // Ensure that each shipment has either a Shop or a Shipper, but not both
+        // Generate shipments - each is either inbound (from a shop) or outbound (to a shipper)
         var shipmentFaker = new Faker<Shipment>()
             .RuleFor(s => s.Shop, f => f.Random.Bool() ? f.PickRandom(shops) : null)
             .RuleFor(s => s.Shipper, (f, s) => s.Shop == null ? f.PickRandom(shippers) : null)
-            .RuleFor(s => s.ShipmentType, (f, s) => s.Shop == null ? ShipmentType.Outbound : ShipmentType.Inbound)
-            .RuleFor(s => s.ShippedDate, f => f.Date.Past(1))
+            .RuleFor(s => s.ShipmentType, (f, s) => s.Shop == null ? ShipmentType.Inbound : ShipmentType.Outbound)
             .RuleFor(s => s.User, f => f.PickRandom(userList.Where(u => u.Role == UserRole.Warehouseman)));
 
         var shipments = shipmentFaker.Generate(30);
         context.Shipments.AddRange(shipments);
         context.SaveChanges();
 
-        // Generate fake ShipmentItems
+        // Create shipment items - each shipment contains 1-5 different products
         foreach (var shipment in shipments)
         {
             int itemCount = random.Next(1, 6);
@@ -193,7 +204,7 @@ public class DataSeeder
                 {
                     Shipment = shipment,
                     Product = product,
-                    Quantity = random.Next(1, 20)
+                    Quantity = random.Next(1, 20) // Each product has 1-19 units in the shipment
                 };
                 context.ShipmentItems.Add(shipmentItem);
             }
@@ -202,11 +213,18 @@ public class DataSeeder
         context.SaveChanges();
     }
 
+
+    /// <summary>
+    /// Returns a descriptive suffix based on the product category.
+    /// </summary>
+    /// <param name="category">The product category for which to generate a suffix.</param>
+    /// <returns>A string containing an appropriate description suffix for the specified category,
+    /// or a generic suffix if the category is not recognized.</returns>
     private static string GetDescriptionSuffix(string category)
     {
         return category switch
         {
-            "Electronics" => "everyday use with the latest technology",
+            "Electronics" => "everyday use",
             "Clothing" => "comfortable everyday wear",
             "Food" => "a delicious and nutritious meal",
             "Sporting Goods" => "sports and outdoor activities",

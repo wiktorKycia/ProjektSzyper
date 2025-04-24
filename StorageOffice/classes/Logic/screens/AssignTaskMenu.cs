@@ -4,6 +4,15 @@ using StorageOffice.classes.UsersManagement.Modules;
 
 namespace StorageOffice.classes.Logic;
 
+/// <summary>
+/// Represents the menu for assigning tasks to users.
+/// This class provides an interactive console-based workflow for selecting unassigned shipments
+/// and assigning them to a user.
+/// </summary>
+/// <remarks>
+/// The menu displays unassigned shipments in a grid layout, allows navigation and selection,
+/// and facilitates the assignment of selected shipments to a user.
+/// </remarks>
 public class AssignTaskMenu
 {
     private readonly string _title;
@@ -18,6 +27,12 @@ public class AssignTaskMenu
     private const int OPTION_MAX_WIDTH = 40; // Maximum width for an option
     private const int OPTION_PADDING = 3; // Padding between options
 
+    /// <param name="user">
+    /// The user performing the task assignment.
+    /// </param>
+    /// <param name="onExit">
+    /// An action to be invoked when the user exits the task assignment menu.
+    /// </param>
     public AssignTaskMenu(User user, Action onExit)
     {
         _title = "Assign Tasks";
@@ -66,6 +81,16 @@ public class AssignTaskMenu
         Run();
     }
 
+    /// <summary>
+    /// Executes the main workflow for the task assignment menu.
+    /// Displays the user interface, handles user input for navigation and selection,
+    /// and processes the assignment of selected shipments.
+    /// </summary>
+    /// <remarks>
+    /// This method runs in a loop until the user exits the menu. It ensures proper handling
+    /// of keyboard actions and updates the display accordingly.
+    /// </remarks>
+
     private void Run()
     {
         bool running = true;
@@ -88,7 +113,14 @@ public class AssignTaskMenu
         }
     }
 
-    // Calculate optimal number of options per row based on console width
+    /// <summary>
+    /// Calculates the optimal number of options to display per row based on the console width.
+    /// Adjusts the layout dynamically to ensure proper spacing and alignment of options.
+    /// </summary>
+    /// <remarks>
+    /// The calculation considers the minimum and maximum width of options, as well as padding
+    /// between options, to determine the number of options that can fit in a single row.
+    /// </remarks>
     private void CalculateOptionsPerRow()
     {
         int effectiveWidth = ConsoleOutput.UIWidth - 8; // Leave some margin
@@ -100,7 +132,10 @@ public class AssignTaskMenu
         _optionsPerRow = Math.Max(1, effectiveWidth / (optionWidth + OPTION_PADDING));
     }
 
-    // Custom navigation methods for grid layout
+    /// <summary>
+    /// Moves the selection highlight up by one row in the grid layout.
+    /// Ensures that the selection remains within the bounds of the available options.
+    /// </summary>
     private void MoveUp()
     {
         int currentIndex = GetHighlightedIndex();
@@ -113,7 +148,11 @@ public class AssignTaskMenu
             }
         }
     }
-    
+
+    /// <summary>
+    /// Moves the selection highlight down by one row in the grid layout.
+    /// Ensures that the selection remains within the bounds of the available options.
+    /// </summary>
     private void MoveDown()
     {
         int currentIndex = GetHighlightedIndex();
@@ -130,6 +169,11 @@ public class AssignTaskMenu
         }
     }
 
+    /// <summary>
+    /// Moves the selection highlight left by one option within the same row.
+    /// Ensures that the selection does not move out of the row's bounds.
+    /// </summary>
+
     private void MoveLeft()
     {
         int currentIndex = GetHighlightedIndex();
@@ -140,6 +184,10 @@ public class AssignTaskMenu
         }
     }
 
+    /// <summary>
+    /// Moves the selection highlight right by one option within the same row.
+    /// Ensures that the selection does not move out of the row's bounds.
+    /// </summary>
     private void MoveRight()
     {
         int currentIndex = GetHighlightedIndex();
@@ -149,6 +197,13 @@ public class AssignTaskMenu
             _select.MoveDown();
         }
     }
+
+    /// <summary>
+    /// Retrieves the index of the currently highlighted option in the grid layout.
+    /// </summary>
+    /// <returns>
+    /// The index of the highlighted option, or 0 if no option is highlighted.
+    /// </returns>
 
     private int GetHighlightedIndex()
     {
@@ -161,6 +216,15 @@ public class AssignTaskMenu
         }
         return 0;
     }
+
+    /// <summary>
+    /// Assigns the selected shipments to a user.
+    /// Opens a user selection menu to choose the user for the assignment.
+    /// </summary>
+    /// <remarks>
+    /// If no shipments are selected, a warning message is displayed, and the method exits.
+    /// Otherwise, the selected shipments are passed to the user selection menu for assignment.
+    /// </remarks>
 
     private void AssignSelectedShipments()
     {
@@ -181,6 +245,16 @@ public class AssignTaskMenu
         // Open the user selection menu
         var userSelectMenu = new SelectUserForTaskMenu(selectedShipments, _onExit);
     }
+
+    /// <summary>
+    /// Displays the user interface for the task assignment menu.
+    /// Shows the available shipments in a grid layout, highlights the selected option,
+    /// and displays details of the highlighted shipment.
+    /// </summary>
+    /// <remarks>
+    /// The method dynamically adjusts the layout based on the console width and provides
+    /// navigation instructions for the user.
+    /// </remarks>
 
     private void Display()
     {

@@ -2,4 +2,3 @@ wiktor,zUJT0IvHKRl0ToWOG/G7ScL90QtADFjr24v0kWS/w90=,Administrator
 Jan,uhKclb7hkMxjWVzu2SlhZt+n0uBmaYm2SnAnRjJYGM8=,Logistician
 mietek,XTPmCUeMEF09hlF2coHJ7SzUv/ZHnjGNvTChZZcyW5o=,Warehouseman
 wiesio,JZBM7sdfWxisY3DTHxUSjFytqT/J8JG7AziUg8YkB00=,WarehouseManager
-Janek,Ngi8oeROpsTSaOttsCJgJpiSwLQrhrvx53pvoWw8koI=,Administrator

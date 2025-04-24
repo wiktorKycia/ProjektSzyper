@@ -43,6 +43,12 @@ public static partial class ConsoleOutput
         return tableString.ToString();
     }
 
+    /// <summary>
+    /// Calculates the maximum width of each column based on the data and headers
+    /// </summary>
+    /// <param name="data">Collection of string arrays representing rows of data</param>
+    /// <param name="headers">Column headers</param>
+    /// <returns>An array of integers representing the width of each column</returns>
     private static int[] CalculateColumnWidths(IEnumerable<string[]> data, string[] headers)
     {
         var widths = headers.Select(h => h.Length).ToArray();
@@ -60,6 +66,16 @@ public static partial class ConsoleOutput
         return widths.Select(w => w + 2).ToArray();
     }
 
+    /// <summary>
+    /// Adjusts the width of table columns to fit within a maximum total width.
+    /// </summary>
+    /// <param name="columnWidths">Array of column widths to be adjusted. Modified in-place.</param>
+    /// <param name="maxTotalWidth">The maximum allowed width for the entire table, including borders.</param>
+    /// <remarks>
+    /// The algorithm reduces column widths proportionally when the total width exceeds the maximum allowed width.
+    /// It preserves a minimum width of 3 characters per column to allow for ellipsis display.
+    /// Columns are reduced iteratively until the desired total width is achieved or further reduction is not possible.
+    /// </remarks>
     private static void AdjustColumnWidths(ref int[] columnWidths, int maxTotalWidth)
     {
         int totalWidth = columnWidths.Sum() + columnWidths.Length + 1;
@@ -94,6 +110,17 @@ public static partial class ConsoleOutput
         }
     }
 
+    /// <summary>
+    /// Creates a formatted table row string from an array of cell values.
+    /// </summary>
+    /// <param name="cells">Array of string values representing cell contents.</param>
+    /// <param name="columnWidths">Array of integers representing the width of each column.</param>
+    /// <returns>A string representing a formatted table row with proper cell padding and borders.</returns>
+    /// <remarks>
+    /// The method handles truncation of cell contents that exceed their column width,
+    /// ensuring that all cells fit within their allocated space. Each cell is padded 
+    /// with spaces to maintain consistent column widths throughout the table.
+    /// </remarks>
     private static string WriteTableRow(string[] cells, int[] columnWidths)
     {
         StringBuilder rowString = new StringBuilder();
@@ -117,6 +144,16 @@ public static partial class ConsoleOutput
         return rowString.ToString();
     }
 
+    /// <summary>
+    /// Creates a horizontal separator line for a table using the specified character.
+    /// </summary>
+    /// <param name="columnWidths">Array of integers representing the width of each column.</param>
+    /// <param name="separatorChar">The character to use for the separator line (typically '-' or '=').</param>
+    /// <returns>A string representing a horizontal separator line with proper column widths and junction characters.</returns>
+    /// <remarks>
+    /// The method creates a separator line with '+' characters at column junctions
+    /// and the specified separator character filling the width of each column.
+    /// </remarks>
     private static string WriteTableSeparator(int[] columnWidths, char separatorChar)
     {
         StringBuilder separatorString = new StringBuilder();
