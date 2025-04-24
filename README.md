@@ -376,7 +376,7 @@ Folder [`Services/`](./StorageOffice/classes/UsersManagement/Sevices/) zawiera k
 
 ## Obłsuga błędów
 
-Wszelkie metody w systemie rzucają odpowiednie do sytuacji wyjątki takie jak: FileNotFoundException, FormatException, ArgumentException, InvlaidOpertionException w związku z brakami plików, błędami w plikach, błędami w poprawności przekazywanych danych(np. nazwy użytkowników muszą mieć odpowiedni format), a także próbami wykonania niepoprawnych działań jak dodanie użytkownika o już zajętej nazwie.
+Wszelkie metody w systemie rzucają odpowiednie do sytuacji wyjątki takie jak: FileNotFoundException, FormatException, ArgumentException, InvalidOpertionException w związku z brakami plików, błędami w plikach, błędami w poprawności przekazywanych danych(np. nazwy użytkowników muszą mieć odpowiedni format), a także próbami wykonania niepoprawnych działań jak dodanie użytkownika o już zajętej nazwie.
 Obłsuga błędów w sekcji `Logic/` jest zrealizowana przez ekran `Error`.
 Użytkownik wtedy widzi czerwony komunikat o błędzie i może wrócić do poprzedniego ekranu
 
