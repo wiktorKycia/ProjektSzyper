@@ -320,3 +320,8 @@
 [2025-04-24 19:56:15] Info: login of user darek1 - successful
 [2025-04-24 19:56:45] Info: action was performed on data of a user named asdf - added a new user
 [2025-04-24 19:56:46] Info: action was performed on data in database - added user named 'username'
+[2025-04-24 20:21:58] Info: login of user wiktor - successful
+[2025-04-24 20:22:17] Info: action was performed on data of a user named darek1 - deleted a user
+[2025-04-24 20:22:17] Info: action was performed on data in database - removed user named 'darek1'
+[2025-04-24 20:22:17] Info: action was performed on data of a user named asdf - deleted a user
+[2025-04-24 20:22:17] Info: action was performed on data in database - removed user named 'asdf'

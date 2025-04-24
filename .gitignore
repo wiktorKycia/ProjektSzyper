@@ -20,6 +20,10 @@ mono_crash.*
 
 StorageOffice/bin/
 StorageOffice/obj/
+StorageOffice.IntegrationsTests/obj/
+StorageOffice.IntegrationsTests/bin/
+StorageOffice.UnitTests/obj/
+StorageOffice.UnitTests/bin/
 [Dd]ebug/
 [Dd]ebugPublic/
 [Rr]elease/
