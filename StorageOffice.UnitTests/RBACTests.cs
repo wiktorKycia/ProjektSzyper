@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NUnit.Framework;
-using StorageOffice.classes.UsersManagement.Modules;
+using StorageOffice.classes.UsersManagement.Models;
 using StorageOffice.classes.UsersManagement.Services;
 
 namespace StorageOffice.UnitTests

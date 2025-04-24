@@ -6,7 +6,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using StorageOffice.classes.UsersManagement.Services;
 
-namespace StorageOffice.classes.UsersManagement.Modules
+namespace StorageOffice.classes.UsersManagement.Models
 {
     /// <summary>
     /// A class representing the user and their data for the purpose and runtime of the system.
