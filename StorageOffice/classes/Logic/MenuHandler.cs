@@ -33,7 +33,7 @@ public static class MenuHandler
             var loginMenu = new Login(
                 title: "Login menu",
                 heading: "Welcome to the logistics warehouse management system!",
-                nextMenu: () => {MainMenu(user);},
+                onExit: () => {MainMenu(user);},
                 user: user
             );
         }
@@ -42,7 +42,7 @@ public static class MenuHandler
             var firstUserMenu = new FirstUser(
                 title: "Register first user",
                 heading: "No user has been created on the system, so the details currently provided will be used to create the first administrator. Enter the details for him/her.\n",
-                nextMenu: () => {MainMenu(user);},
+                onExit: () => {MainMenu(user);},
                 user: user
             );
         }
