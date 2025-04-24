@@ -1,6 +1,6 @@
 using System;
 using StorageOffice.classes.CLI;
-using StorageOffice.classes.UsersManagement.Modules;
+using StorageOffice.classes.UsersManagement.Models;
 namespace StorageOffice.classes.Logic;
 
 /// <summary>

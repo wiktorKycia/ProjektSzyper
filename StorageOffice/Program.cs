@@ -2,7 +2,7 @@
 using StorageOffice.classes.Logic;
 
 using StorageOffice.classes.LogServices;
-using StorageOffice.classes.UsersManagement.Modules;
+using StorageOffice.classes.UsersManagement.Models;
 using StorageOffice.classes.UsersManagement.Services;
 
 
@@ -27,7 +27,7 @@ namespace StorageOffice
             MenuHandler.db = db;
 
             // Create an object to store the info about logged-in user
-            classes.UsersManagement.Modules.User user = new();
+            classes.UsersManagement.Models.User user = new();
 
             PasswordManager.currentUser = user;
 
