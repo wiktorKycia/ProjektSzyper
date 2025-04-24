@@ -80,7 +80,18 @@ public class EditUsername
                         int userId = MenuHandler.db?.GetUserIdByUsername(_username) ?? 0;
                         MenuHandler.db?.UpdateUser(userId, newUsername, null);
 
-                        PasswordManager.ChangeUsername(_username, newUsername);
+                        try
+                        {
+                            PasswordManager.ChangeUsername(_username, newUsername);
+                        }
+                        catch(Exception e)
+                        {
+                            running = false;
+                            var menu = new Error(
+                                text: e.Message,
+                                onExit: _onExit.Invoke
+                            );
+                        }
 
                         ConsoleOutput.PrintColorMessage($"Username successfully changed to {newUsername}\n", ConsoleColor.Green);
                         Console.WriteLine("Press any key to continue...");

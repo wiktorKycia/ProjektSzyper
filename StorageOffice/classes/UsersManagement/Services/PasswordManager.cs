@@ -99,6 +99,11 @@ namespace StorageOffice.classes.UsersManagement.Services
                     string userLineInFile = fileLines[userIndex];
                     string[] parts = userLineInFile.Split(',');
 
+                    if(dataColumnNumber == 0 && fileLines.Any(line => line.Split(',')[0] == newData))
+                    {
+                        throw new InvalidOperationException($"User {newData} already exists in the system");
+                    }
+
                     parts[dataColumnNumber] = newData;
                     fileLines[userIndex] = string.Join(",", parts);
 
