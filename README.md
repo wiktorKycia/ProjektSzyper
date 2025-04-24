@@ -181,11 +181,20 @@ dotnet ef migrations add <nazwa_migracji>
 dotnet ef database update
 ```
 
+### Jak się zalogować?
+Użytkownicy i ich hasła:
+administrator: `wiktor`, hasło: `wiktor123`
+logistyk: `Jan`, hasło: `Jan123`
+manager: `wiesio`, hasło: `wiesio123`
+pracownik: `mietek`, hasło: `mietek123`
+
 ## Zrzuty ekranu
 
 ![Login page](./images/screenshot1.png)
 
 ![Admin panel](./images/widok_administratora.png)
+
+![Wykonywanie zadań](./images/wykonywanie_zadan.png)
 
 ## Przykłady użycia
 
