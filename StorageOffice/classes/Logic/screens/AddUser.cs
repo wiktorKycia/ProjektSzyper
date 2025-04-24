@@ -72,18 +72,39 @@ public class AddUser
             }
             else
             {
-                GetUsername(_user);
+                string username = GetUsername();
                 string password = GetPassword();
                 Role role = GetRole();
 
                 if(GetConfirm(ref running))
                 {
-                    PasswordManager.SaveNewUser(_user.Username, password, role);
-                    MenuHandler.db?.AddUser(_user.Username, role.ToString());
-                    ConsoleOutput.PrintColorMessage("User successfully created!\n", ConsoleColor.Green);
-                    Console.WriteLine("Press any key to continue...");
-                    ConsoleInput.WaitForAnyKey();
-                    _backMenu.Invoke();
+                    try
+                    {
+                        PasswordManager.SaveNewUser(username, password, role);
+                        MenuHandler.db?.AddUser(username, role.ToString());
+                        ConsoleOutput.PrintColorMessage("User successfully created!\n", ConsoleColor.Green);
+                        Console.WriteLine("Press any key to continue...");
+                        ConsoleInput.WaitForAnyKey();
+                        _backMenu.Invoke();
+                    }
+                    catch(InvalidOperationException e)
+                    {
+                        running = false;
+                        var menu = new Error(
+                            text: "Failed to add new user, because a user with this username already exists.\n" +
+                                  "Please try again with a different username.\n" +
+                                  e.Message,
+                            onExit: _backMenu.Invoke
+                        );
+                    }
+                    catch(Exception e)
+                    {
+                        running = false;
+                        var menu = new Error(
+                            text: e.Message,
+                            onExit: _backMenu.Invoke
+                        );
+                    }
                 }
             }
         }
@@ -102,14 +123,15 @@ public class AddUser
     /// <exception cref="ArgumentException">
     /// Thrown if the entered username is invalid (e.g., contains prohibited characters).
     /// </exception>
-    private void GetUsername(User user)
+    private string GetUsername()
     {
+        string username = string.Empty;
         bool isCorrect = false;
         while(!isCorrect)
         {
             try
             {
-                user.Username = ConsoleInput.GetUserString("Enter the username: ");
+                username = ConsoleInput.GetUserString("Enter the username: ");
                 isCorrect = true;
             }
             catch (ArgumentNullException e)
@@ -131,6 +153,7 @@ public class AddUser
                 ConsoleInput.WaitForAnyKey();
             }
         }
+        return username;
     }
 
     /// <summary>

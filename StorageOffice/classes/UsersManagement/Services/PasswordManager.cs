@@ -52,6 +52,10 @@ namespace StorageOffice.classes.UsersManagement.Services
                 _fileErrorFound?.Invoke("the file was removed while the application was running");
                 throw new FileNotFoundException("The file users.txt was removed while the application was running!");
             }
+            catch (InvalidOperationException ex)
+            {
+                throw;
+            }
         }
 
         public static void DeleteUser(string username)

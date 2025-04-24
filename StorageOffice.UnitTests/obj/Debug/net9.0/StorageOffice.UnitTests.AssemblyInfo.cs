@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("StorageOffice.UnitTests")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+75b2dda5a5f0c1ab4b0fdc5a26a7ba37d3cfdbed")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b4e5b6652c33245c4de7f9bd12052ae02e082478")]
 [assembly: System.Reflection.AssemblyProductAttribute("StorageOffice.UnitTests")]
 [assembly: System.Reflection.AssemblyTitleAttribute("StorageOffice.UnitTests")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

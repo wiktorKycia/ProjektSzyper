@@ -309,3 +309,14 @@
 [2025-04-23 22:39:16] Info: login of user wiktor - successful
 [2025-04-23 22:40:15] Info: login of user Jan - successful
 [2025-04-23 22:40:52] Info: login of user wiesio - successful
+[2025-04-24 19:32:35] Info: login of user wiktor - successful
+[2025-04-24 19:39:54] Info: login of user wiktor - successful
+[2025-04-24 19:43:01] Info: login of user wiktor - successful
+[2025-04-24 19:43:49] Info: action was performed on data of a user named darek - added a new user
+[2025-04-24 19:43:50] Info: action was performed on data in database - added user named 'username'
+[2025-04-24 19:44:19] Info: login of user darek - successful
+[2025-04-24 19:44:33] Info: action was performed on data in database - modified user's data
+[2025-04-24 19:44:33] Info: action was performed on data of a user named darek - changed user's name to darek1
+[2025-04-24 19:56:15] Info: login of user darek1 - successful
+[2025-04-24 19:56:45] Info: action was performed on data of a user named asdf - added a new user
+[2025-04-24 19:56:46] Info: action was performed on data in database - added user named 'username'

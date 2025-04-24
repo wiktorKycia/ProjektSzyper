@@ -3,3 +3,5 @@ Jan,uhKclb7hkMxjWVzu2SlhZt+n0uBmaYm2SnAnRjJYGM8=,Logistician
 mietek,XTPmCUeMEF09hlF2coHJ7SzUv/ZHnjGNvTChZZcyW5o=,Warehouseman
 wiesio,JZBM7sdfWxisY3DTHxUSjFytqT/J8JG7AziUg8YkB00=,WarehouseManager
 basia,b/x6YD9XeOVZNf8D7iS4Lg+E7WdrFCQ61e08LvSHvi0=,Warehouseman
+darek1,GiV1AeEadZZ1p2CZFqTIqFAbzwBPKmawbDsH2yp6PNU=,Administrator
+asdf,8OTC92xYkW7CWPJGhRvqCR0U1CR6L8PhhpRGGxgW4Ts=,Logistician
