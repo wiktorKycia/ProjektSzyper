@@ -20,6 +20,9 @@ namespace StorageOffice.classes.UsersManagement.Services
         private static event Action<string> _fileErrorFound;
         private static event Action<string, string> _userDataChanged;
 
+        public static User? currentUser = null;
+        public static database.StorageDatabase? db = null;
+
         static PasswordManager()
         {
             if (!File.Exists(PasswordFilePath))
@@ -54,7 +57,7 @@ namespace StorageOffice.classes.UsersManagement.Services
             }
             catch (InvalidOperationException ex)
             {
-                throw;
+                throw; // Jeśli nieprzechwycamy wszystkich wyjątków, to musimy je przekazać dalej, aby można było je obsłużyć w wywołującym kodzie
             }
         }
 
@@ -79,6 +82,10 @@ namespace StorageOffice.classes.UsersManagement.Services
                 _fileErrorFound?.Invoke("the file was removed while the application was running");
                 throw new FileNotFoundException("The file users.txt was removed while the application was running!");
             }
+            catch (InvalidOperationException ex)
+            {
+                throw;
+            }
         }
 
         public static void OverwriteUserData(string username, string newData, int dataColumnNumber)
@@ -96,6 +103,45 @@ namespace StorageOffice.classes.UsersManagement.Services
                     fileLines[userIndex] = string.Join(",", parts);
 
                     File.WriteAllLines(PasswordFilePath, fileLines);
+
+                    // Change currentUser's data if the user is logged in
+                    if(username == currentUser?.Username && dataColumnNumber == 0)
+                    {
+                        currentUser.Username = newData;
+                    }
+                    else if (username == currentUser?.Username && dataColumnNumber == 2)
+                    {
+                        if (Enum.TryParse(newData, true, out Role newRole))
+                        {
+                            currentUser.Role = newRole;
+                        }
+                        else
+                        {
+                            _fileErrorFound?.Invoke($"incorrect user's role was found in users.txt file for user {username}");
+                            throw new FormatException($"Error: Incorrect user's role was found in users.txt file for user {username}");
+                        }
+                    }
+
+                    // Change the user's info in database
+                    if (db != null)
+                    {
+                        if (dataColumnNumber == 0)
+                        {
+                            db.UpdateUser(db.GetUserIdByUsername(username), newData, null);
+                        }
+                        else if (dataColumnNumber == 2)
+                        {
+                            if (Enum.TryParse(newData, true, out Role newRole))
+                            {
+                                db.UpdateUser(db.GetUserIdByUsername(username), null, newRole.ToString());
+                            }
+                            else
+                            {
+                                _fileErrorFound?.Invoke($"incorrect user's role was found in users.txt file for user {username}");
+                                throw new FormatException($"Error: Incorrect user's role was found in users.txt file for user {username}");
+                            }
+                        }
+                    }
                 }
                 else
                 {
@@ -106,6 +152,14 @@ namespace StorageOffice.classes.UsersManagement.Services
             {
                 _fileErrorFound?.Invoke("the file was removed while the application was running");
                 throw new FileNotFoundException("The file users.txt was removed while the application was running!");
+            }
+            catch (InvalidOperationException ex)
+            {
+                throw;
+            }
+            catch (FormatException ex)
+            {
+                throw;
             }
         }
 

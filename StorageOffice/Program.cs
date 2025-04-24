@@ -29,6 +29,8 @@ namespace StorageOffice
             // Create an object to store the info about logged-in user
             classes.UsersManagement.Modules.User user = new();
 
+            PasswordManager.currentUser = user;
+
             // Start the application
             MenuHandler.Start(user);
         }
