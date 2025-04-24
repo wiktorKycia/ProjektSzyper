@@ -157,7 +157,7 @@ Logistyk (Logistician) - może przyjmować towar do magazynu i planować eksport
    2. przekopiować tam cały kod (czyli plik `Program.cs`, foldery `classes/`, `Data/`, `Migrations/` oraz klasy z projektów z testami)
    3. zainstalować te same paczki co w punkcie `7.`
 
-**Gdyby, przy uruchamianiu pojawiał się błąd związany z błędem przy otwarciu pliku, należy otworzyć Visual Studio jako  administrator i spróbować ponownie uruchomić aplikację oraz sprawdzić czy w folderze `Data/` znajdują się pliki  `StorageOffice.db`, `users.txt` oraz `logs.txt` i czy pliki tekstowe nie mają pustych linii**
+**Gdyby, przy uruchamianiu pojawiał się błąd związany z błędem przy otwarciu pliku, należy otworzyć Visual Studio jako administrator i spróbować ponownie uruchomić aplikację oraz sprawdzić czy w folderze `Data/` znajdują się pliki  `StorageOffice.db`, `users.txt` oraz `logs.txt` i czy pliki tekstowe nie mają pustych linii**
 
 Do uruchomienia testów należy zrobić te same kroki analogicznie w folderach `StorageOffice.IntegrationsTests` oraz `StorageOffice.UnitTests`(trzeba jedynie skupić się na instalacji takich pakietów jak NUnit, NUnit3TestAdapter, Microsoft.NET.Test.Sdk w tych projektach a nie tych wymienionych w punkcie 7.)
 
