@@ -334,3 +334,12 @@
 [2025-04-24 20:52:44] Info: login of user darek1 - successful
 [2025-04-24 20:52:59] Info: action was performed on data in database - modified user's data
 [2025-04-24 20:52:59] Info: action was performed on data of a user named darek1 - changed user's role
+[2025-04-24 20:58:09] Info: login of user wiktor - successful
+[2025-04-24 20:58:18] Info: action was performed on data of a user named basia - deleted a user
+[2025-04-24 20:58:18] Info: action was performed on data in database - removed user named 'basia'
+[2025-04-24 20:58:18] Info: action was performed on data of a user named darek1 - deleted a user
+[2025-04-24 20:58:18] Info: action was performed on data in database - removed user named 'darek1'
+[2025-04-24 20:58:38] Info: login of user Jan - successful
+[2025-04-24 21:00:03] Info: login of user mietek - successful
+[2025-04-24 21:00:19] Info: login of user wiesio - successful
+[2025-04-24 21:03:57] Info: login of user wiesio - successful
