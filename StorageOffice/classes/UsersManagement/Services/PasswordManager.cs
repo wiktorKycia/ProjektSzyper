@@ -44,6 +44,18 @@ namespace StorageOffice.classes.UsersManagement.Services
                 {
                     throw new InvalidOperationException($"User {username} already exists in the system");
                 }
+                else if (string.IsNullOrEmpty(username))
+                {
+                    throw new ArgumentException(null, "The username must not be empty! ");
+                }
+                else if (!Regex.IsMatch(username, @"^[a-zA-Z0-9_.ąćęłńóśźżĄĆĘŁŃÓŚŹŻ]+$"))
+                {
+                    throw new ArgumentException("The username can only contain letters, numbers, characters '_' and '.'! ");
+                }
+                else if (string.IsNullOrEmpty(password))
+                {
+                    throw new ArgumentException("The password must not be empty! ");
+                }
 
                 string hashedPassword = HashPassword(password);
                 File.AppendAllText(PasswordFilePath, $"{username},{hashedPassword},{role}\n");
@@ -58,6 +70,10 @@ namespace StorageOffice.classes.UsersManagement.Services
             catch (InvalidOperationException ex)
             {
                 throw; // Jeśli nieprzechwycamy wszystkich wyjątków, to musimy je przekazać dalej, aby można było je obsłużyć w wywołującym kodzie
+            }
+            catch (ArgumentException ex)
+            {
+                throw;
             }
         }
 
@@ -142,6 +158,10 @@ namespace StorageOffice.classes.UsersManagement.Services
                 throw;
             }
             catch (FormatException ex)
+            {
+                throw;
+            }
+            catch(ArgumentException ex)
             {
                 throw;
             }
